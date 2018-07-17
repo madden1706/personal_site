@@ -1,0 +1,30 @@
+{% extends 'homepage/header.html' %}
+{% block title %} {{ blogpost.title_of_post }} {% endblock %}
+
+{% block content %}
+
+<a class="otherLink" href="{% url 'blog:blog' %}">back to blog</a>
+
+{% load static %}
+<br>
+<br>
+
+<div class="container-fluid">
+    <div class="col-12">
+
+        <h4>{{ blogpost.title_of_post }}</h4>
+        <h6>{{ blogpost.date_of_post }} </h6>
+        <br>
+
+        <p> <!--face='Helvetica, Arial, sans-serif'--> {{ blogpost.blog_post | safe}}</p>
+    </div>
+</div>
+<!-- "| safe" = safe content e.g. html, other scripts -->
+<!-- TODO make a html template for writing posts -->
+
+{% include "blog/next_previous.html" %}
+
+
+{% endblock %}
+
+

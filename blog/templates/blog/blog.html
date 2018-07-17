@@ -1,0 +1,45 @@
+{% extends 'homepage/header.html' %}
+{% block title %} MadResearchDen blog {% endblock %}
+
+
+{% block content %}
+
+{% if blog_home_list %}
+
+    <div class="container-fluid">
+        <div class="row">
+
+                {% for blogpost in blog_home_list %}
+
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                        <h4> <a class="otherLink" href= {{ blogpost.pk }}> {{ blogpost.title_of_post }}</a> </h4>
+                        <h6>{{ blogpost.date_of_post}}</h6>
+                        <p>{{ blogpost.preview | safe  }}.....</p>
+                        <br>
+                        </div>
+
+                {% endfor %}
+
+        </div>
+    </div>
+
+{% else %}
+    <p>No blogs are available.</p>
+{% endif %}
+
+<div class="container-fluid">
+
+ <h4> <a class="otherLink" href= "{% url 'blog:blog_archive_list' %}"> blog archive</a></h4>
+</div><!-- TODO Add a search feature.-->
+
+
+
+
+
+
+<!-- image-fluid class for images to be responsive on blog homepage.-->
+
+
+{% endblock %}
+
+

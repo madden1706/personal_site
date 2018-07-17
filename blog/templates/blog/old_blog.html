@@ -1,0 +1,33 @@
+{% extends 'homepage/header.html' %}
+{% block title %} MadResearchDen blog {% endblock %}
+
+
+{% block content %}
+
+{% if blog_home_list %}
+    <ul class="list-unstyled">
+    {% for blogpost in blog_home_list %}
+        <li>
+
+            <h4> <a class="otherLink" href= {{ blogpost.pk }}> {{ blogpost.title_of_post }}</a> </h4>
+            <h6>{{ blogpost.date_of_post}}</h6>
+            <pre><font face='Helvetica, Arial, sans-serif' >{{ blogpost.preview | safe}}...... </font></pre>
+            <br>
+            <br>
+
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No blogs are available.</p>
+{% endif %}
+
+<div class="container-fluid">
+  <p>This will be for the archive links.</p>
+</div>
+
+
+
+{% endblock %}
+
+
