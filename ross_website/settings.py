@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "vgq2@!vo_4_@^w_)dfj6zuns*%+s(ow2qm@n%#id2v-gf6)9r_"  # Not real key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
+# ALLOWED_HOSTS = ["django-env.c6fm7empee.eu-west-2.elasticbeanstalk.com", "18.130.161.189", ".madresearchden.com"]
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -120,3 +120,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
