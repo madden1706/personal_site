@@ -11,8 +11,12 @@ class BlogPostView(DetailView):
 
     model = BlogPost
     template_name = "blog/blogpost.html"
-    get_list_or_404(BlogPost)
-    # TODO Class view returns a 404 if there is on pk automatically? what if blog/gg ???
+
+    # was an issue with this not being a func and stopping mysql migrations.
+    # get_list_or_404(BlogPost)
+
+    def get_queryset(self):
+        return get_list_or_404(BlogPost)
 
 
 class BlogHomepage(ListView):

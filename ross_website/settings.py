@@ -20,10 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "727qg)x_a%z9@dq-rlv23r_+$%=df^$3mhbo*z)!5_*=92*hel"  # Not real key
+SECRET_KEY = "wlkv5(r&n4%-08pg-(f-$0w+-rk-*7#g#i0q4jmgkh_mqh=0tt"
+
+# for git wlkv5(r&n4%-08pg-(f-$0w+-rk-*7#g#i0q4jmgkh_mqh=0tt
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["django-env.c6fm7empee.eu-west-2.elasticbeanstalk.com", "18.130.161.189", ".madresearchden.com"]
 #ALLOWED_HOSTS = []
@@ -75,12 +77,29 @@ WSGI_APPLICATION = 'ross_website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+
+
+##### This is for the AWS RDS DB
+if 'RDS_HOSTNAME' in os.environ:
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.mysql',
+             'NAME': os.environ['RDS_DB_NAME'],
+             'USER': os.environ['RDS_USERNAME'],
+             'PASSWORD': os.environ['RDS_PASSWORD'],
+             'HOST': os.environ['RDS_HOSTNAME'],
+             'PORT': os.environ['RDS_PORT'],
+         }
+     }
+
+else:
+     DATABASES = {
+          'default': {
+              'ENGINE': 'django.db.backends.sqlite3',
+              'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+          }
+         }
+
 
 
 # Password validation
@@ -107,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'GMT'
 
 USE_I18N = True
 
