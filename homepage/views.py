@@ -19,5 +19,6 @@ def about_me(self):
 def contact(self):
     return render(self, 'homepage/contact.html')
 
-def my_custom_page_not_found(self):
-    return render(self, 'homepage/404.html')
+def custom_404(self):
+    return render(self, "homepage/404.html")
+

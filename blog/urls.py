@@ -1,7 +1,10 @@
 from django.urls import path, re_path
 from . import views
+from django.conf.urls import handler404
 from blog.views import BlogPostView, BlogHomepage, BlogArchive, BlogArchiveList
 from .models import BlogPost
+
+
 app_name = "blog"
 
 urlpatterns = [
@@ -13,3 +16,5 @@ urlpatterns = [
 
 
 #!TODO: add url pattern =  /blog/<year>/<month>/<title> with url dispatcher
+
+handler404 = "blog.views.custom_404"

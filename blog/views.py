@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from .models import BlogPost
 from django.views.generic import DetailView, ListView
+from django.shortcuts import render
+
 
 
 # Create your views here.
@@ -58,7 +60,6 @@ class BlogArchiveList(ListView):
         unique_years = [date.year for date in unique]
         unique_years.sort(reverse=True)
         return unique_years
-
 
 
 
