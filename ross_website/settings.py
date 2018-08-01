@@ -25,9 +25,9 @@ SECRET_KEY = "wlkv5(r&n4%-08pg-(f-$0w+-rk-*7#g#i0q4jmgkh_mqh=0tt"
 # for git wlkv5(r&n4%-08pg-(f-$0w+-rk-*7#g#i0q4jmgkh_mqh=0tt
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["django-env.c6fm7empee.eu-west-2.elasticbeanstalk.com", "18.130.161.189", ".madresearchden.com"]
+ALLOWED_HOSTS = ["MRD-ClassicLB-609090769.eu-west-2.elb.amazonaws.com", "MRD-env.c6fm7empee.eu-west-2.elasticbeanstalk.com", "18.130.187.160", "www.madresearchden.com"]
 #ALLOWED_HOSTS = []
 
 # Application definition
@@ -76,7 +76,6 @@ WSGI_APPLICATION = 'ross_website.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
 
 
 ##### This is for the AWS RDS DB
@@ -140,3 +139,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+

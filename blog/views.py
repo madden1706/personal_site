@@ -15,7 +15,7 @@ class BlogPostView(DetailView):
     # was an issue with this not being a func and stopping mysql migrations.
     # get_list_or_404(BlogPost)
 
-    def get_queryset(self):
+    def get_query_set(self):
         return get_list_or_404(BlogPost)
 
 
@@ -27,7 +27,7 @@ class BlogHomepage(ListView):
     context_object_name = "blog_home_list"
 
     def get_queryset(self):
-        return BlogPost.objects.all().order_by("-date_of_post")[:3]
+        return BlogPost.objects.all().order_by("-date_of_post")[:6]
 
 
 class BlogArchive(ListView):

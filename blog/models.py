@@ -11,6 +11,7 @@ class BlogPost(models.Model):
     blog_post = models.TextField()
 
     def get_absolute_url(self):
+        """This is for the previous/next buttons."""
         return reverse("blog:blog_post", kwargs={"pk": BlogPost._get_pk_val(self)})
 
     def preview(self):
