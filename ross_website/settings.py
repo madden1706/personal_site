@@ -21,14 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+
 # for git
 SECRET_KEY = "wlkv5(r&n4%-08pg-(f-$0w+-rk-*7#g#i0q4jmgkh_mqh=0tt"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["MRD-ClassicLB-609090769.eu-west-2.elb.amazonaws.com", "MRD-env.c6fm7empee.eu-west-2.elasticbeanstalk.com", "18.130.187.160", "madresearchden.com"]
-#ALLOWED_HOSTS = ["*"]
+#ALLOWED_HOSTS = ["MRD-ClassicLB-609090769.eu-west-2.elb.amazonaws.com", "MRD-env.c6fm7empee.eu-west-2.elasticbeanstalk.com", "18.130.187.160", ".madresearchden.com"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
