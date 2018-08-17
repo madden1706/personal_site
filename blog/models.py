@@ -16,9 +16,6 @@ class BlogPost(models.Model):
         """This is for the previous/next buttons."""
         return reverse("blog:blog_post", kwargs={"pk": BlogPost._get_pk_val(self), "slug": BlogPost.slug_value(self)})
 
-    def preview(self):
-        return str(self.blog_post)[0:200]
-
     def __str__(self):
         return self.title_of_post
 

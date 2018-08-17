@@ -22,3 +22,5 @@ def contact(self):
 def custom_404(self):
     return render(self, "homepage/404.html")
 
+def custom_500(self):
+    return render(self, "homepage/500.html")

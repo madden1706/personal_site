@@ -28,8 +28,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = ["MRD-ClassLoadBal-1135014672.eu-west-2.elb.amazonaws.com", "MRD-env.c6fm7empee.eu-west-2.elasticbeanstalk.com ", "35.176.33.68", ".madresearchden.com"]
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["MRD-ClassLoadBal-1135014672.eu-west-2.elb.amazonaws.com", "MRD-env.c6fm7empee.eu-west-2.elasticbeanstalk.com ", "35.176.33.68", ".madresearchden.com"]
+#ALLOWED_HOSTS = ["*"]
 
 # Application definition
 

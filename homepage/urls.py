@@ -1,5 +1,6 @@
 from django.urls import path, re_path
 from . import views
+from django.conf.urls import handler404, handler500
 
 
 app_name = "homepage"
@@ -14,3 +15,5 @@ urlpatterns = [
 
 ]
 
+handler404 = "blog.views.custom_404"
+handler500 = "blog.views.custom_500"
