@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from .models import BlogPost
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render
+from django.utils import timezone
+
 
 
 
@@ -29,7 +31,7 @@ class BlogHomepage(ListView):
     context_object_name = "blog_home_list"
 
     def get_queryset(self):
-        return BlogPost.objects.all().order_by("-date_of_post")[:6]
+        return BlogPost.objects.filter(date_of_post__lte=timezone.now()).order_by("-date_of_post")[:6]
 
 
 class BlogArchive(ListView):
@@ -41,8 +43,9 @@ class BlogArchive(ListView):
 
     def get_queryset(self):
         """Returns all blogs from a year."""
-        return get_list_or_404(BlogPost.objects.filter(
-            date_of_post__year=self.kwargs["year"]))
+        blog_list = BlogPost.objects.filter(date_of_post__year=(self.kwargs["year"])).filter(
+            date_of_post__lte=timezone.now())
+        return get_list_or_404(blog_list)
 
 
 class BlogArchiveList(ListView):
@@ -56,7 +59,8 @@ class BlogArchiveList(ListView):
 
     def get_queryset(self):
         """Returns a list of unique years from all blog posts."""
-        unique = BlogPost.objects.dates("date_of_post", "year")
+        unique = BlogPost.objects.filter(date_of_post__lte=timezone.now())
+        unique = unique.dates("date_of_post", "year")
         unique_years = [date.year for date in unique]
         unique_years.sort(reverse=True)
         return unique_years
