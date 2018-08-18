@@ -28,7 +28,7 @@ class BlogPostTests(TestCase):
         """
         create_post("Title", 10, "Post text")
         response = self.client.get(reverse('blog:blog'))
-        self.assertContains(response, "No blogs are available.")
+        self.assertContains(response, "No blog posts are available.")
         self.assertQuerysetEqual(response.context['blog_home_list'], [])
 
     def test_future_post_in_archive(self):

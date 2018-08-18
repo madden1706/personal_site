@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 # Create your models here.
 
 
@@ -28,6 +29,18 @@ class BlogPost(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title_of_post)
         super(BlogPost, self).save(*args, **kwargs)
+
+    def get_next(self):
+        """This function will return the next post by date, unless it is in the future (in which case it returns nothing
+
+        Used for the next button on the blog post page."""
+
+        try:
+            return BlogPost.objects.filter(date_of_post__lte=timezone.now()).filter(date_of_post__gt=self.date_of_post).order_by("-date_of_post")[0]
+        except:
+            None
+
+
 
 
 

@@ -41,6 +41,7 @@ class BlogArchive(ListView):
     template_name = 'blog/archive.html'
     context_object_name = "posts"
 
+
     def get_queryset(self):
         """Returns all blogs from a year."""
         blog_list = BlogPost.objects.filter(date_of_post__year=(self.kwargs["year"])).filter(
