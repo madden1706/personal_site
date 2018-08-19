@@ -12,6 +12,9 @@ class BlogPost(models.Model):
     date_of_post = models.DateField()
     blog_post = models.TextField()
     slug = models.SlugField(default="", blank=True)
+    seo_description = models.CharField(max_length=200)
+
+
 
     def get_absolute_url(self):
         """This is for the previous/next buttons."""
@@ -40,7 +43,12 @@ class BlogPost(models.Model):
         except:
             None
 
+class SeoKeyword(models.Model):
+    """A class for holding SEO keywords for blog posts, many-to-one with BlogPost.seo_keywords"""
 
+
+    blogpost = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    keyword = models.CharField(max_length=50)
 
 
 

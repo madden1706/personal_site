@@ -1,5 +1,16 @@
 {% extends 'homepage/header.html' %}
-{% block title %} {{ blogpost.title_of_post }} {% endblock %}
+
+{% block title %}{{ blogpost.title_of_post }}{% endblock %}
+
+{% block meta_description %} {{ blogpost.seo_description }} {% endblock %}
+
+{% block meta_keywords  %}
+{% for word in blogpost.seokeyword_set.all %}
+{{ word.keyword }},
+{% endfor %}
+{% endblock %}
+
+{% block meta_url %} {{ blogpost.get_absolute_url }} {% endblock %}
 
 {% block content %}
 
@@ -14,8 +25,6 @@
 
         <h4>{{ blogpost.title_of_post }}</h4>
         <h6>{{ blogpost.date_of_post }} </h6>
-        <br>
-
         <p> <!--face='Helvetica, Arial, sans-serif'--> {{ blogpost.blog_post | safe}}</p>
     </div>
 </div>
