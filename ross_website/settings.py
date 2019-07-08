@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from .secret import secret_key
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,22 +21,25 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
+SECRET_KEY = secret_key()
 
 # for git
 # SECRET_KEY = "wlkv5(r&n4%-08pg-(f-$0w+-rk-*7#g#i0q4jmgkh_mqh=0tt"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["MRD-ClassLoadBal-1135014672.eu-west-2.elb.amazonaws.com", "MRD-env.c6fm7empee.eu-west-2.elasticbeanstalk.com ", "35.176.33.68", ".madresearchden.com"]
-#ALLOWED_HOSTS = ["*"]
+if DEBUG == True:
+    ALLOWED_HOSTS = ["*"]
+elif DEBUG == False:
+    ALLOWED_HOSTS = ["MRD-ClassLoadBal-1135014672.eu-west-2.elb.amazonaws.com", "MRD-env.c6fm7empee.eu-west-2.elasticbeanstalk.com", "35.176.33.68", ".madresearchden.com"]
 
 # Application definition
 
 INSTALLED_APPS = [
     'blog',
     'homepage',
+    'data_vis',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -139,5 +143,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+# #    '/var/www/static/',
+# ]
 
 
