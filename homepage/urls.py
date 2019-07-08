@@ -15,5 +15,5 @@ urlpatterns = [
 
 ]
 
-handler404 = "blog.views.custom_404"
-handler500 = "blog.views.custom_500"
+handler404 = "homepage.views.custom_404"
+handler500 = "homepage.views.custom_500"

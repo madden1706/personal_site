@@ -19,8 +19,10 @@ def about_me(self):
 def contact(self):
     return render(self, 'homepage/contact.html')
 
-def custom_404(self):
+
+def custom_404(self, exception):
     return render(self, "homepage/404.html")
+
 
 def custom_500(self):
     return render(self, "homepage/500.html")

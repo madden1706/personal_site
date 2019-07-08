@@ -15,6 +15,5 @@ class BlogPostAdmin(admin.ModelAdmin):
     inlines = [SeoKeywordInLine]
 
 
-
 admin.site.register(BlogPost, BlogPostAdmin)
 
