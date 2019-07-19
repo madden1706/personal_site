@@ -26,7 +26,6 @@ SECRET_KEY = secret_key()
 # for git
 # SECRET_KEY = "wlkv5(r&n4%-08pg-(f-$0w+-rk-*7#g#i0q4jmgkh_mqh=0tt"
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 if DEBUG == True:
@@ -37,15 +36,17 @@ elif DEBUG == False:
 # Application definition
 
 INSTALLED_APPS = [
-    'blog',
-    'homepage',
-    'data_vis',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'homepage',
+    'blog',
+    'data_vis',
+
+
 ]
 
 MIDDLEWARE = [
@@ -143,6 +144,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+#TODO update on deplotyment. 
+
+PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+
+if DEBUG is True:
+    MEDIA_ROOT = 'media'
+    MEDIA_URL = 'media/'
+else:
+    MEDIA_ROOT = ''
+    MEDIA_URL = ''
 
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, "static"),
