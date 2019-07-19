@@ -13,6 +13,7 @@ class BlogPost(models.Model):
     blog_post = models.TextField()
     slug = models.SlugField(default="", blank=True)
     seo_description = models.CharField(max_length=200)
+    publish = models.BooleanField(default=True)
 
     def get_absolute_url(self):
         """This is for the previous/next buttons."""

@@ -28,7 +28,7 @@ class BlogHomepage(ListView):
     context_object_name = "blog_home_list"
 
     def get_queryset(self):
-        return BlogPost.objects.filter(date_of_post__lte=timezone.now()).order_by("-date_of_post")[:6]
+        return BlogPost.objects.filter(date_of_post__lte=timezone.now()).filter(publish=True).order_by("-date_of_post")[:6]
 
 
 class BlogArchive(ListView):
@@ -57,7 +57,7 @@ class BlogArchiveList(ListView):
 
     def get_queryset(self):
         """Returns a list of unique years from all blog posts."""
-        unique = BlogPost.objects.filter(date_of_post__lte=timezone.now())
+        unique = BlogPost.objects.filter(date_of_post__lte=timezone.now()).filter(publish=True)
         unique = unique.dates("date_of_post", "year")
         unique_years = [date.year for date in unique]
         unique_years.sort(reverse=True)
