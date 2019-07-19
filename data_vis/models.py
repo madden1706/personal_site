@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 # Create your models here.
 
@@ -29,13 +30,9 @@ class DataVis(models.Model):
         self.slug = slugify(self.title_of_post)
         super(DataVis, self).save(*args, **kwargs)
 
-
-#TODO have a foreign key relationship to graphs.
-# have these in html figures. 
-# add a publish column? Filter queries for only those to publish. -- need to change the crawling of site to reflect this. 
-# How to have a featured post -  not by date, but nominated. 
-
-# Variable width content via Bootstrap fields (for white v bars on pages. )
+    # Note: this enables the "View on Site" button in the admin page.     
+    def get_absolute_url(self):    
+        return reverse('data_vis:data_vis_post', kwargs={'slug': self.slug, 'pk': self.pk})
 
 
 class DataVisFigure(models.Model):
@@ -47,4 +44,6 @@ class DataVisFigure(models.Model):
     main_fig = models.BooleanField() # This is used for the thumbnail and if the post is featured to specify the main figure.
     view_order = models.IntegerField(default=0)
     fig_text = models.TextField(default='')
+
+
 
