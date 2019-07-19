@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 
@@ -10,6 +11,9 @@ class DataVis(models.Model):
     slug = models.SlugField(default="", blank=True) # remove from admin page view. Or, not editable. 
     seo_description = models.CharField(max_length=200)
     publish = models.BooleanField()
+    intro_text = models.TextField(default='')
+    # this should be an image upload..... 
+    homepage_chart_image = models.ImageField(upload_to = "static/images/data_vis" )
 
     def __str__(self):
         return self.title_of_post
@@ -40,5 +44,7 @@ class DataVisFigure(models.Model):
     data_vis = models.ForeignKey(DataVis, on_delete=models.CASCADE)
     graph_title = models.CharField(max_length=200)
     json_graph = models.TextField()
-    main_fig = models.BooleanField() # This is used for the thumbnail and if the post is featured to specify the main figure. 
+    main_fig = models.BooleanField() # This is used for the thumbnail and if the post is featured to specify the main figure.
+    view_order = models.IntegerField(default=0)
+    fig_text = models.TextField(default='')
 

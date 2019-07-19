@@ -1,8 +1,59 @@
-{% extends 'homepage/header.html' %}
+{% extends 'homepage/margins.html' %}
+{% block title %}MadResearchDen data visualization{% endblock %}
 
-{% block content %}
+{% block content_margins %}
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
 
-<p>This is the data page.</p>
+{% for item in data_vis_list %}
+<div>
+<h4><a class="otherLink" href="{% url 'data_vis:data_vis' %}{{ item.slug }}_{{ item.id }}">{{ item.title_of_post }} </a></h4>
+
+<h7>{{ item.date_of_post }}</h7>
+
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+
+      <a href="{% url 'data_vis:data_vis' %}{{ item.slug }}_{{ item.id }}">
+        <img src="{{ item.homepage_chart_image.url }}" alt="alt">
+      </a>
+
+    </div> 
+    <div class="col-sm">
+      {% lorem 30 w %}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <!--div id="vis"></div>
+  <script>
+      var spec = {{ item.datavisfigure_set.all.0.json_graph | safe }};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis2');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+
+  </script-->
+
+{% endfor %}
 
 {{ test1  }}
 {{ test2  }}
