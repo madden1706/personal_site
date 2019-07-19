@@ -1,6 +1,6 @@
-{% extends 'homepage/header.html' %}
+{% extends 'homepage/no_margins.html' %}
 
-{% block content %}
+{% block content_nomargins %}
 
 
     <!--    <main class="container" role="main">
@@ -15,33 +15,33 @@
 
 
         <!-- TODO need some homepage content  Add something in the z axis.-->
-<div class="container-fluid">
-        <div class="row my-3" >
-                <div class="col-lg-4 col-sm-12 my-3">
-                        <center>
-                            <img height="300" src="{% static 'images/graph.png' %}">
-                        </center>
-                        <p class="lead text-center"><br> Data</p>
-                </div>
+<div class="row">
 
-                <div class="col-lg-4 col-sm-12 my-3">
+        <div class="col-lg-4 col-sm-12 my-3">
+                <center>
+                        <img height="300" src="{% static 'images/graph.png' %}">
+                </center>
+                <p class="lead text-center"><br> Data</p>
+        </div>
 
-                        <center>
-                            <img height="300" src="{% static 'images/code.png' %}">
-                        </center>
-                        <p class="lead text-center"><br> Coding</p>
+        <div class="col-lg-4 col-sm-12 my-3">
 
-                </div>
+                <center>
+                        <img height="300" src="{% static 'images/code.png' %}">
+                </center>
+                <p class="lead text-center"><br> Coding</p>
 
-                <div class="col-lg-4 col-sm-12 my-3">
+        </div>
 
-                        <center>
-                            <img height="300" src="{% static 'images/cell.png' %}">
-                        </center>
-                        <p class="lead text-center"><br>  Science</p>
+        <div class="col-lg-4 col-sm-12 my-3">
 
-                </div>
-    </div>
+                <center>
+                        <img height="300" src="{% static 'images/cell.png' %}">
+                </center>
+                <p class="lead text-center"><br>  Science</p>
+
+        </div>
+
 
     <!--TODO need to add in a featured item. --> 
 </div>

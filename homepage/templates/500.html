@@ -1,16 +1,13 @@
-{% extends 'homepage/header.html' %}
+{% extends 'homepage/no_margins.html' %}
 
-{% block content %}
+{% block content_nomargins %}
 
 {% load static %}
 
-<div class="container-fluid">
-    <div class="col-9">
 
-        <h4 class="text-center">500 - something broke...</h4>
 
-        <!--- img height="200" src="{% static 'images/dog_is_gone.png' %}" alt="Woof" align="center"-->
+     <h4 class="text-center">500 - something broke...</h4>
 
-    </div>
-</div>
+    <!--- img height="200" src="{% static 'images/dog_is_gone.png' %}" alt="Woof" align="center"-->
+
 {% endblock %}

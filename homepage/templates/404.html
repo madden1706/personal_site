@@ -1,16 +1,12 @@
-{% extends 'homepage/header.html' %}
+{% extends 'homepage/no_margins.html' %}
 
-{% block content %}
+{% block content_nomargins %}
 
 {% load static %}
 
-<div class="container-fluid">
-    <div class="col-9">
+     <h4 class="text-center">404 - page not found.</h4>
 
-        <h4 class="text-center">404 - page not found.</h4>
+    <!--- img height="200" src="{% static 'images/dog_is_gone.png' %}" alt="Woof" align="center"-->
 
-        <!--- img height="200" src="{% static 'images/dog_is_gone.png' %}" alt="Woof" align="center"-->
 
-    </div>
-</div>
 {% endblock %}
