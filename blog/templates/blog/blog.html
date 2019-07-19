@@ -1,28 +1,28 @@
-{% extends 'homepage/header.html' %}
+{% extends 'homepage/no_margins.html' %}
 {% block title %} MadResearchDen blog {% endblock %}
 {% block meta_url %}/blog{% endblock %}
 
 
-{% block content %}
+{% block content_nomargins %}
 
 {% if blog_home_list %}
 
-    <div class="container-fluid">
-        <div class="row">
 
-                {% for blogpost in blog_home_list %}
+    <div class="row">
 
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                        <h4> <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> {{ blogpost.title_of_post }}</a> </h4>
-                        <h6>{{ blogpost.date_of_post}}</h6>
-                        <p>{{ blogpost.blog_post | safe | truncatewords:50 }}.....</p>
-                        <br>
-                        </div>
+            {% for blogpost in blog_home_list %}
 
-                {% endfor %}
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                    <h4> <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> {{ blogpost.title_of_post }}</a> </h4>
+                    <h6>{{ blogpost.date_of_post}}</h6>
+                    <p>{{ blogpost.blog_post | safe | truncatewords:50 }}.....</p>
+                    <br>
+                    </div>
 
-        </div>
+            {% endfor %}
+
     </div>
+
 
 {% else %}
     <p>No blog posts are available.</p>
@@ -33,13 +33,7 @@
  <h4> <a class="otherLink" href= "{% url 'blog:blog_archive_list' %}"> blog archive</a></h4>
 </div><!-- TODO Add a search feature.-->
 
-
-
-
-
-
 <!-- image-fluid class for images to be responsive on blog homepage.-->
-
 
 {% endblock %}
 

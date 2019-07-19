@@ -1,4 +1,4 @@
-{% extends 'homepage/header.html' %}
+{% extends 'homepage/margins.html' %}
 
 {% block title %}{{ blogpost.title_of_post }}{% endblock %}
 
@@ -12,7 +12,7 @@
 
 {% block meta_url %} {{ blogpost.get_absolute_url }} {% endblock %}
 
-{% block content %}
+{% block content_margins %}
 
 <a class="otherLink" href="{% url 'blog:blog' %}">back to blog</a>
 
@@ -20,19 +20,15 @@
 <br>
 <br>
 
-<div class="container-fluid">
-    <div class="col-12">
+<h4>{{ blogpost.title_of_post }}</h4>
+<h6>{{ blogpost.date_of_post }} </h6>
+<p> <!--face='Helvetica, Arial, sans-serif'--> {{ blogpost.blog_post | safe}}</p>
 
-        <h4>{{ blogpost.title_of_post }}</h4>
-        <h6>{{ blogpost.date_of_post }} </h6>
-        <p> <!--face='Helvetica, Arial, sans-serif'--> {{ blogpost.blog_post | safe}}</p>
-    </div>
-</div>
+
 <!-- "| safe" = safe content e.g. html, other scripts -->
 <!-- TODO make a html template for writing posts How to deal with adding images neatly.-->
 
 {% include "blog/next_previous.html" %}
-
 
 {% endblock %}
 

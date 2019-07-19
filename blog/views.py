@@ -5,10 +5,7 @@ from django.shortcuts import render
 from django.utils import timezone
 
 
-
-
 # Create your views here.
-
 
 class BlogPostView(DetailView):
     """This class generates views for individual blog posts."""
