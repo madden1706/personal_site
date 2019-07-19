@@ -11,14 +11,14 @@
     <div class="container">
         <div class="row">
             
-            <div class="col-xs col-sm col-lg-3">
+            <div class="col-xs col-sm-12 col-md-5">
                 <h5><a class="otherLink" href="{% url 'data_vis:data_vis' %}{{ item.slug }}_{{ item.id }}"> {{ item.title_of_post }}</a></h5>
                 <small>{{ item.date_of_post }}</small>
                 <p>{% lorem 30 w %}</p>                   
             </div> 
-            <div class="col-xs col-sm col-lg-3">
+            <div class="col-xs col-sm-12 col-md-5">
                 <a href="{% url 'data_vis:data_vis' %}{{ item.slug }}_{{ item.id }}">                    
-                            <img height="250" src="/data_visualization/media/{{ item.homepage_chart_image }}" alt="alt">
+                            <img class="" height="250" src="/data_visualization/media/{{ item.homepage_chart_image }}" alt="alt">
                             {# Unsure if the above is stable to work. #}
                 </a>
             
