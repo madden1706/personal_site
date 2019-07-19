@@ -25,7 +25,6 @@ class DataVisHomepage(ListView):
 
     # def get(self, request):
     #     """Gather data to return to the view."""
-
     #     test = test_graph.draw()
     #     # dict of data for.
     #     kwargs = {'test1': test, 
@@ -39,10 +38,6 @@ TODO
 Want to have a page that is for returning data vis.
 Have the code for making interactive charts with user data in the graphs module. 
 """
-
-# def get_queryset(self):
-#     return BlogPost.objects.filter(date_of_post__lte=timezone.now()).order_by("-date_of_post")[:6]
-
 
 class DataVisPost(DetailView):
     """List view for figures on each data vis post page."""
