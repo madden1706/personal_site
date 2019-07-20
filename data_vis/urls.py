@@ -9,11 +9,28 @@ from .models import DataVis as DVModel
 
 app_name = "data_vis"
 
+
+class CustomArchiveIndexView(ArchiveIndexView):
+    """Needed a view to excluded the non-published items."""
+
+    def get_dated_items(self):
+        """Return (date_list, items, extra_context) for this request."""
+        qs = self.get_dated_queryset()
+        qs = qs.filter(publish=True) # Filtering for the the published data.
+        date_list = self.get_date_list(qs, ordering='DESC')
+
+        if not date_list:
+            qs = qs.none()
+
+        return (date_list, qs, {})
+
+
+
 urlpatterns = [
     path('', DataVisHomepage.as_view(), name='data_vis'),
     path('<slug:slug>_<pk>/', DataVisPost.as_view(), name="data_vis_post"),
     path('archive/',
-         ArchiveIndexView.as_view(model=DVModel, date_field="date_of_post"),
+         CustomArchiveIndexView.as_view(model=DVModel, date_field="date_of_post"),
          name="data_vis_archive"),
    # path('', views.testpage, name='data_vis')
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -7,6 +7,8 @@
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
 
+{% if data_vis_list %}
+
 <div>
   <h4><a class="otherLink" href="{% url 'data_vis:data_vis' %}{{ data_vis_list.0.slug }}_{{ data_vis_list.0.id }}">{{ data_vis_list.0.title_of_post }} </a></h4>
   <h7>{{ data_vis_list.0.date_of_post }}</h7>
@@ -16,7 +18,6 @@
   <div class="row">
     <div class="col-xs col-sm-9 col-lg-9">
       <a href="{% url 'data_vis:data_vis' %}{{ data_vis_list.0.slug }}_{{ data_vis_list.0.id }}">
-
         <img class="img-fluid" src="{{ data_vis_list.0.homepage_chart_image.url }}" alt="alt">
       </a>
     </div> 
@@ -61,13 +62,21 @@
 
     </div>
   </div>
-</div>
+
   
   <br>
 
   <h5><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">see more</a></h5>
 
 </div>
+
+{% else %}
+
+<div>
+  <h5>There is no data right now...</h5>
+</div>
+
+{% endif %}
 
 
 
