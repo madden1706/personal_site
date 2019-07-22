@@ -3,21 +3,28 @@ from .models import BlogPost
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render
 from django.utils import timezone
+from django.http import Http404
 
 
 # Create your views here.
 
-class BlogPostView(DetailView):
-    """This class generates views for individual blog posts."""
+# class BlogPostView(DetailView):
+#     """This class generates views for individual blog posts."""
 
-    model = BlogPost
-    template_name = "blog/blogpost.html"
+#     model = BlogPost
+#     template_name = "blog/blogpost.html"
 
-    # was an issue with this not being a func and stopping mysql migrations.
-    # get_list_or_404(BlogPost)
+#     def get_query_set(self):
+#         return get_list_or_404(BlogPost)
 
-    def get_query_set(self):
-        return get_list_or_404(BlogPost)
+
+def blogpost(request, slug, pk):
+
+    blogpost = get_object_or_404(BlogPost, pk=pk, slug=slug)
+    if blogpost.publish == True:
+        return render(request, 'blog/blogpost.html', {'blogpost': blogpost})
+    else:
+        raise Http404() 
 
 
 class BlogHomepage(ListView):

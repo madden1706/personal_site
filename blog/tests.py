@@ -7,7 +7,7 @@ from django.urls import reverse
 # Create your tests here.
 
 
-def create_post(title, date, post,):
+def create_post(title, date, post, publishable):
     """
     :param title: Title of a blog post.
     :param date: Date of the blog post.
@@ -16,7 +16,7 @@ def create_post(title, date, post,):
     """
 
     time = timezone.now() + datetime.timedelta(days=date)
-    return BlogPost.objects.create(title_of_post=title, date_of_post=time, blog_post=post)
+    return BlogPost.objects.create(title_of_post=title, date_of_post=time, blog_post=post, publish=publishable)
 
 
 class BlogPostTests(TestCase):
@@ -26,7 +26,7 @@ class BlogPostTests(TestCase):
         Test to see if posts from a future date are hidden from the BlogHomepage view.
         :return:
         """
-        create_post("Title", 10, "Post text")
+        create_post("Title", 10, "Post text", True)
         response = self.client.get(reverse('blog:blog'))
         self.assertContains(response, "No blog posts are available.")
         self.assertQuerysetEqual(response.context['blog_home_list'], [])
@@ -36,7 +36,7 @@ class BlogPostTests(TestCase):
         Test to see if posts from a future date are hidden from the BlogArchive view.
         :return:
         """
-        post = create_post("Title", 10, "Post text")
+        post = create_post("Title", 10, "Post text", True)
         year = post.date_of_post.year
         response = self.client.get(reverse('blog:blog_archive', args=[year]))
         #self.assertContains(response, "No blogs are available.")
@@ -47,7 +47,7 @@ class BlogPostTests(TestCase):
         Test to see if posts from a future date are hidden (the year of the post) from the BlogArchiveList view.
         :return:
         """
-        post = create_post("Title", 10, "Post text")
+        post = create_post("Title", 10, "Post text", True)
         year = post.date_of_post.year
         response = self.client.get(reverse('blog:blog_archive_list'))
         self.assertNotContains(response, year)
@@ -58,7 +58,7 @@ class BlogPostTests(TestCase):
         Test to see if posts from a past date are in the BlogHomepage view.
         :return:
         """
-        post = create_post("Title", -10, "Post text")
+        post = create_post("Title", -10, "Post text", True)
         response = self.client.get(reverse('blog:blog'))
         self.assertContains(response, post.title_of_post)
         self.assertQuerysetEqual(response.context['blog_home_list'], ["<BlogPost: Title>"])
@@ -68,7 +68,7 @@ class BlogPostTests(TestCase):
         Test to see if posts from a past date are in the BlogArchive view.
         :return:
         """
-        post = create_post("Title", -10, "Post text")
+        post = create_post("Title", -10, "Post text", True)
         year = post.date_of_post.year
         response = self.client.get(reverse('blog:blog_archive', args=[year]))
         #self.assertContains(response, "No blogs are available.")
@@ -80,8 +80,21 @@ class BlogPostTests(TestCase):
         Test to see if posts from a past date (the year of the post) are in the BlogArchiveList view.
         :return:
         """
-        post = create_post("Title", -10, "Post text")
+        post = create_post("Title", -10, "Post text", True)
         year = post.date_of_post.year
         response = self.client.get(reverse('blog:blog_archive_list'))
         self.assertContains(response, year)
         self.assertQuerysetEqual(response.context['years'], [str(year)])
+
+    def test_publishable_post(self):
+        test_post = create_post("Title", -10, "Post text", True)
+        url = reverse('blog:blog_post', kwargs={'pk': test_post.id, 'slug': test_post.slug })
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, test_post.title_of_post)   
+
+    def test_not_publishable_post(self):
+        test_post = create_post("Title", -10, "Post text", False)
+        url = reverse('blog:blog_post', kwargs={'pk': test_post.id, 'slug': test_post.slug })
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
