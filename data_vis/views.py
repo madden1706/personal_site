@@ -47,6 +47,19 @@ def data_vis_post(request, slug, pk):
     else:
         raise Http404() 
 
+from bokeh.embed import server_document, components
+
+test_bk =  server_document("http://localhost:1555/my_app")
+
+# should ask about this on reddit. 
+# How to ensure the server is up....
+# Dealing with more than one app? 
+
+
+def test_bokeh(self):
+    return render(self, 'data_vis/test.html', {'test': test_bk})
+
+
 
 
 

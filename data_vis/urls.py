@@ -32,6 +32,7 @@ urlpatterns = [
     path('archive/',
          CustomArchiveIndexView.as_view(model=DVModel, date_field="date_of_post"),
          name="data_vis_archive"),
+    path('test', test_bokeh,)
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # alsa_output.pci-0000_1e_00.3.analog-stereo
