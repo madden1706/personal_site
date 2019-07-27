@@ -42,13 +42,14 @@ Have the code for making interactive charts with user data in the graphs module.
 def data_vis_post(request, slug, pk):
 
     data = get_object_or_404(DataVis, pk=pk, slug=slug)
+    type_of = data.template_to_use
+
     if data.publish == True:
-        return render(request, 'data_vis/data_vis_page.html', {'datavis': data})
+        return render(request, f'data_vis/data_vis_page_{type_of}.html', {'datavis': data})
     else:
         raise Http404() 
 
 from bokeh.embed import server_document, components
-
 test_bk =  server_document("http://localhost:1555/my_app")
 
 # should ask about this on reddit. 

@@ -40,11 +40,9 @@ class DataVisTest(TestCase):
     def test_not_publishable_post(self):
         test_post = false_publish_post()
         url = reverse('data_vis:data_vis_post', kwargs={'pk': test_post.id, 'slug': test_post.slug })
-        print(url)
         response = self.client.get(url)
-        print("ROSS ######", response)
         self.assertEqual(response.status_code, 404)
-        
+
 
 class DataVisHomeView(TestCase):
 

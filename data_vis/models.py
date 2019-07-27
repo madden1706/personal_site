@@ -13,6 +13,8 @@ class DataVis(models.Model):
     seo_description = models.CharField(max_length=200)
     publish = models.BooleanField()
     intro_text = models.TextField(default='')
+
+    template_to_use = models.CharField(choices=[['altair', 'Altair'], ['bokeh', 'Bokeh']], default='', max_length=10)
     # this should be an image upload..... 
     homepage_chart_image = models.ImageField(upload_to = "static/images/data_vis" )
 
@@ -41,8 +43,8 @@ class DataVisFigure(models.Model):
     data_vis = models.ForeignKey(DataVis, on_delete=models.CASCADE)
     graph_title = models.CharField(max_length=200)
     json_graph = models.TextField()
-    main_fig = models.BooleanField() # This is used for the thumbnail and if the post is featured to specify the main figure.
-    view_order = models.IntegerField(default=0)
+ #   main_fig = models.BooleanField(default=False) # This is used for the thumbnail and if the post is featured to specify the main figure.
+ #   view_order = models.IntegerField(default=0)
     fig_text = models.TextField(default='')
 
 
