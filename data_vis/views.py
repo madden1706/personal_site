@@ -3,7 +3,9 @@ from .models import DataVis, DataVisFigure
 from django.views.generic import DetailView, ListView
 from django.utils import timezone
 from django.http import Http404
+from os import system
 from .graphs import test_graph
+
 
 
 # Create your views here.
@@ -52,13 +54,27 @@ def data_vis_post(request, slug, pk):
 from bokeh.embed import server_document, components
 test_bk =  server_document("http://localhost:1555/my_app")
 
+# bokeh serve --show test_bokeh_app/my_app.py --port 1555 --allow-websocket-origin=127.0.0.1:8000
+# bokeh serve --show test_bokeh_app/my_app.py --port 1555 --allow-websocket-origin=www.madresearchden:com
+# check if port is free # if ! lsof -i:1555 ; then echo free; else echo not free; fi
+
+
+#fuser 1555/tcp
+#fuser -k 8080/tcp
+
+
 # should ask about this on reddit. 
 # How to ensure the server is up....
 # Dealing with more than one app? 
 
 
 def test_bokeh(self):
+    bk_script = 'bokeh serve --show test_bokeh_app/my_app.py --port 1555 --allow-websocket-origin=127.0.0.1:8000'
+    system(f"if ! lsof -i:1555 ; then {bk_script}; else echo bokeh running; fi &")
     return render(self, 'data_vis/test.html', {'test': test_bk})
+
+
+    # if ! lsof -i:1555 ; then;  bokeh serve --show test_bokeh_app/my_app.py --port 1555 --allow-websocket-origin=127.0.0.1:8000; else echo bokeh running; fi; &;
 
 
 
