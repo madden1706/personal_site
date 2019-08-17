@@ -25,7 +25,7 @@ def true_publish_post_bokeh():
     homepage_img='static/images/data_vis/visualization1.png')
 
 def false_publish_post_bokeh(): 
-    return create_datavis(title='Test_True', days=-1, publishable=False, template='bokeh',
+    return create_datavis(title='Test_False', days=-1, publishable=False, template='bokeh',
     homepage_img='static/images/data_vis/visualization1.png')
 
 def true_publish_post_altair(): 
@@ -33,7 +33,7 @@ def true_publish_post_altair():
     homepage_img='static/images/data_vis/visualization1.png')
 
 def false_publish_post_altair(): 
-    return create_datavis(title='Test_True', days=-1, publishable=False, template='altair',
+    return create_datavis(title='Test_False', days=-1, publishable=False, template='altair',
     homepage_img='static/images/data_vis/visualization1.png')
 
 
@@ -87,6 +87,7 @@ class DataVisHomeView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "There is no data right now...")
         self.assertQuerysetEqual(response.context['data_vis_list'], [])
+        self.assertNotContains(response, test_post.title_of_post)
 
     def test_publishable_posts_bokeh(self):
         test_post = true_publish_post_bokeh()
@@ -101,8 +102,8 @@ class DataVisHomeView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "There is no data right now...")
         self.assertQuerysetEqual(response.context['data_vis_list'], [])
+        self.assertNotContains(response, test_post.title_of_post)
 
-    Only did the one combo of altair templates for this test.
     def test_publishable_and_no_publishable_posts(self):
         """Only did the one combo of altair templates for this test."""
         test_post = true_publish_post_altair()
@@ -111,5 +112,6 @@ class DataVisHomeView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(response.context['data_vis_list'], ['<DataVis: Test_True>'])
         self.assertContains(response, test_post.title_of_post)
+        self.assertNotContains(response, test_post_false.title_of_post)
 
 
