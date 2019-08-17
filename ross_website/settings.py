@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from .secret import secret_key
+from .secret import secret_key, debug_state, hosts
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,12 +26,8 @@ SECRET_KEY = secret_key()
 # for git
 # SECRET_KEY = "wlkv5(r&n4%-08pg-(f-$0w+-rk-*7#g#i0q4jmgkh_mqh=0tt"
 
-DEBUG = True
-
-if DEBUG == True:
-    ALLOWED_HOSTS = ["*"]
-elif DEBUG == False:
-    ALLOWED_HOSTS = ["MRD-ClassLoadBal-1135014672.eu-west-2.elb.amazonaws.com", "MRD-env.c6fm7empee.eu-west-2.elasticbeanstalk.com", "35.176.33.68", ".madresearchden.com"]
+DEBUG = debug_state()
+ALLOWED_HOSTS = hosts()
 
 # Application definition
 
