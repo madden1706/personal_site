@@ -145,12 +145,12 @@ STATIC_ROOT = 'static'
 
 PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
 
-if DEBUG is True:
+if debug_state() is True:
     MEDIA_ROOT = 'media'
     MEDIA_URL = 'media/'
 else:
-    MEDIA_ROOT = ''
-    MEDIA_URL = ''
+    MEDIA_ROOT = 'media'
+    MEDIA_URL = 'media/'
 
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, "static"),
