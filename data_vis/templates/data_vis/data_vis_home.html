@@ -18,7 +18,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-9 col-lg-9">
       <a href="{% url 'data_vis:data_vis' %}{{ data_vis_list.0.slug }}_{{ data_vis_list.0.id }}">
-        <img class="img-fluid" src="{{ data_vis_list.0.homepage_chart_image.url }}" alt="alt" height="500">
+        <img class="img-fluid" src="{{ data_vis_list.0.homepage_chart_image.url }}" alt="alt" height="400">
       </a>
     </div> 
       <div class="col-xs-12 col-sm-3 col-lg-3">
@@ -29,6 +29,8 @@
 
 <br>
 <br>
+
+<!--TODO Have a list for 4 posts with the 1st left off.-->
 
 <div class="container-fluid">
   <div class="row">
@@ -55,7 +57,8 @@
           <a href="{% url 'data_vis:data_vis' %}{{ data_vis_list.0.slug }}_{{ data_vis_list.0.id }}">
             <img class="img-fluid border-0" src="{{ data_vis_list.0.homepage_chart_image.url }}" alt="" height="150">
           </a>
-        </div>
+        </div class="card-body border-0">
+
           <p class="card-text">{% lorem 30 w %}</p>          
         </div>
       </div>
