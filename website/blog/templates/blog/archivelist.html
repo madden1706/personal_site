@@ -1,0 +1,35 @@
+{% extends 'homepage/margins.html' %}
+{% block title %} MadResearchDen blog {% endblock %}
+
+
+{% block content_margins %}
+
+<a class="otherLink" href="{% url 'blog:blog' %}">back to blog</a>
+
+{% if years %}
+<p><br></p>
+
+    <div class="container-fluid">
+        <div class="row">
+
+          {% for year in years %}
+
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                        <h3> <a class="otherLink" href= "{% url 'blog:blog' %}archive/{{year}}"> {{ year }}</a> </h3>
+                        <br>
+                        </div>
+
+                {% endfor %}
+
+        </div>
+    </div>
+
+{% else %}
+
+    <p><br>No blogs are available.</p>
+{% endif %}
+
+
+{% endblock %}
+
+

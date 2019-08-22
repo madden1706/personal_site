@@ -1,11 +1,22 @@
 version: '3'
 
 services:
-  web:
-    build: .
+  website:
+    build: ./website
     command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    container_name: ross_website
+    container_name: MRD
     volumes:
-      - .:/ross_website
+      - .:/website
     ports:
       - "8000:8000"
+
+  bokeh_server:
+    build: ./test_bokeh_app
+    command: bokeh serve --show test_bokeh_app/my_app.py --port 5001 --allow-websocket-origin=0.0.0.0:8000
+    container_name: bokeh_server_MRD
+    volumes:
+      - .:/test_bokeh_app
+    ports:
+      - "5001:5001"
+    depends_on:
+      - website
