@@ -1,6 +1,37 @@
-<p>Test</p>
-<script src="http://cdn.pydata.org/bokeh/release/bokeh-x.y.z.min.js"></script>
-<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-x.y.z.min.js"></script>
-<script src="http://cdn.pydata.org/bokeh/release/bokeh-tables-x.y.z.min.js"></script>
+{% extends 'homepage/margins.html' %}
 
-{{ test | safe }}
+{% block title %} MadResearchDen data vis archive {% endblock %}
+
+{% block content_margins %}
+
+<div class="container-fluid">
+
+    <div class="row">
+        <h4>Test</h4>
+        <p>{% lorem 30 w %}</p>
+    </div>
+
+    <script src="http://cdn.pydata.org/bokeh/release/bokeh-x.y.z.min.js"></script>
+    <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-x.y.z.min.js"></script>
+    <script src="http://cdn.pydata.org/bokeh/release/bokeh-tables-x.y.z.min.js"></script>
+
+    <div class="row">
+        <div class="mx-auto">
+            <!--p>{% lorem 5 w %}</p-->
+
+            {{ test | safe }}
+
+        </div>     
+    </div>
+
+    <div class="row">
+        <br>
+
+        <h4><br>Test</h4>
+        <p>{% lorem 30 w %}</p>
+    </div>
+
+
+</div>
+
+{% endblock %}

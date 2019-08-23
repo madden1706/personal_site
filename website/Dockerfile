@@ -7,13 +7,13 @@ FROM python:3.6
 ENV PYTHONUNBUFFERED 1
 
 # create root directory for our project in the container
-RUN mkdir /ross_website
+RUN mkdir /website
 
 # Set the working directory to /music_service
-WORKDIR /ross_website
+WORKDIR /website
 
 # Copy the current directory contents into the container at /music_service
-ADD . /ross_website/
+ADD . /website
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
