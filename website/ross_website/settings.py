@@ -92,13 +92,27 @@ if 'RDS_HOSTNAME' in os.environ:
          }
      }
 
+
+# This is for a local postgres test db in a Docker container.
 else:
      DATABASES = {
           'default': {
-              'ENGINE': 'django.db.backends.sqlite3',
-              'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+              'ENGINE': 'django.db.backends.postgresql_psycopg2',
+              'NAME': 'postgres',
+              'USER': 'postgres',
+              'HOST': 'db', # set in docker-compose.yml
+              'PORT': 5432 # default postgres port
           }
          }
+
+# else: 
+# # Built in DB
+#      DATABASES = {
+#           'default': {
+#               'ENGINE': 'django.db.backends.sqlite3',
+#               'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#           }
+#          }
 
 
 
