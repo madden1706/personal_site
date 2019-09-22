@@ -1,5 +1,7 @@
 version: '3'
 
+# This is for local dev.
+
 services:
   website:
     build: ./website
@@ -11,6 +13,27 @@ services:
     ports:
       - "8000:8000"
 
+  db:
+    # image: postgres:10.1-alpine 
+    # https://docs.docker.com/storage/volumes/   
+    build: ./db_test
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+
+# # Postgres
+#   db:
+#     image: postgres
+#     restart: always
+#     environment:
+#       POSTGRES_PASSWORD: example
+
+#   adminer:
+#     image: adminer
+#     restart: always
+#     ports:
+#       - 8080:8080
+
   bokeh_server:
     build: ./test_bokeh_app
     command: bokeh serve --show ./my_app.py --port 5001 --allow-websocket-origin=0.0.0.0:8000
@@ -21,3 +44,9 @@ services:
       - "5001:5001"
     depends_on:
       - website
+
+volumes:
+  postgres_data:
+      # Why does this need to be here empty?
+
+
