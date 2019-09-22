@@ -1,3 +1,11 @@
 build:
         docker:
                 web: ./website/Dockerfile
+
+
+
+# https://testdriven.io/blog/deploying-django-to-heroku-with-docker/
+# http://whitenoise.evans.io/en/stable/
+# https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
+# https://devcenter.heroku.com/categories/postgres-basics
+# https://cloud.docker.com/repository/docker/madden1706/madresearchden/builds
