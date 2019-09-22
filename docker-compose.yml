@@ -13,10 +13,14 @@ services:
     ports:
       - "8000:8000"
 
+
   db:
-    image: postgres:10.1-alpine
+    # image: postgres:10.1-alpine 
+    # https://docs.docker.com/storage/volumes/   
+    build: ./db_test
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+
 
 # # Postgres
 #   db:
@@ -45,3 +49,5 @@ services:
 volumes:
   postgres_data:
       # Why does this need to be here empty?
+
+
