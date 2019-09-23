@@ -1,8 +1,14 @@
+setup:
+  addons:
+  - plan: heroku-postgresql
+
 build:
-        docker:
-                web: ./website/Dockerfile
-                bokeh: ./test_bokeh_app/Dockerfile
-                
+  docker:
+    web: website/Dockerfile
+                # bokeh: ./test_bokeh_app/Dockerfile
+run:
+  web: bash -c python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+
 
 
 
