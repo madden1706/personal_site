@@ -1,0 +1,23 @@
+setup:
+  addons:
+  - plan: heroku-postgresql
+
+build:
+  docker:
+    web: ./website/Dockerfile
+                # bokeh: ./test_bokeh_app/Dockerfile
+run:
+  web: bash -c python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+
+release:
+  image: web
+  command:
+    - python manage.py collectstatic --noinput
+
+
+
+# https://testdriven.io/blog/deploying-django-to-heroku-with-docker/
+# http://whitenoise.evans.io/en/stable/
+# https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
+# https://devcenter.heroku.com/categories/postgres-basics
+# https://cloud.docker.com/repository/docker/madden1706/madresearchden/builds
