@@ -1,6 +1,8 @@
 build:
         docker:
                 web: ./website/Dockerfile
+                bokeh: ./test_bokeh_app/Dockerfile
+                
 
 
 
