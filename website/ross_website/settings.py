@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from .secret import secret_key, debug_state, hosts
+from .test_secret import secret_key, debug_state, hosts
+#from .secret import secret_key, debug_state, hosts
+#import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -79,22 +81,22 @@ WSGI_APPLICATION = 'ross_website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-##### This is for the AWS RDS DB
-if 'RDS_HOSTNAME' in os.environ:
-     DATABASES = {
-         'default': {
-             'ENGINE': 'django.db.backends.mysql',
-             'NAME': os.environ['RDS_DB_NAME'],
-             'USER': os.environ['RDS_USERNAME'],
-             'PASSWORD': os.environ['RDS_PASSWORD'],
-             'HOST': os.environ['RDS_HOSTNAME'],
-             'PORT': os.environ['RDS_PORT'],
-         }
-     }
+# ##### This is for the AWS RDS DB
+# if 'RDS_HOSTNAME' in os.environ:
+#      DATABASES = {
+#          'default': {
+#              'ENGINE': 'django.db.backends.mysql',
+#              'NAME': os.environ['RDS_DB_NAME'],
+#              'USER': os.environ['RDS_USERNAME'],
+#              'PASSWORD': os.environ['RDS_PASSWORD'],
+#              'HOST': os.environ['RDS_HOSTNAME'],
+#              'PORT': os.environ['RDS_PORT'],
+#          }
+#      }
 
 
 # This is for a local postgres test db in a Docker container.
-else:
+if DEBUG is True:
      DATABASES = {
           'default': {
               'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -104,8 +106,10 @@ else:
               'PORT': 5432 # default postgres port
           }
          }
+else: 
+    # Activate Django-Heroku.^M
+    django_heroku.settings(locals())
 
-# else: 
 # # Built in DB
 #      DATABASES = {
 #           'default': {
