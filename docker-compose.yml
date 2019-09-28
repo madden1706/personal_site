@@ -5,13 +5,15 @@ version: '3'
 services:
   website:
     build: ./website
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    #command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn ross_website.wsgi -b 0.0.0.0:8000"
     #command: bash -c "python manage.py runserver 0.0.0.0:8000"
     container_name: MRD
     volumes:
       - ./website:/website
     ports:
       - "8000:8000"
+      - "8001:8001"
 
   db:
     # image: postgres:10.1-alpine 
