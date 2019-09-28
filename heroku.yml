@@ -2,12 +2,13 @@ setup:
   addons:
   - plan: heroku-postgresql
 
-build:
+build: 
   docker:
     web: ./website/Dockerfile
                 # bokeh: ./test_bokeh_app/Dockerfile
-# run:
-#   web: bash -c python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+run:
+  web: gunicorn ross_website.wsg -b 0.0.0.0:$PORT
+  #web: python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:$PORT
 
 release:
   image: web
