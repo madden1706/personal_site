@@ -15,12 +15,10 @@
     <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-x.y.z.min.js"></script>
     <script src="http://cdn.pydata.org/bokeh/release/bokeh-tables-x.y.z.min.js"></script>
 
-    <div class="row">
-        <div class="mx-auto">
+
             <!--p>{% lorem 5 w %}</p-->
-            {{ test | safe }}
-        </div>     
-    </div>
+            
+
 
     <div class="row">
         <h4><br>Test</h4>
@@ -30,4 +28,12 @@
 
 </div>
 
+
 {% endblock %}
+
+
+{% block bokeh_app %}
+{{ test | safe }}
+{% endblock %}
+
+
