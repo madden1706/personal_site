@@ -79,11 +79,12 @@ def test_bokeh(self):
 
 from bokeh.embed import server_document, components
 #test_bk =  server_document("http://0.0.0.0:5001/my_app")
-test_bk =  server_document("http://0.0.0.0:5001/bokeh_app")
+test_bk =  server_document("http://0.0.0.0:5001/test_other_name")
 
 def test_bokeh(self):
     #bk_script = 'bokeh serve --show test_bokeh_app/my_app.py --port 1555 --allow-websocket-origin=0.0.0.0:5001'
     #system(f"if ! lsof -i:1555 ; then {bk_script}; else echo bokeh running; fi &>-")
+    print(test_bk)
     return render(self, 'data_vis/test.html', {'test': test_bk})
   
 
