@@ -1,0 +1,63 @@
+version: '3'
+
+# This is for local dev.
+
+services:
+  website:
+    build: ./website
+    #command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py makemigrations && 
+      python manage.py migrate && 
+      python manage.py collectstatic --noinput && 
+      gunicorn ross_website.wsgi:application -b 0.0.0.0:8000"
+    #command: bash -c "python manage.py runserver 0.0.0.0:8000"
+    container_name: MRD
+    volumes:
+      - ./website:/website
+    expose:
+      - 8000
+    # depends_on:
+    #   - db # script to test if DB up to add. 
+    environment:
+        - DEBUG=1
+        - DB_USER=User
+        - DB_PASS=Pass
+        - DB_PORT=5432
+        - SECRET_KEY=LALALALALALALLA
+       # - ALLOWED_HOSTS=*
+
+  nginx:
+    build: ./nginx
+    ports:
+      # HOST:CONTAINER
+      - 1337:80
+    depends_on:
+      - website
+    # volumes:
+    # - static_volume:/website/staticfiles
+
+
+  db:
+    # image: postgres:10.1-alpine 
+    # https://docs.docker.com/storage/volumes/   
+    build: ./db_test
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  bokeh_server:
+    build: ./test_bokeh_app
+    # list two apps as
+    command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin=0.0.0.0:1337
+    container_name: bokeh_server_MRD
+    volumes:
+      - ./test_bokeh_app:/test_bokeh_app
+    ports:
+      - "5001:5001"
+    depends_on:
+      - website
+
+volumes:
+  postgres_data:
+      # Why does this need to be here empty?
+
+      #You can set default values for environment variables using a .env file, which Compose automatically looks for. Values set in the shell environment override those set in the .env file.
