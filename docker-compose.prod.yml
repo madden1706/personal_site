@@ -19,12 +19,12 @@ services:
     # depends_on:
     #   - db # script to test if DB up to add. 
     environment:
-        - DEBUG=1
-        - DB_USER=User
-        - DB_PASS=Pass
-        - DB_PORT=5432
-        - SECRET_KEY=LALALALALALALLA
-       # - ALLOWED_HOSTS=*
+        - DEBUG: False
+        - DB_USER: madresearchden_db
+        - DB_PASS: 
+        - DB_PORT: 5432
+        - SECRET_KEY: 
+        - ALLOWED_HOSTS: '139.162.194.61'
 
   nginx:
     build: ./nginx
@@ -43,6 +43,9 @@ services:
     build: ./db_test
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    environment: 
+      - POSTGRES_PASSWORD: 
+      - POSTGRES_USER: madresearchden_db
 
   bokeh_server:
     build: ./test_bokeh_app
