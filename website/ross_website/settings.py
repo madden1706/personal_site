@@ -1,6 +1,4 @@
 import os
-from .secret import secret_key, hosts, debug_state
-import django_heroku
 
 """
 Django settings for ross_website project.
@@ -22,9 +20,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secret_key()
-DEBUG = debug_state()
-ALLOWED_HOSTS = hosts()
+SECRET_KEY = os.environ['SECRET_KEY']
+DEBUG = os.environ['DEBUG']
+ALLOWED_HOSTS =  ["*"] # [os.environ['ALLOWED_HOSTS']]
 
 # Application definition
 
@@ -90,8 +88,16 @@ if DEBUG:
             }
         }
 else: 
-    # Activate Django-Heroku.
-    django_heroku.settings(locals())
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['DB_USER'],
+            'USER': os.environ['DB_PASS'],
+            'HOST': 'db', # set in docker-compose.yml
+            'PORT': os.environ['DB_PORT'] # default postgres port
+            }
+        }
+
 
 # # Built in DB
 #      DATABASES = {
