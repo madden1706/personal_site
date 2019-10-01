@@ -6,14 +6,15 @@ services:
   website:
     build: ./website
     #command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn ross_website.wsgi -b 0.0.0.0:8000"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn ross_website.wsgi -b 0.0.0.0:8000"
     #command: bash -c "python manage.py runserver 0.0.0.0:8000"
     container_name: MRD
     volumes:
       - ./website:/website
     ports:
       - "8000:8000"
-      - "8001:8001"
+
+
 
   db:
     # image: postgres:10.1-alpine 
@@ -22,23 +23,10 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
-
-# # Postgres
-#   db:
-#     image: postgres
-#     restart: always
-#     environment:
-#       POSTGRES_PASSWORD: example
-
-#   adminer:
-#     image: adminer
-#     restart: always
-#     ports:
-#       - 8080:8080
-
   bokeh_server:
     build: ./test_bokeh_app
-    command: bokeh serve --show ./my_app.py --port 5001 --allow-websocket-origin=0.0.0.0:8000
+    # list two apps as
+    command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin=0.0.0.0:8000
     container_name: bokeh_server_MRD
     volumes:
       - ./test_bokeh_app:/test_bokeh_app
