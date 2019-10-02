@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY'] 
 DEBUG = os.environ['DEBUG']
-ALLOWED_HOSTS = [[os.environ['ALLOWED_HOSTS']] 
+ALLOWED_HOSTS = [os.environ['ALLOWED_HOSTS']]
 # Application definition
 
 INSTALLED_APPS = [
@@ -82,8 +82,8 @@ if DEBUG:
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'postgres',
             'USER': 'postgres',
-            'HOST': 'db', # set in docker-compose.yml
-            'PORT': 5432 # default postgres port
+            'HOST': os.environ['SQL_HOST'], # set in docker-compose.yml
+            'PORT': os.environ['DB_PORT'], # default postgres port
             }
         }
 else: 
@@ -92,8 +92,8 @@ else:
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': os.environ['DB_USER'],
             'USER': os.environ['DB_PASS'],
-            'HOST': 'db', # set in docker-compose.yml
-            'PORT': os.environ['DB_PORT'] # default postgres port
+            'HOST': os.environ['SQL_HOST'], # set in docker-compose.yml
+            'PORT': os.environ['DB_PORT'], # default postgres port
             }
         }
 
