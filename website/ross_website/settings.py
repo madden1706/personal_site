@@ -76,24 +76,27 @@ WSGI_APPLICATION = 'ross_website.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 # This is for a local postgres test db in a Docker container.
+
+
 if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'postgres',
             'USER': 'postgres',
-            'HOST': os.environ['SQL_HOST'], # set in docker-compose.yml
-            'PORT': os.environ['DB_PORT'], # default postgres port
+            'HOST': 'db', # os.environ['SQL_HOST'], # set in docker-compose.yml
+            'PORT': 5432 #  os.environ['DB_PORT'], # default postgres port
             }
         }
 else: 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ['DB_USER'],
-            'USER': os.environ['DB_PASS'],
-            'HOST': os.environ['SQL_HOST'], # set in docker-compose.yml
-            'PORT': os.environ['DB_PORT'], # default postgres port
+            'ENGINE': os.environ['DBENGINE'],
+            'NAME': os.environ['DATABASE'],
+            'USER': os.environ['DB_USER'],
+            'PASSWORD': os.environ['DB_PASS'],
+            'HOST': 'db', #  os.environ['SQL_HOST'], # set in docker-compose.yml
+            'PORT': 5432 #int(os.environ['DB_PORT']), # default postgres port
             }
         }
 

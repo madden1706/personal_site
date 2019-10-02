@@ -24,9 +24,10 @@ services:
       - DB_PASS=pass
       - DB_PORT=5432
       - SECRET_KEY=key
-      - ALLOWED_HOSTS='139.162.194.61'
+      - ALLOWED_HOSTS='*'
       - SQL_HOST=db
       - DATABASE=postgres
+      - DBENGINE=django.db.backends.postgresql_psycopg2
 
   nginx:
     build: ./nginx
