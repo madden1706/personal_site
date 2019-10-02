@@ -20,10 +20,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ['SECRET_KEY'] 
 DEBUG = os.environ['DEBUG']
-ALLOWED_HOSTS = [os.environ['ALLOWED_HOSTS']]
-
+ALLOWED_HOSTS = [[os.environ['ALLOWED_HOSTS']] 
 # Application definition
 
 INSTALLED_APPS = [
@@ -107,7 +106,6 @@ else:
 #           }
 #          }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -165,5 +163,3 @@ STATICFILES_DIRS = [
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# print('-------------- STATIC ROOT', STATIC_ROOT, "BASE_DIR", BASE_DIR, "PROJECT_ROOT", PROJECT_ROOT)
