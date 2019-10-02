@@ -18,11 +18,13 @@ services:
       - "8000:8000"
     environment: 
       - DEBUG=True
-      - SECRET_KEY=TESTKEY
-      - ALLOWED_HOSTS="*"
       - DB_USER=user
       - DB_PASS=pass
       - DB_PORT=5432
+      - SECRET_KEY=TESTKEY
+      - ALLOWED_HOSTS="*"
+      - SQL_HOST=db
+      - DATABASE=postgres 
 
 
   db:

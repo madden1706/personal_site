@@ -19,12 +19,14 @@ services:
     # depends_on:
     #   - db # script to test if DB up to add. 
     environment:
-        - DEBUG=False
-        - DB_USER=madresearchden_db
-        - DB_PASS=pass
-        - DB_PORT=5432
-        - SECRET_KEY=key
-        - ALLOWED_HOSTS='139.162.194.61'
+      - DEBUG=False
+      - DB_USER=madresearchden_db
+      - DB_PASS=pass
+      - DB_PORT=5432
+      - SECRET_KEY=key
+      - ALLOWED_HOSTS='139.162.194.61'
+      - SQL_HOST=db
+      - DATABASE=postgres
 
   nginx:
     build: ./nginx
@@ -41,6 +43,7 @@ services:
     # image: postgres:10.1-alpine 
     # https://docs.docker.com/storage/volumes/   
     build: ./db_test
+    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment: 
