@@ -33,7 +33,7 @@ services:
     # https://docs.docker.com/storage/volumes/   
     build: ./db_test
     volumes:
-      - /postgres_data:/var/lib/postgresql/data/
+      - ./postgres_data:/var/lib/postgresql/data/
 
   bokeh_server:
     build: ./test_bokeh_app
