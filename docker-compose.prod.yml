@@ -19,11 +19,11 @@ services:
     # depends_on:
     #   - db # script to test if DB up to add. 
     environment:
-    #    - DEBUG=False
+        - DEBUG=False
         - DB_USER=madresearchden_db
-        - DB_PASS= ""
+        - DB_PASS=pass
         - DB_PORT=5432
-        - SECRET_KEY= 
+        - SECRET_KEY=key
         - ALLOWED_HOSTS='139.162.194.61'
 
   nginx:
@@ -44,7 +44,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment: 
-      - POSTGRES_PASSWORD=
+      - POSTGRES_PASSWORD=pass
       - POSTGRES_USER=madresearchden_db
 
       # Need to add in script to wait until db is provisioned.
