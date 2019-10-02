@@ -1,4 +1,6 @@
 /static/admin/
+website/ross_website/staticfiles
+website/ross_website/old_local_static
 
 
 # Byte-compiled / optimized / DLL files
