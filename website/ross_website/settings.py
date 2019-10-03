@@ -21,7 +21,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY'] 
-DEBUG = os.environ['DEBUG']
+
+DEBUG = ''
+if os.environ['DEBUG'] == 'False':
+    DEBUG = False
+elif os.environ['DEBUG'] == 'True':
+    DEBUG = True
+
 ALLOWED_HOSTS = [os.environ['ALLOWED_HOSTS']]
 # Application definition
 
@@ -77,15 +83,18 @@ WSGI_APPLICATION = 'ross_website.wsgi.application'
 
 # This is for a local postgres test db in a Docker container.
 
+# Note: if the postgres data is not "in-sync" (also the user and pass)
+# this may cause errors as the DB cannot be accessed
+
 
 if DEBUG:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'HOST': 'db', # os.environ['SQL_HOST'], # set in docker-compose.yml
-            'PORT': 5432 #  os.environ['DB_PORT'], # default postgres port
+            'ENGINE': os.environ['DBENGINE'],
+            'NAME': os.environ['DATABASE'],
+            'USER': os.environ['DB_USER'],
+            'HOST': os.environ['SQL_HOST'], # set in docker-compose.yml
+            'PORT': os.environ['DB_PORT'], # default postgres port
             }
         }
 else: 
@@ -95,8 +104,8 @@ else:
             'NAME': os.environ['DATABASE'],
             'USER': os.environ['DB_USER'],
             'PASSWORD': os.environ['DB_PASS'],
-            'HOST': 'db', #  os.environ['SQL_HOST'], # set in docker-compose.yml
-            'PORT': 5432 #int(os.environ['DB_PORT']), # default postgres port
+            'HOST': os.environ['SQL_HOST'], # set in docker-compose.yml
+            'PORT': os.environ['DB_PORT'], # default postgres port
             }
         }
 
