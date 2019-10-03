@@ -1,7 +1,7 @@
 /static/admin/
-website/ross_website/staticfiles
-website/ross_website/old_local_static
-
+website/staticfiles
+website/old_local_static
+postgres_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
