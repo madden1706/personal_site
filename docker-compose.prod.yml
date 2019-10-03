@@ -1,10 +1,14 @@
-version: '3'
+version: '3.1'
 
 # This is for local dev.
+
+#Remove all docker containers
+# docker rm -v $(docker ps -a -q -f status=exited)
 
 services:
   website:
     build: ./website
+    restart: always
     #command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     command: bash -c "python manage.py makemigrations && 
       python manage.py migrate && 
@@ -22,17 +26,18 @@ services:
    # Remeber -f seems to extend the yml file. 
     environment:
       - DEBUG=False
-      - DB_USER=madresearchden_db
-      - DB_PASS=pass
+      - DB_USER=postgres
+      - DB_PASS=password
       - DB_PORT=5432
       - SECRET_KEY=key
-      - ALLOWED_HOSTS='139.162.194.61'
+      - ALLOWED_HOSTS=* #'139.162.194.61'
       - SQL_HOST=db
       - DATABASE=postgres
       - DBENGINE=django.db.backends.postgresql_psycopg2
 
   nginx:
     build: ./nginx
+    restart: always
     ports:
       # HOST:CONTAINER
       - 1337:80
@@ -54,7 +59,7 @@ services:
       #- POSTGRES_DB=madresearchden_db
       # name has to be postgres.
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=pass
+      - POSTGRES_PASSWORD=password
       
 
       # Need to add in script to wait until db is provisioned.
@@ -62,6 +67,7 @@ services:
 
   bokeh_server:
     build: ./test_bokeh_app
+    restart: always
     # list two apps as
     command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin=0.0.0.0:1337
     container_name: bokeh_server_MRD
