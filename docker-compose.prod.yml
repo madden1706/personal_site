@@ -1,7 +1,5 @@
 version: '3.1'
 
-# This is for local dev.
-
 #Remove all docker containers
 # docker rm -v $(docker ps -a -q -f status=exited)
 
