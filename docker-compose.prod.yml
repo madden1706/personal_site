@@ -5,6 +5,12 @@ version: '3.1'
 
 # TODO - bokeh server not getting requests via nginx reverse proxy. 
 
+# script to make certs in a container
+# write to volume
+# renew with cron job
+# restart my docker containers.
+
+
 services:
   website:
     build: ./website
@@ -22,7 +28,6 @@ services:
       - 8000
     # depends_on:
     #   - db # script to test if DB up to add. 
-
    # Remeber -f seems to extend the yml file. 
     environment:
       - DEBUG=False
@@ -30,7 +35,7 @@ services:
       - DB_PASS=password
       - DB_PORT=5432
       - SECRET_KEY=key
-      - ALLOWED_HOSTS=* #'139.162.194.61'
+      - ALLOWED_HOSTS=['139.162.194.61', '.madresearchden.com']
       - SQL_HOST=db
       - DATABASE=postgres
       - DBENGINE=django.db.backends.postgresql_psycopg2
@@ -40,12 +45,17 @@ services:
     restart: always
     ports:
       # HOST:CONTAINER
-      - 1337:80
+      - 80:80
+      - 433:433
+
     depends_on:
       - website
     # volumes:
     # - static_volume:/website/staticfiles
 
+  #cert_bot:
+    # Certbot - https://www.humankode.com/ssl/how-to-set-up-free-ssl-certificates-from-lets-encrypt-using-docker-and-nginx
+    # Let's Encrypt has rate limits. Most notably, there's a limit of 20 issued certificates per 7 days.
 
   db:
     # image: postgres:10.1-alpine 
@@ -74,7 +84,7 @@ services:
     volumes:
       - ./test_bokeh_app:/test_bokeh_app
     ports:
-      - "5001:5001"
+      - 5001:5001
     depends_on:
       - website
 
