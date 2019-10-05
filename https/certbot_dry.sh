@@ -8,4 +8,4 @@ certonly --webroot \
 --register-unsafely-without-email --agree-tos \
 --webroot-path=/data/letsencrypt \
 --staging \
--d madresearchden.com -d madresearchden.com
+-d www.madresearchden.com -d www.madresearchden.com
