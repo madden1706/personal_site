@@ -28,7 +28,7 @@ if os.environ['DEBUG'] == 'False':
 elif os.environ['DEBUG'] == 'True':
     DEBUG = True
 
-ALLOWED_HOSTS = [os.environ['ALLOWED_HOSTS']]
+ALLOWED_HOSTS = [i for i in os.environ['ALLOWED_HOSTS'].split('|')]
 # Application definition
 
 INSTALLED_APPS = [
@@ -93,6 +93,7 @@ if DEBUG:
             'ENGINE': os.environ['DBENGINE'],
             'NAME': os.environ['DATABASE'],
             'USER': os.environ['DB_USER'],
+            'PASSWORD': os.environ['DB_PASS'],
             'HOST': os.environ['SQL_HOST'], # set in docker-compose.yml
             'PORT': os.environ['DB_PORT'], # default postgres port
             }
