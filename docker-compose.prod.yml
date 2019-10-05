@@ -39,6 +39,7 @@ services:
       - SQL_HOST=db
       - DATABASE=postgres
       - DBENGINE=django.db.backends.postgresql_psycopg2
+      - BOKEH_URL=madresearchden.com
 
   nginx:
     build: ./nginx
