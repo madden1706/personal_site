@@ -35,7 +35,7 @@ services:
       - DB_PASS=password
       - DB_PORT=5432
       - SECRET_KEY=key
-      - ALLOWED_HOSTS=['139.162.194.61', '.madresearchden.com']
+      - ALLOWED_HOSTS=139.162.194.61|.madresearchden.com|
       - SQL_HOST=db
       - DATABASE=postgres
       - DBENGINE=django.db.backends.postgresql_psycopg2
