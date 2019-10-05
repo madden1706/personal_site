@@ -3,7 +3,7 @@ from .models import DataVis, DataVisFigure
 from django.views.generic import DetailView, ListView
 from django.utils import timezone
 from django.http import Http404
-from os import system
+from os import system, environ
 from .graphs import test_graph
 
 
@@ -79,7 +79,10 @@ def test_bokeh(self):
 
 from bokeh.embed import server_document, components
 #test_bk =  server_document("http://0.0.0.0:5001/my_app")
-test_bk =  server_document("http://0.0.0.0:5001/test_other_name")
+# This sould be an allowed host for prod.
+# test_bk = server_document(f"http://0.0.0.0:5001/test_other_name")
+test_bk = server_document(f"http://{environ['BOKEH_URLL']}:5001/test_other_name")
+
 
 def test_bokeh(self):
     #bk_script = 'bokeh serve --show test_bokeh_app/my_app.py --port 1555 --allow-websocket-origin=0.0.0.0:5001'
