@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  letsencrypt_nginx:
+    build: ./nginx/.
+    command:
+    container_name: letsencrypt_nginx
+    volumes: 
+      - ./data/www:/var/www/certbot
+    ports:
+      - 80:80
+      - 433:433
+  
+  # certbot:
+  #   build: ./certbot/.
+  #   command: 
+  #   volumes: 
+  #     - ./data/conf:/etc/letsencrpyt
+  #     - ./data/www:/var/www/certbot
+
+
