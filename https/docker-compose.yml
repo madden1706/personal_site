@@ -7,6 +7,7 @@ services:
     container_name: letsencrypt_nginx
     volumes: 
       - ./data/www/:/var/www/certbot
+      - ./letsencrypt-site:/usr/share/nginx/html
     ports:
       - 80:80
       - 433:433
