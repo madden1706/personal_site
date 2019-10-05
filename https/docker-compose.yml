@@ -2,14 +2,17 @@ version: '3.1'
 
 services:
   letsencrypt_nginx:
-    build: ./nginx/.
-    command:
+    build: ./nginx
+ #   command:
     container_name: letsencrypt_nginx
     volumes: 
-      - ./data/www:/var/www/certbot
+      - ./data/www/:/var/www/certbot
     ports:
       - 80:80
       - 433:433
+
+    networks:
+      - docker-network
   
   # certbot:
   #   build: ./certbot/.
@@ -19,3 +22,7 @@ services:
   #     - ./data/www:/var/www/certbot
 
 
+
+networks:
+  docker-network:
+    driver: bridge

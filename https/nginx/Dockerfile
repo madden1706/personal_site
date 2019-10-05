@@ -1,12 +1,10 @@
-FROM nginx:latest
+FROM nginx:1.17.2
 
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d
+COPY ./nginx.conf /etc/nginx/conf.d
 
-RUN mkdir /var/www/certbot
-
-RUN mkdir /usr/share/nginx/
-COPY index.html /usr/share/nginx/
+RUN rm /usr/share/nginx/html/index.html
+COPY index.html /usr/share/nginx/html/
 
 #  Docker-comp file to run certbot
 # cron job to update. 
