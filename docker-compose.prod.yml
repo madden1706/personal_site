@@ -40,8 +40,9 @@ services:
   nginx:
     build: ./nginx
     restart: always
-    volumes: 
-      - ./nginx/conf.d:/etc/nginx/conf.d/
+  
+   # volumes: 
+   #   - ./etc/:/etc/
     ports:
       # HOST:CONTAINER
       - 80:80
@@ -89,6 +90,7 @@ services:
 
 volumes:
   postgres_data:
+
       # Why does this need to be here empty?
 
       #You can set default values for environment variables using a .env file, which Compose automatically looks for. Values set in the shell environment override those set in the .env file.
