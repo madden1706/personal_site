@@ -3,14 +3,10 @@ version: '3.1'
 #Remove all docker containers
 # docker rm -v $(docker ps -a -q -f status=exited)
 
-# TODO - bokeh server not getting requests via nginx reverse proxy. 
-
 # script to make certs in a container
 # write to volume
 # renew with cron job
 # restart my docker containers.
-
-
 services:
   website:
     build: ./website
@@ -44,6 +40,8 @@ services:
   nginx:
     build: ./nginx
     restart: always
+    volumes: 
+      - ./conf.d:/etc/nginx/conf.d/
     ports:
       # HOST:CONTAINER
       - 80:80
@@ -80,7 +78,7 @@ services:
     build: ./test_bokeh_app
     restart: always
     # list two apps as
-    command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin=* --use-xheaders 
+    command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin=www.madresearchden.com --use-xheaders 
     container_name: bokeh_server_MRD
     volumes:
       - ./test_bokeh_app:/test_bokeh_app
