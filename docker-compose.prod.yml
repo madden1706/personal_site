@@ -41,7 +41,7 @@ services:
     build: ./nginx
     restart: always
     volumes: 
-      - ./conf.d:/etc/nginx/conf.d/
+      - ./nginx/conf.d:/etc/nginx/conf.d/
     ports:
       # HOST:CONTAINER
       - 80:80
