@@ -29,7 +29,7 @@ services:
       - SQL_HOST=db
       - DATABASE=postgres
       - DBENGINE=django.db.backends.postgresql_psycopg2
-      - BOKEH_URL=madresearchden.com
+      - BOKEH_URL=https://www.madresearchden.com
 
   nginx:
     build: ./nginx
@@ -75,6 +75,7 @@ services:
     build: ./test_bokeh_app
     restart: always
     # list two apps as
+    # Note the origin for https://
     command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin=www.madresearchden.com --use-xheaders 
     container_name: bokeh_server_MRD
     volumes:
