@@ -81,7 +81,7 @@ from bokeh.embed import server_document, components
 #test_bk =  server_document("http://0.0.0.0:5001/my_app")
 # This sould be an allowed host for prod.
 # test_bk = server_document(f"http://0.0.0.0:5001/test_other_name")
-test_bk = server_document(f"http://{environ['BOKEH_URL']}:5001/test_other_name")
+test_bk = server_document(f"{environ['BOKEH_URL']}:5001/test_other_name")
 
 
 def test_bokeh(self):
