@@ -3,27 +3,21 @@ version: '3.1'
 #Remove all docker containers
 # docker rm -v $(docker ps -a -q -f status=exited)
 
-# script to make certs in a container
-# write to volume
-# renew with cron job
-# restart my docker containers.
 services:
   website:
     build: ./website
     restart: always
-    #command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     command: bash -c "python manage.py makemigrations && 
       python manage.py migrate && 
       python manage.py collectstatic --noinput && 
       gunicorn ross_website.wsgi:application -b 0.0.0.0:8000"
-    #command: bash -c "python manage.py runserver 0.0.0.0:8000"
     container_name: MRD
     volumes:
       - ./website:/website
     expose:
       - 8000
-    # depends_on:
-    #   - db # script to test if DB up to add. 
+    depends_on:
+      - db 
    # Remeber -f seems to extend the yml file. 
     environment:
       - DEBUG=False
@@ -44,6 +38,7 @@ services:
       # HOST:CONTAINER
       - 80:80
       - 433:433
+    # nginx should not depend on anything when getting certs ?
     depends_on:
       - website
     volumes:
@@ -52,9 +47,12 @@ services:
       # - static_volume:/website/staticfiles
 
   certbot:
+    build: ./certbot
     volumes: 
       - ./ssl_data/certbot/conf:/etc/letsencrypt
       - ./ssl_data/certbot/www:/var/www/certbot
+    # expose:
+    #  - 80
     # Let's Encrypt has rate limits. Most notably, there's a limit of 20 issued certificates per 7 days.
 
   db:
@@ -71,10 +69,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       
-
-      # Need to add in script to wait until db is provisioned.
-      # need to sort env variables. 
-
   bokeh_server:
     build: ./test_bokeh_app
     restart: always
@@ -92,5 +86,4 @@ volumes:
   postgres_data:
 
       # Why does this need to be here empty?
-
       #You can set default values for environment variables using a .env file, which Compose automatically looks for. Values set in the shell environment override those set in the .env file.
