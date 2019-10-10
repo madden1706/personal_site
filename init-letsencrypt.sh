@@ -2,7 +2,7 @@
 
 domains=(madresearchden.com www.madresearchden.com)
 rsa_key_size=4096
-data_path="./certbot"
+data_path="./ssl_data/certbot"
 email="madden1706@gmail.com" # Adding a valid address is strongly recommended
 staging=1 # Set to 1 if you're testing your setup to avoid hitting request limits
 dock_comp_file="docker-compose.prod.yml"
