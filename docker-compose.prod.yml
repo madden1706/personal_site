@@ -47,12 +47,11 @@ services:
     depends_on:
       - website
     volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - ./ssl_data/certbot/conf:/etc/letsencrypt
+      - ./ssl_data/certbot/www:/var/www/certbot
       # - static_volume:/website/staticfiles
 
   certbot:
-    image: certbot/certbot
     volumes: 
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
