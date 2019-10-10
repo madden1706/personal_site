@@ -53,8 +53,8 @@ services:
 
   certbot:
     volumes: 
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - ./ssl_data/certbot/conf:/etc/letsencrypt
+      - ./ssl_data/certbot/www:/var/www/certbot
     # Let's Encrypt has rate limits. Most notably, there's a limit of 20 issued certificates per 7 days.
 
   db:
