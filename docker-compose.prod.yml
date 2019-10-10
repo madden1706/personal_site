@@ -37,7 +37,7 @@ services:
     ports:
       # HOST:CONTAINER
       - 80:80
-      - 433:433
+      - 443:443
     # nginx should not depend on anything when getting certs ?
     depends_on:
       - website
@@ -45,9 +45,11 @@ services:
       - ./ssl_data/certbot/conf:/etc/letsencrypt
       - ./ssl_data/certbot/www:/var/www/certbot
       # - static_volume:/website/staticfiles
-
+  
+  # Not, I am getting certs for both site.com and www.site.com. Only www. is being used. The other 
+  # has a redirect.  
   certbot:
-    build: ./certbot
+    image: certbot/certbot
     volumes: 
       - ./ssl_data/certbot/conf:/etc/letsencrypt
       - ./ssl_data/certbot/www:/var/www/certbot
