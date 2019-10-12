@@ -24,9 +24,7 @@ services:
     environment:
       - DEBUG=False
       - DB_USER=postgres
-      - DB_PASS=
       - DB_PORT=5432
-      - SECRET_KEY=
       - ALLOWED_HOSTS=139.162.194.61|.madresearchden.com|
       - SQL_HOST=db
       - DATABASE=postgres
