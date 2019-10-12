@@ -9,8 +9,8 @@ then
 
     echo "PostgreSQL started"
 fi
-
-python manage.py flush --no-input
+# ----- This will remove all db data!!!!! ------
+# python manage.py flush --no-input
 
 exec "$@"
                               
