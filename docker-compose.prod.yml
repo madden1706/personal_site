@@ -20,6 +20,7 @@ services:
       - db 
    # Remeber -f seems to extend the yml file.
     env_file:
+    # Stores DB_PASS and SECRET_KEY.
       - django.env 
     environment:
       - DEBUG=False
