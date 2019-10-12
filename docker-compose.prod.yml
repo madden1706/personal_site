@@ -60,7 +60,7 @@ services:
   db:
     # image: postgres:10.1-alpine 
     # https://docs.docker.com/storage/volumes/   
-    build: ./db_test
+    build: ./db
     restart: always
     volumes:
       - ./postgres_data:/var/lib/postgresql/data/
