@@ -1,6 +1,4 @@
 import os
-from .secret import secret_key, hosts, debug_state
-import django_heroku
 
 """
 Django settings for ross_website project.
@@ -22,10 +20,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secret_key()
-DEBUG = debug_state()
-ALLOWED_HOSTS = hosts()
+SECRET_KEY = os.environ['SECRET_KEY'] 
 
+DEBUG = ''
+if os.environ['DEBUG'] == 'False':
+    DEBUG = False
+elif os.environ['DEBUG'] == 'True':
+    DEBUG = True
+
+ALLOWED_HOSTS = [i for i in os.environ['ALLOWED_HOSTS'].split('|')]
 # Application definition
 
 INSTALLED_APPS = [
@@ -79,19 +82,34 @@ WSGI_APPLICATION = 'ross_website.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 # This is for a local postgres test db in a Docker container.
+
+# Note: if the postgres data is not "in-sync" (also the user and pass)
+# this may cause errors as the DB cannot be accessed
+
+
 if DEBUG:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'HOST': 'db', # set in docker-compose.yml
-            'PORT': 5432 # default postgres port
+            'ENGINE': os.environ['DBENGINE'],
+            'NAME': os.environ['DATABASE'],
+            'USER': os.environ['DB_USER'],
+            'PASSWORD': os.environ['DB_PASS'],
+            'HOST': os.environ['SQL_HOST'], # set in docker-compose.yml
+            'PORT': os.environ['DB_PORT'], # default postgres port
             }
         }
 else: 
-    # Activate Django-Heroku.
-    django_heroku.settings(locals())
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ['DBENGINE'],
+            'NAME': os.environ['DATABASE'],
+            'USER': os.environ['DB_USER'],
+            'PASSWORD': os.environ['DB_PASS'],
+            'HOST': os.environ['SQL_HOST'], # set in docker-compose.yml
+            'PORT': os.environ['DB_PORT'], # default postgres port
+            }
+        }
+
 
 # # Built in DB
 #      DATABASES = {
@@ -100,7 +118,6 @@ else:
 #               'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #           }
 #          }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -159,5 +176,3 @@ STATICFILES_DIRS = [
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# print('-------------- STATIC ROOT', STATIC_ROOT, "BASE_DIR", BASE_DIR, "PROJECT_ROOT", PROJECT_ROOT)
