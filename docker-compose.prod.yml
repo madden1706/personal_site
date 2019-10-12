@@ -46,7 +46,7 @@ services:
       - ./ssl_data/certbot/www:/var/www/certbot
       # - static_volume:/website/staticfiles
   
-  # Not, I am getting certs for both site.com and www.site.com. Only www. is being used. The other 
+  # Note, I am getting certs for both site.com and www.site.com. Only www. is being used. The other 
   # has a redirect.  
   certbot:
     image: certbot/certbot
@@ -74,8 +74,8 @@ services:
   bokeh_server:
     build: ./test_bokeh_app
     restart: always
-    # list two apps as
-    # Note the origin for https://
+    # list two apps as show ./app1 ./app2
+    # Note the prefix for https://
     command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin="www.madresearchden.com" --use-xheaders --prefix=/bokeh_app
     container_name: bokeh_server_MRD
     volumes:
@@ -88,5 +88,5 @@ services:
 volumes:
   postgres_data:
 
-      # Why does this need to be here empty?
-      #You can set default values for environment variables using a .env file, which Compose automatically looks for. Values set in the shell environment override those set in the .env file.
+  # Why does this need to be here empty?
+  #You can set default values for environment variables using a .env file, which Compose automatically looks for. Values set in the shell environment override those set in the .env file.
