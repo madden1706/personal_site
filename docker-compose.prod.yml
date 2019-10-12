@@ -22,9 +22,9 @@ services:
     environment:
       - DEBUG=False
       - DB_USER=postgres
-      - DB_PASS=password
+      - DB_PASS=$DB_PASS
       - DB_PORT=5432
-      - SECRET_KEY=key
+      - SECRET_KEY=$SECRET_KEY
       - ALLOWED_HOSTS=139.162.194.61|.madresearchden.com|
       - SQL_HOST=db
       - DATABASE=postgres
@@ -72,7 +72,7 @@ services:
       #- POSTGRES_DB=madresearchden_db
       # name has to be postgres.
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=$DB_PASS
       
   bokeh_server:
     build: ./bokeh_apps
