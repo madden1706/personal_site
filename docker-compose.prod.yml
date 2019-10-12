@@ -18,13 +18,15 @@ services:
       - 8000
     depends_on:
       - db 
-   # Remeber -f seems to extend the yml file. 
+   # Remeber -f seems to extend the yml file.
+    env_file:
+      - django.env 
     environment:
       - DEBUG=False
       - DB_USER=postgres
-      - DB_PASS=${DB_PASS}
+      - DB_PASS=
       - DB_PORT=5432
-      - SECRET_KEY=${SECRET_KEY}
+      - SECRET_KEY=
       - ALLOWED_HOSTS=139.162.194.61|.madresearchden.com|
       - SQL_HOST=db
       - DATABASE=postgres
@@ -72,7 +74,7 @@ services:
       #- POSTGRES_DB=madresearchden_db
       # name has to be postgres.
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_PASSWORD="website:${DB_PASS}"
       
   bokeh_server:
     build: ./bokeh_apps
