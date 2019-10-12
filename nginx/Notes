@@ -1,0 +1,23 @@
+location / {
+    include uwsgi_params;
+    uwsgi_pass 127.0.0.1:3031;
+}
+
+https://docs.nginx.com/nginx/admin-guide/web-server/web-server/
+error_page 404 /404.html;
+
+https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/
+
+https://docs.nginx.com/nginx/admin-guide/web-server/app-gateway-uwsgi-django/
+
+https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html
+
+https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
+
+
+https://medium.com/@jeremygale/how-to-set-up-a-free-dynamic-hostname-with-ssl-cert-using-google-domains-58929fdfbb7a
+https://letsencrypt.org/
+https://docs.nginx.com/nginx/admin-guide/security-controls/
+
+https://docs.nginx.com/nginx/admin-guide/security-controls/terminating-ssl-http/#setting-up-an-https-server
+
