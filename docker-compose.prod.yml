@@ -45,7 +45,9 @@ services:
       - ./ssl_data/certbot/conf:/etc/letsencrypt
       - ./ssl_data/certbot/www:/var/www/certbot
       # - static_volume:/website/staticfiles
-  
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  # https://medium.com/@pentacent/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71  
   # Note, I am getting certs for both site.com and www.site.com. Only www. is being used. The other 
   # has a redirect.  
   certbot:
@@ -53,6 +55,7 @@ services:
     volumes: 
       - ./ssl_data/certbot/conf:/etc/letsencrypt
       - ./ssl_data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     # expose:
     #  - 80
     # Let's Encrypt has rate limits. Most notably, there's a limit of 20 issued certificates per 7 days.
