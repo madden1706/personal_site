@@ -1,0 +1,92 @@
+version: '3.1'
+
+#Remove all docker containers
+# docker rm -v $(docker ps -a -q -f status=exited)
+
+services:
+  website:
+    build: ./website
+    restart: always
+    command: bash -c "python manage.py makemigrations && 
+      python manage.py migrate && 
+      python manage.py collectstatic --noinput && 
+      gunicorn ross_website.wsgi:application -b 0.0.0.0:8000"
+    container_name: MRD
+    volumes:
+      - ./website:/website
+    expose:
+      - 8000
+    depends_on:
+      - db 
+   # Remeber -f seems to extend the yml file. 
+    environment:
+      - DEBUG=False
+      - DB_USER=postgres
+      - DB_PASS=password
+      - DB_PORT=5432
+      - SECRET_KEY=key
+      - ALLOWED_HOSTS=139.162.194.61|.madresearchden.com|
+      - SQL_HOST=db
+      - DATABASE=postgres
+      - DBENGINE=django.db.backends.postgresql_psycopg2
+      - BOKEH_URL=https://www.madresearchden.com/bokeh_app/
+
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      # HOST:CONTAINER
+      - 80:80
+      - 443:443
+    # nginx should not depend on anything when getting certs ?
+    depends_on:
+      - website
+    volumes:
+      - ./ssl_data/certbot/conf:/etc/letsencrypt
+      - ./ssl_data/certbot/www:/var/www/certbot
+      # - static_volume:/website/staticfiles
+  
+  # Not, I am getting certs for both site.com and www.site.com. Only www. is being used. The other 
+  # has a redirect.  
+  certbot:
+    image: certbot/certbot
+    volumes: 
+      - ./ssl_data/certbot/conf:/etc/letsencrypt
+      - ./ssl_data/certbot/www:/var/www/certbot
+    # expose:
+    #  - 80
+    # Let's Encrypt has rate limits. Most notably, there's a limit of 20 issued certificates per 7 days.
+
+  db:
+    # image: postgres:10.1-alpine 
+    # https://docs.docker.com/storage/volumes/   
+    build: ./db_test
+    restart: always
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    environment:
+      # Order here matters DB, USER, PASS
+      #- POSTGRES_DB=madresearchden_db
+      # name has to be postgres.
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      
+  bokeh_server:
+    build: ./test_bokeh_app
+    restart: always
+    # list two apps as
+    # Note the origin for https://
+    command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin="www.madresearchden.com" --use-xheaders --prefix=/bokeh_app
+    container_name: bokeh_server_MRD
+    volumes:
+      - ./test_bokeh_app:/test_bokeh_app
+    ports:
+      - 5001:5001
+    depends_on:
+      - website
+
+volumes:
+  postgres_data:
+
+      # Why does this need to be here empty?
+      #You can set default values for environment variables using a .env file, which Compose automatically looks for. Values set in the shell environment override those set in the .env file.
