@@ -29,7 +29,7 @@ services:
       - SQL_HOST=db
       - DATABASE=postgres
       - DBENGINE=django.db.backends.postgresql_psycopg2
-      - BOKEH_URL=https://www.madresearchden.com/bokeh_app/
+      - BOKEH_URL=https://www.madresearchden.com/bokeh_app
 
   nginx:
     build: ./nginx
