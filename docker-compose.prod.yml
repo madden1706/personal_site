@@ -72,14 +72,14 @@ services:
       - POSTGRES_PASSWORD=password
       
   bokeh_server:
-    build: ./test_bokeh_app
+    build: ./bokeh_apps
     restart: always
     # list two apps as show ./app1 ./app2
     # Note the prefix for https://
     command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin="www.madresearchden.com" --use-xheaders --prefix=/bokeh_app
     container_name: bokeh_server_MRD
     volumes:
-      - ./test_bokeh_app:/test_bokeh_app
+      - ./bokeh_apps:/bokeh_apps
     ports:
       - 5001:5001
     depends_on:
