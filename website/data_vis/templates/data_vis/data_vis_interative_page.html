@@ -1,6 +1,6 @@
 {% extends 'homepage/margins.html' %}
 
-{% block title %} MadResearchDen - Test Plot {% endblock %}
+{% block title %}{{ datavisinteractive.title_of_post }}{% endblock %}
 
 <script src="https://cdn.pydata.org/bokeh/release/bokeh-1.1.0.min.js"></script>
 <script src="https://cdn.pydata.org/bokeh/release/bokeh-widgets-1.1.0.min.js"></script>
@@ -8,28 +8,23 @@
 
 {% block content_margins %}
     <div class="container-fluid">
+      <h4>{{ datavisinteractive }}</h4>
         <div class="row">
-            <h4>Test</h4>
-            <p>{% lorem 30 w %}</p>
-        </div>
-
-        <!--p>{% lorem 5 w %}</p-->           
-
-        <div class="row">
-            <h4><br>Test</h4>
-            <p>{% lorem 30 w %}</p>
+            <p>{{datavisinteractive.intro_text}}</p>
         </div>
     </div>
 {% endblock %}
 
-
 {% block bokeh_app %}
-    {{ test | safe }}
+    {{ bokeh_server_doc | safe }}
 {% endblock %}
 
-
-{% block content2_margins %} 
-    <p> Second  block </p>
+{% block content2_margins %}
+    <div class="container-fluid">
+        <div class="row"> 
+            <p> {{datavisinteractive.concluding_text}} </p>
+        </div>
+    </div>
 {% endblock %}
 
 

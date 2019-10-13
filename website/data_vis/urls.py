@@ -2,7 +2,7 @@ from django.urls import path, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic.dates import ArchiveIndexView 
-from .views import DataVisHomepage, data_vis_post, test_bokeh
+from .views import DataVisHomepage, data_vis_post, test_bokeh, interactive_data_vis_page
 from .models import DataVis as DVModel
 
 
@@ -32,7 +32,8 @@ urlpatterns = [
     path('archive/',
          CustomArchiveIndexView.as_view(model=DVModel, date_field="date_of_post"),
          name="data_vis_archive"),
-   path('test', test_bokeh,)
+    path('int/<slug:slug>_<pk>/', interactive_data_vis_page, name='interactive_data_vis_page'),
+    path('test', test_bokeh,)
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # alsa_output.pci-0000_1e_00.3.analog-stereo

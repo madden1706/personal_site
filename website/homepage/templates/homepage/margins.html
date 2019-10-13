@@ -1,24 +1,29 @@
 {% extends 'homepage/header.html' %}
 
-
 {% block content %}
-
-<div class="container">
-  <div class="row justify-content-md-center">
-    <div class="col-lg-1 col-md-0 col-sm-0 col-xs-0">
-    </div>
-    <div class="col-lg-10 col-md-12 col-sm-12">
-        {% block content_margins %}
-        {% endblock %}
-    </div>
-    <div class="col-lg-1 col-md-0 col-sm-0 col-xs-0">
+  <div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-10 col-md-12 col-sm-12">
+            {% block content_margins %}
+            {% endblock %}
+        </div>
     </div>
   </div>
 
-  {% block bokeh_app %}
-  {% endblock %}
+  <div class="row justify-content-md-center">
+    {% block bokeh_app %}
+    {% endblock %}
+  </div>
 
-
-
+  <div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-10 col-md-12 col-sm-12">
+            {% block content2_margins %}
+            {% endblock %}
+        </div>
+    </div>
+  </div>
 {% endblock %}
+
+
 
