@@ -23,10 +23,21 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY'] 
 
 DEBUG = ''
+SECURE_SSL_REDIRECT = ''
+SESSION_COOKIE_SECURE = ''
+CSRF_COOKIE_SECURE = ''
+
 if os.environ['DEBUG'] == 'False':
     DEBUG = False
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    
 elif os.environ['DEBUG'] == 'True':
     DEBUG = True
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
 
 ALLOWED_HOSTS = [i for i in os.environ['ALLOWED_HOSTS'].split('|')]
 # Application definition
