@@ -17,7 +17,8 @@ class DataVis(models.Model):
 
     template_to_use = models.CharField(choices=[['altair', 'Altair'], ['bokeh', 'Bokeh']], default='', max_length=10)
     # this should be an image upload..... 
-    homepage_chart_image = models.ImageField(upload_to = "static/images/data_vis", blank=True)
+    # How should this be named?
+    homepage_chart_image = models.ImageField(upload_to = "/images/data_vis", blank=True)
 
     def __str__(self):
         return self.title_of_post
@@ -61,7 +62,7 @@ class DataVisInteractive(models.Model):
     bokeh_app_name = models.CharField(max_length=200)
     concluding_text = models.TextField(default='')
     # this should be an image upload..... 
-    homepage_chart_image = models.ImageField(upload_to = "static/images/data_vis_interactive", blank=True)
+    homepage_chart_image = models.ImageField(upload_to = "/images/data_vis_interactive", blank=True)
 
     def __str__(self):
         return self.title_of_post

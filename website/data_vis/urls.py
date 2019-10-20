@@ -29,8 +29,7 @@ class CustomArchiveIndexView(ArchiveIndexView):
 urlpatterns = [
     path('', DataVisHomepage.as_view(), name='data_vis'),
     path('<slug:slug>_<pk>/', data_vis_post, name="data_vis_post"),
-    path('archive/',
-         CustomArchiveIndexView.as_view(model=DVModel, date_field="date_of_post"),
+    path('archive/', CustomArchiveIndexView.as_view(model=DVModel, date_field="date_of_post"),
          name="data_vis_archive"),
     path('int/<slug:slug>_<pk>/', interactive_data_vis_page, name='interactive_data_vis_page'),
     path('test', test_bokeh,)

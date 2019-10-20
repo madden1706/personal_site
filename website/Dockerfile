@@ -7,6 +7,7 @@ ENV PYTHONUNBUFFERED 1
 
 # create root directory for our project in the container
 RUN mkdir /website
+RUN mkdir /website/media
 
 # Set the working directory to /music_service
 WORKDIR /website

@@ -23,7 +23,7 @@ class DataVisHomepage(ListView):
         """Returns all blogs from a year."""
         # date_of_post__lte=timezone.now().filter(publish=True
         data_vis_list = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[:2]
-        data_vis_interactive_list = DataVisInteractive.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[:2]
+        #data_vis_interactive_list = DataVisInteractive.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[:2]
         # print(data_vis_list.values()[0]['id']) # this is a list of dicts.
         return data_vis_list
 
