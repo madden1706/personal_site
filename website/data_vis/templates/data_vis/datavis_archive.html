@@ -17,10 +17,12 @@
                 <p>{% lorem 30 w %}</p>                   
             </div> 
             <div class="col-xs col-sm-12 col-md-5">
-            {% if item.homepage_chart_image %}
+            
+            {% if item.homepage_chart_image.url %}     
+                {# Need the prefix for the url here. #}     
                 <a href="{% url 'data_vis:data_vis' %}{{ item.slug }}_{{ item.id }}">                    
-                            <img class="" height="250" src="/data_visualization/media/{{ item.homepage_chart_image|default_if_none:'#' }}" alt="alt">
-                            {# Unsure if the above is stable to work. #}
+                <img class="" height="250" src="/data_visualisation/{{ item.homepage_chart_image.url }}" alt="alt">
+                {# Unsure if the above is stable to work. #}
                 </a>
             {% endif %}
             
