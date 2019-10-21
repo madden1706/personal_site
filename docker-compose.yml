@@ -44,7 +44,7 @@ services:
   bokeh_server:
     build: ./bokeh_apps
     # list two apps as show ./app1 ./app2
-    command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin=*
+    command: bokeh serve --show ./bokeh_app/test_other_name.py ./plasmodium_gametocytes/scripts/bokeh_app/plasmodium_gametocytes.py my_app.py --port 5001 --allow-websocket-origin=*
     container_name: bokeh_server_MRD
     volumes:
       - ./bokeh_apps:/bokeh_apps
