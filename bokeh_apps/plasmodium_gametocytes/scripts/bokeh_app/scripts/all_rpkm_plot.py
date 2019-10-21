@@ -44,8 +44,8 @@ def all_rpkm_plot(data):
 
         # Plot tools
         base_plot_options = dict(
-            width=800,
-            plot_height=800,
+            width=550,
+            plot_height=550,
             tools=["box_select, pan, wheel_zoom, box_zoom, reset"],
         )
 
@@ -89,7 +89,7 @@ def all_rpkm_plot(data):
             text_font_size="9pt",
         )
 
-        p2 = figure(**plot_options, title="Sample 2(coloured by logRPKM)")
+        p2 = figure(**plot_options, title="Sample 2")
         p2.circle(
             "x",
             "y",
@@ -205,7 +205,7 @@ def all_rpkm_plot(data):
         ]
 
         data_table = DataTable(
-            source=selected_data, columns=columns, width=800, height=300
+            source=selected_data, columns=columns, width=500, height=300
         )
 
         # final_plot = layout([[p1, p2]])
