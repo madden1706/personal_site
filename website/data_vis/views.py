@@ -72,7 +72,7 @@ def interactive_data_vis_page(request, slug, pk):
 def test_bokeh(self):
     #bk_script = 'bokeh serve --show test_bokeh_app/my_app.py --port 1555 --allow-websocket-origin=0.0.0.0:5001'
     #system(f"if ! lsof -i:1555 ; then {bk_script}; else echo bokeh running; fi &>-")
-    test_bk = server_document(f"{environ['BOKEH_URL']}/test_other_name")
+    test_bk = server_document(f"{environ['BOKEH_URL']}/plasmodium_gametocytes")
     return render(self, 'data_vis/test.html', {'test': test_bk})
   
 
