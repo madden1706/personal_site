@@ -13,5 +13,7 @@ The project consists of Docker containers for:
 
 ---
 
+The script init-letsencrypt.sh is used to get a dummy ssl cert, start nginx and the request real ssl certs via certbot. 
+
 
 
