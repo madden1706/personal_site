@@ -7,13 +7,13 @@ FROM python:3.7
 ENV PYTHONUNBUFFERED 1
 
 # create root directory for our project in the container
-RUN mkdir /test_bokeh_app
+RUN mkdir /bokeh_apps/
 
 # Set the working directory to /music_service
-WORKDIR /test_bokeh_app
+WORKDIR /bokeh_apps/
 
 # Copy the current directory contents into the container at /music_service
-ADD . /test_bokeh_app/
+ADD . /bokeh_apps/
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
