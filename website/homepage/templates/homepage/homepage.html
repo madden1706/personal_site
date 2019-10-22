@@ -1,6 +1,6 @@
-{% extends 'homepage/no_margins.html' %}
+{% extends 'homepage/margins.html' %}
 
-{% block content_nomargins %}
+{% block content_margins %}
 
 
     <!--    <main class="container" role="main">
@@ -14,38 +14,65 @@
 {% load static %}
 
 
-        <!-- TODO need some homepage content  Add something in the z axis.-->
 <div class="row">
+        <div class="col-lg-7 col-sm-12 my-3">
+                <h3><a class="otherLink" href="{% url 'data_vis:data_vis' %}{{ datavis.slug }}_{{ datavis.id }}">{{ datavis.title_of_post }} </a></h3>
+                <h7>{{ datavis.date_of_post }}</h7>
+                 <p> {{ datavis.intro_text | safe | truncatewords:50 }} {% lorem 30 w %} </p>
 
+                {% if datavis.homepage_chart_image %}
+                <a href="{% url 'data_vis:data_vis' %}{{ datavis.slug }}_{{ datavis.id }}">
+                        <img class="img-fluid" src="/data_visualisation/{{ datavis.homepage_chart_image.url }}" alt="alt" height="400">
+                </a>
+                {% endif %}                       
+
+        </div>
+        <div class="col-lg-1 col-sm-0 my-3">
+        </div>
         <div class="col-lg-4 col-sm-12 my-3">
+                <h3> <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> {{ blogpost.title_of_post }}</a> </h3>
+                <p>{{ blogpost.date_of_post }}</p>
+                <p>{{ blogpost.blog_post | safe | truncatewords:50 }} {% lorem 50 w %}... <br>
+                <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> Read more here.</a> </p>
+                
+
+        </div>
+
+</div>
+
+<br>
+<br>
+
+{% endblock %}
+
+{% block bokeh_app %}      
+<div class="row">
+        <div class="col-sm-4 col-xs-12 my-3">
                 <center>
-                        <img height="300" src="{% static 'images/graph.png' %}">
+                        <img height="100" src="{% static 'images/graph.png' %}">
                 </center>
                 <p class="lead text-center"><br> Data</p>
         </div>
 
-        <div class="col-lg-4 col-sm-12 my-3">
+        <div class="col-sm-4 col-xs-12 my-3">
 
                 <center>
-                        <img height="300" src="{% static 'images/code.png' %}">
+                        <img height="100" src="{% static 'images/code.png' %}">
                 </center>
                 <p class="lead text-center"><br> Coding</p>
 
         </div>
 
-        <div class="col-lg-4 col-sm-12 my-3">
+        <div class="col-sm-4 col-xs-12 my-3">
 
                 <center>
-                        <img height="300" src="{% static 'images/cell.png' %}">
+                        <img height="100" src="{% static 'images/cell.png' %}">
                 </center>
                 <p class="lead text-center"><br>  Science</p>
 
         </div>
-
-
-    <!--TODO need to add in a featured item. --> 
 </div>
-
-
-
 {% endblock %}
+
+
+

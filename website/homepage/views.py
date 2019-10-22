@@ -1,11 +1,42 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import ListView,DetailView
+
+from blog.models import BlogPost
+from data_vis.models import DataVis
+
+from django.utils import timezone
 
 # Create your views here.
 
 
 def homepage(self):
-    return render(self, 'homepage/homepage.html')
+
+    # Get most recent data vis post
+    # get last blog post
+    blogpost = BlogPost.objects.filter(
+        date_of_post__lte=timezone.now()
+        ).filter(publish=True
+        ).order_by("-date_of_post")[0]
+
+    data_vis = DataVis.objects.filter(
+        date_of_post__lte=timezone.now()
+        ).filter(
+        publish=True
+        ).order_by("date_of_post")[1]
+
+    print("------------", data_vis)
+    data = {'datavis': data_vis, 'blogpost': blogpost}
+    template = 'homepage/homepage.html'
+
+    return render(self, template, data)
+
+
+
+
+
+# def homepage(self): 
+#     return render(self, 'homepage/homepage.html')
 
 
 def testpage(self):
