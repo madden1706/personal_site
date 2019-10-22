@@ -44,7 +44,7 @@ class DataVisFigure(models.Model):
     
     data_vis = models.ForeignKey(DataVis, on_delete=models.CASCADE)
     graph_title = models.CharField(max_length=200)
-    json_graph = models.TextField()
+    json_graph = models.TextField(default='')
  #   main_fig = models.BooleanField(default=False) # This is used for the thumbnail and if the post is featured to specify the main figure.
  #   view_order = models.IntegerField(default=0)
     fig_text = models.TextField(default='')
@@ -62,7 +62,7 @@ class DataVisInteractive(models.Model):
     bokeh_app_name = models.CharField(max_length=200)
     concluding_text = models.TextField(default='')
     # this should be an image upload..... 
-    homepage_chart_image = models.ImageField(upload_to = "bokeh_apps/data_vis_interactive", blank=True)
+    homepage_chart_image = models.ImageField(upload_to = "bokeh_apps/data_vis_interactive", blank=True, default='')
 
     def __str__(self):
         return self.title_of_post
