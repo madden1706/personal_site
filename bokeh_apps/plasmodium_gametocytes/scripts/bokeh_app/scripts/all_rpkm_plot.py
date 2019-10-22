@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from bokeh.layouts import column, gridplot, layout, widgetbox
+from bokeh.layouts import column, gridplot, layout, widgetbox, row
 from bokeh.models import ColorBar, CustomJS, HoverTool, LinearColorMapper, Panel
 from bokeh.models.sources import ColumnDataSource
 from bokeh.models.widgets import (
@@ -10,6 +10,7 @@ from bokeh.models.widgets import (
     Select,
     TableColumn,
     TextInput,
+    AutocompleteInput,
 )
 from bokeh.plotting import figure
 
@@ -44,7 +45,7 @@ def all_rpkm_plot(data):
 
         # Plot tools
         base_plot_options = dict(
-            width=550,
+            # width=550,
             plot_height=550,
             tools=["box_select, pan, wheel_zoom, box_zoom, reset"],
         )
@@ -59,7 +60,7 @@ def all_rpkm_plot(data):
         min_c = -1
         mapper = LinearColorMapper(palette="Plasma256", low=min_c, high=max_c)
 
-        p1 = figure(**plot_options, title="Sample 1")  # title=f'{sample1.value}')
+        p1 = figure(**plot_options, width=550, title="Sample 1")  # title=f'{sample1.value}')
         p1.circle(
             "x",
             "y",
@@ -89,7 +90,7 @@ def all_rpkm_plot(data):
             text_font_size="9pt",
         )
 
-        p2 = figure(**plot_options, title="Sample 2")
+        p2 = figure(**plot_options, width=600, title="Sample 2")
         p2.circle(
             "x",
             "y",
@@ -119,7 +120,7 @@ def all_rpkm_plot(data):
             text_font_size="9pt",
         )
 
-        color_bar = ColorBar(color_mapper=mapper, width=8, location=(0, 0))
+        color_bar = ColorBar(color_mapper=mapper, width=8, location=(4, 0))
         p2.add_layout(color_bar, "left")
 
         p1.x_range = p2.x_range
@@ -205,7 +206,7 @@ def all_rpkm_plot(data):
         ]
 
         data_table = DataTable(
-            source=selected_data, columns=columns, width=500, height=300
+            source=selected_data, columns=columns, width=550, height=300
         )
 
         # final_plot = layout([[p1, p2]])
@@ -225,7 +226,9 @@ def all_rpkm_plot(data):
     sample_list.remove("gene_id")
 
     # Gene finder tool
-    text_input = TextInput(value="PBANKA_1106000", title="Find Gene ID:")
+    # TODO look into AutocompleteInput
+
+    text_input = TextInput(value="PBANKA_1106000", title="Find Gene ID:",)  #completions=['PBANKA_1106000'], min_characters=4,) #
 
     sample1 = Select(
         title="Sample 1 selection:",
@@ -255,8 +258,8 @@ def all_rpkm_plot(data):
         # print(sample1_data.data.keys())
 
     plot1, plot2, data_table = make_plot(sample_data, highlight_data)
-    widgets = layout([[sample1, sample2], [text_input]])
-    final = gridplot([[plot1, plot2], [widgets, data_table]])
+    widgets = layout([[sample1, sample2]])
+    final = gridplot([[text_input], [widgets], [plot1, plot2], [data_table]])
     final_tab = Panel(child=final, title="Genes Plot")
     sample1.on_change("value", update)
     sample2.on_change("value", update)
