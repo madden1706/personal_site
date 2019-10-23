@@ -16,6 +16,8 @@
 
 <div class="row">
         <div class="col-lg-7 col-sm-12 my-3">
+        <h3>Data</h3>
+        {% if datavis %}        
                 <h3><a class="otherLink" href="{% url 'data_vis:data_vis' %}{{ datavis.slug }}_{{ datavis.id }}">{{ datavis.title_of_post }} </a></h3>
                 <h7>{{ datavis.date_of_post }}</h7>
                  <p> {{ datavis.intro_text | safe | truncatewords:50 }} {% lorem 30 w %} </p>
@@ -24,16 +26,25 @@
                 <a href="{% url 'data_vis:data_vis' %}{{ datavis.slug }}_{{ datavis.id }}">
                         <img class="img-fluid" src="/data_visualisation/{{ datavis.homepage_chart_image.url }}" alt="alt" height="400">
                 </a>
-                {% endif %}                       
-
+                {% endif %}
+        {% else %}
+        <p>There are currently no data visualisation posts.</p>
+        {% endif %}                     
         </div>
+
         <div class="col-lg-1 col-sm-0 my-3">
         </div>
+
         <div class="col-lg-4 col-sm-12 my-3">
+        <h3>Blog</h3>
+        {% if blogpost %}
                 <h3> <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> {{ blogpost.title_of_post }}</a> </h3>
                 <p>{{ blogpost.date_of_post }}</p>
                 <p>{{ blogpost.blog_post | safe | truncatewords:50 }} {% lorem 50 w %}... <br>
                 <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> Read more here.</a> </p>
+        {% else %}
+        <p>There are currently no data blog posts.</p>
+        {% endif %}
                 
 
         </div>
@@ -45,7 +56,7 @@
 
 {% endblock %}
 
-{% block bokeh_app %}      
+{% block no_margin %}      
 <div class="row">
         <div class="col-sm-4 col-xs-12 my-3">
                 <center>
