@@ -17,20 +17,42 @@ def homepage(self):
         blogpost = BlogPost.objects.filter(
             date_of_post__lte=timezone.now()
             ).filter(publish=True
-            ).order_by("-date_of_post")[0]
+            ).order_by("-date_of_post")[0]               
     except:
         blogpost = []
+    
+    try:
+        secondary_posts = BlogPost.objects.filter(
+            date_of_post__lte=timezone.now()
+            ).filter(publish=True
+            ).order_by("-date_of_post")[1:3]               
+    except:
+        secondary_posts = []
+        
 
     try:
         data_vis = DataVis.objects.filter(
             date_of_post__lte=timezone.now()
             ).filter(
             publish=True
-            ).order_by("date_of_post")[1]
+            ).order_by("date_of_post")[:5]
     except:
         data_vis = []
 
-    data = {'datavis': data_vis, 'blogpost': blogpost}
+    try:
+        secondary_data_vis = DataVis.objects.filter(
+            date_of_post__lte=timezone.now()
+            ).filter(
+            publish=True
+            ).order_by("date_of_post")[:5]
+    except:
+        secondary_data_vis = []
+
+    data = {'datavis': data_vis, 
+        'blogpost': blogpost, 
+        'secondary_blogposts': secondary_posts,
+        'secondary_datavis': secondary_data_vis}
+
     template = 'homepage/homepage.html'
 
     return render(self, template, data)

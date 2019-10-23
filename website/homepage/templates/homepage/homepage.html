@@ -44,12 +44,46 @@
                 <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> Read more here.</a> </p>
         {% else %}
         <p>There are currently no data blog posts.</p>
-        {% endif %}
-                
-
+        {% endif %}               
         </div>
-
 </div>
+
+<div class="row">
+        {% if secondary_datavis %}
+                {% for post in secondary_datavis %}
+                        <div class="col-lg-3 col-sm-12 my-3">
+                                <h3> <a class="otherLink" href= "{% url 'blog:blog' %}{{ post.slug }}_{{ post.id }}/"> {{ post.title_of_post }}</a> </h3>
+                                <p>{{ post.date_of_post }}</p>
+                                <p>{{ post.blog_post | safe | truncatewords:20 }} {% lorem 20 w %}... <br>
+                                <a class="otherLink" href= "{% url 'data_vis:data_vis' %}{{ post.slug }}_{{ post.id }}/"> Read more here.</a> </p>
+                        </div>
+                {% endfor %}
+        {% else %}
+                <div class="col-lg-3 col-sm-12 my-3">
+                </div>
+                <div class="col-lg-3 col-sm-12 my-3">
+                </div>
+        {% endif %}
+
+        {% if secondary_posts %}
+                {% for blogpost in secondary_posts %}
+                        <div class="col-lg-3 col-sm-12 my-3">
+                                <h3> <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> {{ blogpost.title_of_post }}</a> </h3>
+                                <p>{{ blogpost.date_of_post }}</p>
+                                <p>{{ blogpost.blog_post | safe | truncatewords:20 }} {% lorem 20 w %}... <br>
+                                <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> Read more here.</a> </p>
+                        </div>
+                {% endfor %}
+        {% else %}
+                <div class="col-lg-3 col-sm-12 my-3">
+                </div>
+                <div class="col-lg-3 col-sm-12 my-3">
+                </div>
+        {% endif %}
+
+
+</div> 
+
 
 <br>
 <br>
