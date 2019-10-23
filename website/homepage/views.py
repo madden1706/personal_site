@@ -12,20 +12,24 @@ from django.utils import timezone
 
 def homepage(self):
 
-    # Get most recent data vis post
-    # get last blog post
-    blogpost = BlogPost.objects.filter(
-        date_of_post__lte=timezone.now()
-        ).filter(publish=True
-        ).order_by("-date_of_post")[0]
+    # If there are no posts the logic in the homeplate html template displays a message.
+    try:
+        blogpost = BlogPost.objects.filter(
+            date_of_post__lte=timezone.now()
+            ).filter(publish=True
+            ).order_by("-date_of_post")[0]
+    except:
+        blogpost = []
 
-    data_vis = DataVis.objects.filter(
-        date_of_post__lte=timezone.now()
-        ).filter(
-        publish=True
-        ).order_by("date_of_post")[1]
+    try:
+        data_vis = DataVis.objects.filter(
+            date_of_post__lte=timezone.now()
+            ).filter(
+            publish=True
+            ).order_by("date_of_post")[1]
+    except:
+        data_vis = []
 
-    print("------------", data_vis)
     data = {'datavis': data_vis, 'blogpost': blogpost}
     template = 'homepage/homepage.html'
 
