@@ -17,15 +17,46 @@ class DataVisHomepage(ListView):
     """This is the class the generates the data vis homepage view."""
 
     template_name = 'data_vis/data_vis_home.html'
-    context_object_name = "data_vis_list"
+    #context_object_name = "data_vis_list"
 
     def get_queryset(self):
         """Returns all blogs from a year."""
-        # date_of_post__lte=timezone.now().filter(publish=True
-        data_vis_list = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[:2]
+        # date_of_post__lte=timezone.now().filter(publish=True#
+
+        try:
+            data_vis = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[0]
+        except:
+            data_vis = ""
+
+        try:
+            data_vis_int = DataVisInteractive.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[0]
+        except:
+            data_vis_int = ""
+
         #data_vis_interactive_list = DataVisInteractive.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[:2]
         # print(data_vis_list.values()[0]['id']) # this is a list of dicts.
-        return data_vis_list
+        return data_vis, data_vis_int
+
+
+
+    def get(self, request):
+        """Gather data to return to the view."""
+        # dict of data for.
+
+        kwargs = {}
+        data_vis, data_vis_int = self.get_queryset()
+
+        if data_vis and data_vis_int and ((data_vis_int.date_of_post > data_vis.date_of_post) 
+            or (data_vis_int.date_of_post == data_vis.date_of_post)):
+            kwargs['data_vis_int'] = data_vis_int
+            kwargs['data_vis'] = ""
+        
+        elif data_vis and data_vis_int and data_vis_int.date_of_post < data_vis.date_of_post:
+            kwargs['data_vis_int'] = ""
+            kwargs['data_vis'] = data_vis
+        
+        return render(request, self.template_name, kwargs)
+
 
     # def get(self, request):
     #     """Gather data to return to the view."""
@@ -33,7 +64,7 @@ class DataVisHomepage(ListView):
     #     # dict of data for.
     #     kwargs = {'test1': test, 
     #         'test2': 'TEST2',
-    #         'data_vis_list': ''}        
+    #         'data_vis_list': self.get_queryset()}        
         
     #     return render(request, self.template_name, kwargs)
 

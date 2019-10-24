@@ -7,52 +7,49 @@
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
 
-{% if data_vis_list %}
 
-<div>
-  <h4><a class="otherLink" href="{% url 'data_vis:data_vis' %}{{ data_vis_list.0.slug }}_{{ data_vis_list.0.id }}">{{ data_vis_list.0.title_of_post }} </a></h4>
-  <h7>{{ data_vis_list.0.date_of_post }}</h7>
-</div>
+
+{{ data_vis_int }}
+
+{% if data_vis %}
+  <div>
+    <h4><a class="otherLink" href="{% url 'data_vis:data_vis' %}{{ data_vis.slug }}_{{ data_vis.id }}">{{ data_vis.title_of_post }} </a></h4>
+    <h7>{{ data_vis.date_of_post }}</h7>
+  </div>
 
 <!--div class="container no-gutters"-->
   <div class="row">
     <div class="col-xs-12 col-sm-9 col-lg-9">
-      {% if data_vis_list.0.homepage_chart_image %}
-        <a href="{% url 'data_vis:data_vis' %}{{ data_vis_list.0.slug }}_{{ data_vis_list.0.id }}">
-          <img class="img-fluid" src="{{ data_vis_list.0.homepage_chart_image.url }}" alt="alt" height="400">
+      {% if data_vis.homepage_chart_image %}
+        <a href="{% url 'data_vis:data_vis' %}{{ data_vis.slug }}_{{ data_vis.id }}">
+          <img class="img-fluid" src="{{ data_vis.homepage_chart_image.url }}" alt="alt" height="400">
         </a>
       {% else %}
       {% endif %}  
-    </div> 
+    </div>
     <div class="col-xs-12 col-sm-3 col-lg-3">
-      {{ data_vis_list.0.intro_text | truncatewords:20 }}
+      {{ data_vis.intro_text | truncatewords:20 }}
     </div>
   </div>
-<!--/div-->
-
-<br>
-<br>
-
-<!--TODO Have a list for 4 posts with the 1st left off.-->
-
-<div class="container-fluid">
-  <div class="row">
-    <div class="card-deck">
-      
-    </div>
-  </div>
- 
+  <!--/div-->
   <br>
-  <h5><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">see more</a></h5>
-</div>
+  <br>
+  <!--TODO Have a list for 4 posts with the 1st left off.-->
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="card-deck">
+        
+      </div>
+    </div> 
+    <br>
+    <h5><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">see more</a></h5>
+  </div>
 
 {% else %}
-
-<div>
-  <h5>There is no data right now...</h5>
-</div>
-
+  <div>
+    <h5>There is no data right now...</h5>
+  </div>
 {% endif %}
-
 
 {% endblock %}

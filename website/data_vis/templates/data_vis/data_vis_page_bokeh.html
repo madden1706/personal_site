@@ -8,10 +8,11 @@
 <script src="https://cdn.pydata.org/bokeh/release/bokeh-widgets-x.y.z.min.js"></script>
 <script src="https://cdn.pydata.org/bokeh/release/bokeh-tables-x.y.z.min.js"></script>
 
+{% include "data_vis/back_to_data_vis.html" %}
+
 <h4>{{ datavis }}</h4>
 
-<p> {% lorem 1 p %}</p>
-
+<p>{{ datavis.intro_text }}</p>
 
 <h5>{{ datavis.datavisfigure_set.all.0.graph_title }}</h5>
 
@@ -35,11 +36,6 @@
           .catch(error => showError(el, error));
 
     </script>
-    <p> {% lorem 1 p %}</p>
 
-
-
-
-<!--{% lorem 2 p  %} -->
 
 {% endblock %}
