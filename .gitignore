@@ -2,6 +2,7 @@
 website/staticfiles
 website/old_local_static
 postgres_data/
+website/*/migrations/*.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
