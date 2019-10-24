@@ -65,8 +65,8 @@
                 </div>
         {% endif %}
 
-        {% if secondary_posts %}
-                {% for blogpost in secondary_posts %}
+        {% if secondary_blogposts %}
+                {% for blogpost in secondary_blogposts %}
                         <div class="col-lg-3 col-sm-12 my-3">
                                 <h3> <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> {{ blogpost.title_of_post }}</a> </h3>
                                 <p>{{ blogpost.date_of_post }}</p>
