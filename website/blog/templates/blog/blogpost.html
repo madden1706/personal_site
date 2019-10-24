@@ -6,7 +6,7 @@
 
 {% block meta_keywords  %}
 {% for word in blogpost.seokeyword_set.all %}
-{{ word.keyword }},
+{{ word.keyword }}
 {% endfor %}
 {% endblock %}
 
