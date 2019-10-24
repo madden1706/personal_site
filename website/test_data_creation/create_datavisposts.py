@@ -16,7 +16,7 @@ def create_posts():
                     seo_description = "SEO",
                     publish = True,
                     intro_text = f'Intro text of data_vis {i}',
-                    template_to_use = 'Bokeh',
+                    template_to_use = 'bokeh',
                     homepage_chart_image = '',
                 )        
             post.save()
