@@ -8,21 +8,17 @@ from .graphs import test_graph
 
 from bokeh.embed import server_document, components
 
-
 # Create your views here.
-# def testpage(self):
-#     return render(self, 'data_vis/data_vis_home.html')
 
 class DataVisHomepage(ListView):
     """This is the class the generates the data vis homepage view."""
 
     template_name = 'data_vis/data_vis_home.html'
-    #context_object_name = "data_vis_list"
 
     def get_queryset(self):
-        """Returns all blogs from a year."""
-        # date_of_post__lte=timezone.now().filter(publish=True#
+        """ """
 
+        # This logic is tho get the most recent data_vis/int post (with a preference for an interactive post) for the data vis homepage.
         try:
             data_vis = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[0]
         except:
@@ -33,27 +29,40 @@ class DataVisHomepage(ListView):
         except:
             data_vis_int = ""
 
-        #data_vis_interactive_list = DataVisInteractive.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[:2]
-        # print(data_vis_list.values()[0]['id']) # this is a list of dicts.
-        return data_vis, data_vis_int
+        # Get other posts. Main post is filtered out in the get() below.
+        other_int = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[1:5]
+        other_data_vis = DataVisInteractive.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[1:5] 
 
+        other_data = other_int.values_list('title_of_post', 'date_of_post', 'intro_text', 'homepage_chart_image').union(
+            other_data_vis.values_list('title_of_post', 'date_of_post', 'intro_text', 'homepage_chart_image')).order_by('-date_of_post')
 
+        return data_vis, data_vis_int, other_data
 
     def get(self, request):
         """Gather data to return to the view."""
         # dict of data for.
 
         kwargs = {}
-        data_vis, data_vis_int = self.get_queryset()
+        data_vis, data_vis_int, other_data = self.get_queryset()
 
         if data_vis and data_vis_int and ((data_vis_int.date_of_post > data_vis.date_of_post) 
             or (data_vis_int.date_of_post == data_vis.date_of_post)):
+
+            other_data.exclude(title_of_post=data_vis_int.title_of_post)
+            other_data = other_data[0:3]
+
             kwargs['data_vis_int'] = data_vis_int
             kwargs['data_vis'] = ""
+            kwargs['other_data'] = other_data
         
         elif data_vis and data_vis_int and data_vis_int.date_of_post < data_vis.date_of_post:
+
+            other_data.exclude(title_of_post=data_vis.title_of_post)
+            other_data = other_data[0:3]
+
             kwargs['data_vis_int'] = ""
             kwargs['data_vis'] = data_vis
+            kwargs['other_posts'] = other_data
         
         return render(request, self.template_name, kwargs)
 
@@ -68,11 +77,6 @@ class DataVisHomepage(ListView):
         
     #     return render(request, self.template_name, kwargs)
 
-"""
-TODO
-Want to have a page that is for returning data vis.
-Have the code for making interactive charts with user data in the graphs module. 
-"""
 
 def data_vis_post(request, slug, pk):
 
@@ -106,6 +110,14 @@ def test_bokeh(self):
     test_bk = server_document(f"{environ['BOKEH_URL']}/plasmodium_gametocytes")
     return render(self, 'data_vis/test.html', {'test': test_bk})
   
+
+
+
+"""
+TODO
+Want to have a page that is for returning data vis.
+Have the code for making interactive charts with user data in the graphs module. 
+"""
 
 
 
