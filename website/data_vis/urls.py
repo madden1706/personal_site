@@ -15,12 +15,14 @@ class CustomArchiveIndexView(ArchiveIndexView):
 
     def get_dated_items(self):
         """Return (date_list, items, extra_context) for this request."""
+        
         qs = self.get_dated_queryset()
         qs = qs.filter(publish=True) # Filtering for the the published data.
         date_list = self.get_date_list(qs, ordering='DESC')
 
         if not date_list:
             qs = qs.none()
+
 
         return (date_list, qs, {})
 

@@ -44,12 +44,15 @@
       </div>
     {% endfor %} 
     </div>
-
+    
+    {% if other_posts %}
+    {% else %}
     <div class='row'>
       <div class="col">
         <h5><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">more data posts</a></h5>
       </div>
     </div>
+    {% endif %}
     <!--div class='row'>
       <div class="text-right">  
         <h5><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">interactive apps</a></h5>

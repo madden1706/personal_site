@@ -4,7 +4,7 @@
 
 {% block content_margins %}
 
-{% if latest %}
+
 
     {% for item in latest %}
         {% load static %}
@@ -33,10 +33,5 @@
             <br>
 
     {% endfor %}
-{% else %}
-
-<h5>There is no data right now...</h5>
-
-{% endif %}
 
 {% endblock %}
