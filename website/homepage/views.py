@@ -35,7 +35,7 @@ def homepage(self):
             date_of_post__lte=timezone.now()
             ).filter(
             publish=True
-            ).order_by("date_of_post")[1]
+            ).order_by("-date_of_post")[1]
     except:
         data_vis = []
 
@@ -44,7 +44,7 @@ def homepage(self):
             date_of_post__lte=timezone.now()
             ).filter(
             publish=True
-            ).order_by("date_of_post")[1:3]
+            ).order_by("-date_of_post")[1:3]
     except:
         secondary_data_vis = []
 

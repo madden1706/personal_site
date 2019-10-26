@@ -20,21 +20,23 @@ class DataVisHomepage(ListView):
 
         # This logic is tho get the most recent data_vis/int post (with a preference for an interactive post) for the data vis homepage.
         try:
-            data_vis = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[0]
+            data_vis = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now()).order_by("-date_of_post")[0]
         except:
             data_vis = ""
 
         try:
-            data_vis_int = DataVisInteractive.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[0]
+            data_vis_int = DataVisInteractive.objects.filter(publish=True).filter(date_of_post__lte=timezone.now()).order_by("-date_of_post")[0]
         except:
             data_vis_int = ""
 
         # Get other posts. Main post is filtered out in the get() below.
-        other_int = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[1:5]
-        other_data_vis = DataVisInteractive.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[1:5] 
+        # other_int = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[1:5]
+        # other_data_vis = DataVisInteractive.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[1:5] 
 
-        other_data = other_int.values_list('title_of_post', 'date_of_post', 'intro_text', 'homepage_chart_image').union(
-            other_data_vis.values_list('title_of_post', 'date_of_post', 'intro_text', 'homepage_chart_image')).order_by('-date_of_post')
+        # other_data = other_int.values_list('title_of_post', 'date_of_post', 'intro_text', 'homepage_chart_image').union(
+        #     other_data_vis.values_list('title_of_post', 'date_of_post', 'intro_text', 'homepage_chart_image')).order_by('-date_of_post')
+
+        other_data = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[0:5]
 
         return data_vis, data_vis_int, other_data
 
@@ -45,23 +47,27 @@ class DataVisHomepage(ListView):
         kwargs = {}
         data_vis, data_vis_int, other_data = self.get_queryset()
 
-        if data_vis and data_vis_int and ((data_vis_int.date_of_post > data_vis.date_of_post) 
+        if data_vis and data_vis_int and ((data_vis_int.date_of_post < data_vis.date_of_post) 
             or (data_vis_int.date_of_post == data_vis.date_of_post)):
 
-            other_data.exclude(title_of_post=data_vis_int.title_of_post)
-            other_data = other_data[0:3]
-
-            kwargs['data_vis_int'] = data_vis_int
-            kwargs['data_vis'] = ""
-            kwargs['other_data'] = other_data
+            try:
+                # Removes first bit of data - as it is the main post. 
+                other_data = other_data[0:4]
+            except:
+                other_data = ""
         
-        elif data_vis and data_vis_int and data_vis_int.date_of_post < data_vis.date_of_post:
+            kwargs['data_vis_main'] = data_vis_int
+            kwargs['other_posts'] = other_data
+        
+        elif data_vis and data_vis_int and data_vis_int.date_of_post > data_vis.date_of_post:
+            
+            try:
+                # Removes first bit of data - as it is the main post. 
+                other_data = other_data[1:5]
+            except:
+                other_data = ""
 
-            other_data.exclude(title_of_post=data_vis.title_of_post)
-            other_data = other_data[0:3]
-
-            kwargs['data_vis_int'] = ""
-            kwargs['data_vis'] = data_vis
+            kwargs['data_vis_main'] = data_vis
             kwargs['other_posts'] = other_data
         
         return render(request, self.template_name, kwargs)

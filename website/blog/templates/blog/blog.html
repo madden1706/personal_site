@@ -28,9 +28,10 @@
     <p>No blog posts are available.</p>
 {% endif %}
 
-<div class="container-fluid">
-
- <h4> <a class="otherLink" href= "{% url 'blog:blog_archive_list' %}"> blog archive</a></h4>
+<div class="row">
+    <div class="col">
+     <h5> <a class="otherLink" href= "{% url 'blog:blog_archive_list' %}"> blog archive</a></h5>
+    </div>
 </div><!-- TODO Add a search feature.-->
 
 <!-- image-fluid class for images to be responsive on blog homepage.-->

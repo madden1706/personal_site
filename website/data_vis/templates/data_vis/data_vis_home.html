@@ -7,74 +7,54 @@
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
 
-{{ other_data }}
 
-{% if data_vis %}
-  <div>
-    <h4><a class="otherLink" href="{% url 'data_vis:data_vis' %}{{ data_vis.slug }}_{{ data_vis.id }}">{{ data_vis.title_of_post }} </a></h4>
-    <h7>{{ data_vis.date_of_post }}</h7>
-  </div>
+{% if data_vis_main %}
 
-  <div class="row">
-    <div class="col-xs-12 col-sm-9 col-lg-9">
-      {% if data_vis.homepage_chart_image %}
-        <a href="{% url 'data_vis:data_vis' slug=data_vis.slug pk=data_vis.id %}">
-          <img class="img-fluid" src="{{ data_vis.homepage_chart_image.url }}" alt="alt" height="400">
-        </a>
-      {% else %}
-      {% endif %}  
-    </div>
-    <div class="col-xs-12 col-sm-3 col-lg-3">
-      {{ data_vis.intro_text | truncatewords:20 }}
-    </div>
-  </div>
-
-  <br>
-  <br>
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="card-deck">
-        
+    <div class='row'>
+      <div class="col">
+        <h4><a class="otherLink" href="{% url 'data_vis:interactive_data_vis_page' slug=data_vis_main.slug pk=data_vis_main.id %}">{{ data_vis_main.title_of_post }}</a></h4>
       </div>
-    </div> 
-    <br>
-    <h5><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">see more</a></h5>
-  </div>
-
-
-{% elif data_vis_int %}
-
-  <div>
-    <h4><a class="otherLink" href="{% url 'data_vis:interactive_data_vis_page' slug=data_vis_int.slug pk=data_vis_int.id %}">{{ data_vis_int.title_of_post }}</a></h4>
-    <h7>{{ data_vis_int.date_of_post }}</h7>
-  </div>
-
-  <div class="row">
-    <div class="col-xs-12 col-sm-9 col-lg-9">
-      {% if data_vis.homepage_chart_image %}
-        <a href="{% url 'data_vis:data_vis' %}{{ data_vis_int.slug }}_{{ data_vis_int.id }}">
-          <img class="img-fluid" src="{{ data_vis_int.homepage_chart_image.url }}" alt="alt" height="400">
-        </a>
-      {% else %}
-      {% endif %}  
     </div>
-    <div class="col-xs-12 col-sm-3 col-lg-3">
-      {{ data_vis_int.intro_text | truncatewords:20 }}
+    <div class='row'>
+      <div class="col">
+        <h7>{{ data_vis_main.date_of_post }}</h7>
+      </div>
+    </div>
+    <div class='row'>
+      <div class="col-xs-12 col-sm-9 col-lg-9">
+        {% if data_vis_main.homepage_chart_image %}
+          <a href="{% url 'data_vis:data_vis' %}{{ data_vis_main.slug }}_{{ data_vis_main.id }}">
+            <img class="img-fluid" src="{{ data_vis_main.homepage_chart_image.url }}" alt="alt" height="400">
+          </a>
+        {% else %}
+        {% endif %}  
+      </div>
+      <div class="col-xs-12 col-sm-3 col-lg-3">
+        <p>{{ data_vis_main.intro_text | truncatewords:20 }}...</p>
+      </div>
     </div>
 
-    <br>
-    <br>
+    <div class='row'>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="card-deck">
-          
-        </div>
-      </div> 
-      <br>
-      <h5><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">see more</a></h5>
+    {% for post in other_posts %}
+      <div class="col-xs-12 col-sm-6 col-lg-3">              
+        <a class="otherLink" href="{% url 'data_vis:data_vis_post' slug=post.slug pk=post.id%}"><h4>{{ post.title_of_post }}</h4></a>
+        <p>{{ post.title_of_post }}</p>
+        <p>{{ post.intro_text | truncatewords:20 }}...</p>
+      </div>
+    {% endfor %} 
     </div>
+
+    <div class='row'>
+      <div class="col">
+        <h5><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">more data posts</a></h5>
+      </div>
+    </div>
+    <!--div class='row'>
+      <div class="text-right">  
+        <h5><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">interactive apps</a></h5>
+      </div>
+    </div-->
 
 {% else %}
   <div>
