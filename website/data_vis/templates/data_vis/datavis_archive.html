@@ -4,34 +4,37 @@
 
 {% block content_margins %}
 
+{% if latest %}
 
-{% for item in latest %}
-{% load static %}
+    {% for item in latest %}
+        {% load static %}
 
-    <div class="container">
-        <div class="row">
-            
-            <div class="col-xs col-sm-12 col-md-5">
-                <h5><a class="otherLink" href="{% url 'data_vis:data_vis' %}{{ item.slug }}_{{ item.id }}"> {{ item.title_of_post }}</a></h5>
-                <small>{{ item.date_of_post }}</small>
-                <p> {{ item.intro_text | truncatewords:20 }}</p>                   
-            </div> 
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-xs col-sm-12 col-md-5">
+                        <h5><a class="otherLink" href="{% url 'data_vis:data_vis' %}{{ item.slug }}_{{ item.id }}"> {{ item.title_of_post }}</a></h5>
+                        <small>{{ item.date_of_post }}</small>
+                        <p> {{ item.intro_text | truncatewords:20 }}</p>                   
+                    </div> 
 
-            <div class="col-xs col-sm-12 col-md-5">            
-                {% if item.homepage_chart_image %}     
-                    {# Need the prefix for the url here. #}     
-                    <a href="{% url 'data_vis:data_vis' %}{{ item.slug }}_{{ item.id }}">                    
-                    <img class="" height="250" src="/data_visualisation/{{ item.homepage_chart_image.url }}" alt="alt">
-                    {# Unsure if the above is stable to work. #}
-                    </a>
-                {% else %}
-                {% endif %}            
+                    <div class="col-xs col-sm-12 col-md-5">            
+                        {% if item.homepage_chart_image %}     
+                            {# Need the prefix for the url here. #}     
+                            <a href="{% url 'data_vis:data_vis' %}{{ item.slug }}_{{ item.id }}">                    
+                            <img class="" height="250" src="/data_visualisation/{{ item.homepage_chart_image.url }}" alt="alt">
+                            {# Unsure if the above is stable to work. #}
+                            </a>
+                        {% else %}
+                        {% endif %}            
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <br>
+            <br>
 
-{% endfor %}
+    {% endfor %}
+{% else %}
 
+<h5>There is no data right now...</h5>
 
 {% endblock %}
