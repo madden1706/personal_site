@@ -80,7 +80,7 @@ services:
     restart: always
     # list two apps as show ./app1 ./app2
     # Note the prefix for https://
-    command: bokeh serve --show ./bokeh_app/test_other_name.py  my_app.py --port 5001 --allow-websocket-origin="www.madresearchden.com" --use-xheaders --prefix=/bokeh_app
+    command: bokeh serve --show ./bokeh_app/test_other_name.py  ./plasmodium_gametocytes/scripts/bokeh_app/plasmodium_gametocytes.py my_app.py --port 5001 --allow-websocket-origin="www.madresearchden.com" --use-xheaders --prefix=/bokeh_app
     container_name: bokeh_server_MRD
     volumes:
       - ./bokeh_apps:/bokeh_apps
