@@ -47,9 +47,7 @@ class DataVisHomepage(ListView):
         kwargs = {}
         data_vis, data_vis_int, other_data = self.get_queryset()
 
-        if (data_vis and data_vis_int) or (not data_vis and  data_vis_int) and ((data_vis_int.date_of_post < data_vis.date_of_post) 
-            or (data_vis_int.date_of_post == data_vis.date_of_post)):
-
+        if data_vis_int: 
             try:
                 # Removes first bit of data - as it is the main post. 
                 other_data = other_data[0:4]
