@@ -56,8 +56,8 @@ def all_rpkm_plot(data):
         plot_options["tools"].append(hover_gene_id)
 
         # Range the covers 5 - 95 %iles.
-        max_c = 0.25
-        min_c = -0.3
+        max_c = 10
+        min_c = -1
         mapper = LinearColorMapper(palette="Plasma256", low=min_c, high=max_c)
 
         p1 = figure(**plot_options, width=550, title="Sample 1")  # title=f'{sample1.value}')
