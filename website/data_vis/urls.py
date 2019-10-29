@@ -35,7 +35,9 @@ urlpatterns = [
          name="data_vis_archive"),
     path('int/<slug:slug>_<pk>/', interactive_data_vis_page, name='interactive_data_vis_page'),
     path('test', test_bokeh,)
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ] 
+    
+    #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # alsa_output.pci-0000_1e_00.3.analog-stereo
 
