@@ -11,13 +11,13 @@
 
                       <h4><a class="otherLink" href="{% url 'data_vis:interactive_data_vis_page' slug=data_vis_int_main.slug pk=data_vis_int_main.id %}">{{ data_vis_int_main.title_of_post }} </a></h4>
                         <h7>{{ data_vis_int_main.date_of_post }}</h7>
-                        <p> {{ data_vis_int_main.intro_text | safe | truncatewords:50 }}...</p>
                         {% if data_vis_int_main.homepage_chart_image %}
                         Test
                         <a href="{% url 'data_vis:interactive_data_vis_page' slug=data_vis_int_main.slug pk=data_vis_int_main.id %}">
                                 <img class="img-fluid" src="{{ data_vis_int_main.homepage_chart_image.url }}" alt="alt" height="400">
                         </a>
-                        {% endif %}  
+                        {% endif %}
+                        <p> {{ data_vis_main.intro_text | safe | truncatewords:20 }}...</p>  
                    
                 {% elif data_vis_main %}
 
