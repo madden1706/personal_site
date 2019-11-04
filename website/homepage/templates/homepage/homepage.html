@@ -46,7 +46,7 @@
                 {% if blogpost %}
                         <h4> <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> {{ blogpost.title_of_post }}</a> </h4>
                         <p>{{ blogpost.date_of_post }}</p>
-                        <p>{{ blogpost.blog_post | safe | truncatewords:50 }}...<br>
+                        <p>{{ blogpost.blog_post | safe | truncatewords:120 }}...<br>
                 {% else %}
                 <p>There are currently no data blog posts.</p>
                 {% endif %}               

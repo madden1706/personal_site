@@ -15,7 +15,7 @@
                     <div class="col-md-4 col-sm-6 col-xs-12">
                     <h4> <a class="otherLink" href= "{% url 'blog:blog' %}{{ blogpost.slug }}_{{ blogpost.id }}/"> {{ blogpost.title_of_post }}</a> </h4>
                     <h6>{{ blogpost.date_of_post}}</h6>
-                    <p>{{ blogpost.blog_post | safe | truncatewords:50 }}.....</p>
+                    <p>{{ blogpost.blog_post | safe | truncatewords: 120 }}.....</p>
                     <br>
                     </div>
 
