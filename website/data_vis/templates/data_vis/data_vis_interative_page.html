@@ -16,7 +16,7 @@
             <h4>{{ datavisinteractive.title_of_post }}</h4>        
         </div>    
         <div class="row">
-            <p>{{datavisinteractive.intro_text}}</p>
+            <p>{{datavisinteractive.intro_text | safe }}</p>
         </div>
     </div>
 {% endblock %}
@@ -28,7 +28,7 @@
 {% block content2_margins %}
     <div class="container-fluid">
         <div class="row"> 
-            <p> {{datavisinteractive.concluding_text}} </p>
+            <p> {{datavisinteractive.concluding_text | safe }} </p>
         </div>
     </div>
 {% endblock %}
