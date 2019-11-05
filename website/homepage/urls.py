@@ -10,7 +10,7 @@ urlpatterns = [
     path('', views.homepage, name='homepage'),
     #path('newpage/', views.newpage, name='newpage'),
     path('testpage/', views.testpage, name='testpage'),
-    # path('contact/', views.contact, name='contact'),
+    #  path('contact/', views.contact, name='contact'),
     path('about-me/', views.about_me, name='aboutme')
 
 ]
