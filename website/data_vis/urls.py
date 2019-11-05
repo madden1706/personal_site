@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic.dates import ArchiveIndexView 
 from .views import DataVisHomepage, data_vis_post, test_bokeh, interactive_data_vis_page
-from .models import DataVis as DVModel
+from .models import DataVis as DVModel, DataVisInteractive as DVIntModel
 
 
 
@@ -23,7 +23,6 @@ class CustomArchiveIndexView(ArchiveIndexView):
         if not date_list:
             qs = qs.none()
 
-
         return (date_list, qs, {})
 
 
@@ -34,6 +33,8 @@ urlpatterns = [
     path('archive/', CustomArchiveIndexView.as_view(model=DVModel, date_field="date_of_post"),
          name="data_vis_archive"),
     path('int/<slug:slug>_<pk>/', interactive_data_vis_page, name='interactive_data_vis_page'),
+    path('int/archive/', CustomArchiveIndexView.as_view(model=DVIntModel, date_field="date_of_post"),
+         name="data_vis_int_archive"),
     path('test', test_bokeh,)
     ] 
     

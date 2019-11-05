@@ -38,18 +38,21 @@
 
     {% for post in other_posts %}
       <div class="col-xs-12 col-sm-6 col-lg-3">              
-        <a class="otherLink" href="{% url 'data_vis:data_vis_post' slug=post.slug pk=post.id%}"><h4>{{ post.title_of_post }}</h4></a>
+        <a class="otherLink" href="{% url 'data_vis:data_vis_post' slug=post.slug pk=post.id %}"><h4>{{ post.title_of_post }}</h4></a>
         <p>{{ post.title_of_post }}</p>
         <p>{{ post.intro_text | truncatewords:20 | safe}}...</p>
       </div>
     {% endfor %} 
-    </div>
+    </div>  
     
     {% if other_posts %}
       <div class='row'>
-        <div class="col">
-          <h5><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">more data posts</a></h5>
+      <div class="col-md-6">
+          <h5 class="text-left"><a class="otherLink" href="{% url 'data_vis:data_vis_archive' %}">more data posts</a></h5>
       </div>
+      <div class="col-md-6">
+          <h5 class="text-right"><a class="otherLink" href="{% url 'data_vis:data_vis_int_archive' %}">more interactive apps</a></h5> 
+      </div>    
     </div>
     {% else %}
 
