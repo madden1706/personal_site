@@ -23,7 +23,7 @@
                    
                 {% elif data_vis_main %}
 
-                        <h4><a class="otherLink" href="{% url 'data_vis:data_vis' slug=data_vis_main.slug pk=data_vis_main.id %}">{{ data_vis_main.title_of_post }} </a></h4>
+                        <h4><a class="otherLink" href="{% url 'data_vis:data_vis_post' slug=data_vis_main.slug pk=data_vis_main.id %}">{{ data_vis_main.title_of_post }} </a></h4>
                         <h7>{{ data_vis_main.date_of_post }}</h7>
                         
 

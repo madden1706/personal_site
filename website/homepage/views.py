@@ -55,13 +55,11 @@ def homepage(self):
         else:
             data_vis_main = []
 
-
     elif data_vis_main and not data_vis_int_main:
         data_vis_int_main = []
     
     elif not data_vis_main and data_vis_int_main:
-        data_vis_main = []
-        
+        data_vis_main = []       
 
     else:
         data_vis_main = []
