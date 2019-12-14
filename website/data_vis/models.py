@@ -5,6 +5,45 @@ from datetime import date
 
 # Create your models here.
 
+from wagtail.core.models import Page
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+
+class DataVisPage(Page):
+    # DB fields
+    title_of_post = models.CharField(max_length=200)
+    date_of_post = models.DateField(default=date.today)
+    #slug = models.SlugField(default="", blank=True) # remove from admin page view. Or, not editable. 
+    #seo_description = models.CharField(max_length=200)
+    #publish = models.BooleanField(default=False)
+    intro_text = models.TextField(default='')
+
+    template_to_use = models.CharField(choices=[['altair', 'Altair'], ['bokeh', 'Bokeh']], default='', max_length=10)
+    # this should be an image upload..... 
+    # How should this be named?
+    homepage_chart_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    content_panels = [
+        FieldPanel('title_of_post'),
+        FieldPanel('date_of_post'),
+        ImageChooserPanel('homepage_chart_image'),
+
+    ]
+
+    promote_panels = [
+        
+
+    ]
+
+
+
+
 class DataVis(models.Model):
     """A class for data vis posts."""
 
