@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
-from .models import DataVis, DataVisFigure, DataVisInteractive
+from .models import DataVisPage, DataVisFigure, DataVisInteractive
 from django.views.generic import DetailView, ListView
 from django.utils import timezone
 from django.http import Http404
@@ -20,7 +20,7 @@ class DataVisHomepage(ListView):
 
         # This logic is tho get the most recent data_vis/int post (with a preference for an interactive post) for the data vis homepage.
         try:
-            data_vis = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now()).order_by("-date_of_post")[0]
+            data_vis = DataVisPage.objects.filter(publish=True).filter(date_of_post__lte=timezone.now()).order_by("-date_of_post")[0]
         except:
             data_vis = ""
 
@@ -36,7 +36,7 @@ class DataVisHomepage(ListView):
         # other_data = other_int.values_list('title_of_post', 'date_of_post', 'intro_text', 'homepage_chart_image').union(
         #     other_data_vis.values_list('title_of_post', 'date_of_post', 'intro_text', 'homepage_chart_image')).order_by('-date_of_post')
 
-        other_data = DataVis.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[0:5]
+        other_data = DataVisPage.objects.filter(publish=True).filter(date_of_post__lte=timezone.now())[0:5]
 
         return data_vis, data_vis_int, other_data
 
@@ -84,7 +84,7 @@ class DataVisHomepage(ListView):
 
 def data_vis_post(request, slug, pk):
 
-    data = get_object_or_404(DataVis, pk=pk, slug=slug)
+    data = get_object_or_404(DataVisPage, pk=pk, slug=slug)
     type_of = data.template_to_use
 
     if data.publish == True:
