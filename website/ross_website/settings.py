@@ -27,22 +27,6 @@ DEBUG = ''
 SESSION_COOKIE_SECURE = ''
 CSRF_COOKIE_SECURE = ''
 
-if os.environ['DEBUG'] == 'False':
-    DEBUG = False
-    #SECURE_SSL_REDIRECT = False
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-
-    
-elif os.environ['DEBUG'] == 'True':
-    DEBUG = True
-    SECURE_SSL_REDIRECT = False
-    SESSION_COOKIE_SECURE = False
-    CSRF_COOKIE_SECURE = False
-
-ALLOWED_HOSTS = [i for i in os.environ['ALLOWED_HOSTS'].split('|')]
-# Application definition
-
 INSTALLED_APPS = [
     #'whitenoise.runserver_nostatic',
     'django.contrib.admin',
@@ -55,19 +39,76 @@ INSTALLED_APPS = [
     'blog',
     'data_vis',
 
+    # wagtail
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail.core',
+
+    'modelcluster',
+    'taggit',
+    'debug_toolbar'
+
 ]
 
+if os.environ['DEBUG'] == 'False':
+    DEBUG = False
+    #SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    
+elif os.environ['DEBUG'] == 'True':
+    DEBUG = True
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    #INSTALLED_APPS += 
+
+ALLOWED_HOSTS = [i for i in os.environ['ALLOWED_HOSTS'].split('|')]
+# Application definition
+
+
+
 MIDDLEWARE = [
+    
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # wagtail
+    'wagtail.core.middleware.SiteMiddleware',
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
     
 ]
+
+#get via "hostname -i" in the container. 
+INTERNAL_IPS = ["172.19.0.2"]
+
+# Nuclear option to get the toolbar to show up. 
+def show_toolbar(request):
+    return True
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK" : show_toolbar,
+}
+
+
+if os.environ['DEBUG'] == 'True':
+    pass
+    #MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+   # INTERNAL_IPS += ("127.0.0.1", "127.17.0.1", "0.0.0.0")
 
 ROOT_URLCONF = 'ross_website.urls'
 
@@ -187,5 +228,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "local_static"),
 #    '/var/www/static/',
 ]
+
+# wagtail
+WAGTAIL_SITE_NAME = 'MadResearchDen'
+SITE_ID = 1
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
