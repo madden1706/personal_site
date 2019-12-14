@@ -45,8 +45,7 @@ class HomepageDataVis(TestCase):
     # python manage.py test homepage
 
     def test_main_datavis_int_post(self):        
-        """
-        
+        """        
         :return:
         """
         test = create_data_vis_int("Data Vis Int Title", -10, "Post text", True)
