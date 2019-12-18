@@ -41,6 +41,8 @@ class DataVisPage(Page):
 
     ]
 
+        # should use stream fields here
+
 
 
 
