@@ -16,7 +16,7 @@ services:
   mrd_django:
     build: ./website
 
-    # command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn ross_website.wsgi -b 0.0.0.0:8000"
+
     command: bash -c "/opt/entrypoint.sh && exec gunicorn madresearchden.wsgi:application --bind 0.0.0.0:8000 --workers 3"
     #python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
 
@@ -34,7 +34,8 @@ services:
       - SECRET_KEY=key
       - ALLOWED_HOSTS=*|
       - BOKEH_URL=http://0.0.0.0:5001
-
+      - DJANGO_ENV=dev
+      # dev/production
   # bokeh_server:
   #   build: ./bokeh_apps
   #   # list two apps as show ./app1 ./app2
