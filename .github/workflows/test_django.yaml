@@ -6,6 +6,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build and test
-        run: docker-compose up -d && docker exec -t mrd_django pytest
-      # - name: Test
-      #   run: docker exec -t mrd_django pytest
+        run: docker-compose up -d
+      - name: Test
+        run: docker exec -t mrd_django 'echo test'
