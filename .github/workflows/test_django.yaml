@@ -12,4 +12,4 @@ jobs:
       - name: Build and test
         run: docker-compose up -d
       - name: Test
-        run: docker ps -a
+        run: docker-compose exec -T mrd_django pytest
