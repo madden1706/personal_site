@@ -8,4 +8,4 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
       - name: Test
-        run: echo Testing
+        run: docker exec -t mrd_django pytest
