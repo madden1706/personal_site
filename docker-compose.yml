@@ -1,60 +1,55 @@
-version: '3.1'
+version: '3.7'
 
 # This is for local dev.
 
 services:
-  website:
-    build: ./website
-    #command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    # command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn ross_website.wsgi -b 0.0.0.0:8000"
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
-    #command: bash -c "python manage.py runserver 0.0.0.0:8000"
-    container_name: MRD
+
+  mrd_postgres:
+    build: ./postgres
+    container_name: mrd_postgres
+    restart: always
     volumes:
-      - ./website:/website
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+
+  mrd_django:
+    build: ./website
+
+    # command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn ross_website.wsgi -b 0.0.0.0:8000"
+    command: bash -c "/opt/entrypoint.sh && exec gunicorn madresearchden.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    #python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
+
+    container_name: mrd_django
+    volumes:
+      - ./website/madresearchden:/opt/madresearchden
     ports:
       - "8000:8000"
     depends_on:
-      - db 
+      - mrd_postgres 
+    env_file:
+      - .env
     environment:
       - DEBUG=True
-      - DB_USER=postgres
-      - DB_PASS=password
-      - DB_PORT=5432
       - SECRET_KEY=key
       - ALLOWED_HOSTS=*|
-      - SQL_HOST=db
-      - DATABASE=postgres
-      - DBENGINE=django.db.backends.postgresql_psycopg2
       - BOKEH_URL=http://0.0.0.0:5001
 
-  db:
-    # image: postgres:10.1-alpine 
-    # https://docs.docker.com/storage/volumes/   
-    build: ./db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      # Order here matters DB, USER, PASS
-      #- POSTGRES_DB=madresearchden_db
-      # name has to be postgres.
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-
-  bokeh_server:
-    build: ./bokeh_apps
-    # list two apps as show ./app1 ./app2
-    command: bokeh serve --show ./bokeh_app/test_other_name.py ./plasmodium_gametocytes/scripts/bokeh_app/plasmodium_gametocytes.py my_app.py --port 5001 --allow-websocket-origin=*
-    container_name: bokeh_server_MRD
-    volumes:
-      - ./bokeh_apps:/bokeh_apps
-    ports:
-      - "5001:5001"
-    depends_on:
-      - website
+  # bokeh_server:
+  #   build: ./bokeh_apps
+  #   # list two apps as show ./app1 ./app2
+  #   command: bokeh serve --show ./bokeh_app/test_other_name.py ./plasmodium_gametocytes/scripts/bokeh_app/plasmodium_gametocytes.py my_app.py --port 5001 --allow-websocket-origin=*
+  #   container_name: bokeh_server
+  #   volumes:
+  #     - ./bokeh_apps:/bokeh_apps
+  #   ports:
+  #     - "5001:5001"
+  #   depends_on:
+  #     - website
 
 volumes:
+  # Creation of a volume to store the postgres data.
   postgres_data:
-      # Why does this need to be here empty?
+
 
 
