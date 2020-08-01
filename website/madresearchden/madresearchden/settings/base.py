@@ -92,7 +92,7 @@ schema = os.environ['MRD_SCHEMA']
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ['DB_ENGINE'],
+        'ENGINE':'django.db.backends.postgresql_psycopg2',
         'OPTIONS': {'options': f'-c search_path={schema}'},
         'NAME': os.environ['POSTGRES_DB'],
         'USER': os.environ['POSTGRES_USER'],
@@ -162,7 +162,7 @@ MEDIA_URL = '/media/'
 
 # Wagtail settings
 
-WAGTAIL_SITE_NAME = "madresearchden"
+WAGTAIL_SITE_NAME = "MadResearchDen"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash

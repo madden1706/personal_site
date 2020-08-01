@@ -3,5 +3,6 @@ wagtail>=2.9,<2.10
 psycopg2-binary==2.8.5
 bokeh==2.1.1
 gunicorn
+pytest-django==3.9.0
 #whitenoise
 #django-debug-toolbar
