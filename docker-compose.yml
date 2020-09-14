@@ -19,8 +19,8 @@ services:
 
   mrd_django:
     build: ./website
-    command: bash -c "/opt/entrypoint.sh && exec gunicorn madresearchden.wsgi:application --bind 0.0.0.0:8000 --workers 3"
-    #python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
+    #command: bash -c "/opt/entrypoint.sh && exec gunicorn madresearchden.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    command: bash -c "/opt/entrypoint.sh && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
     container_name: mrd_django
     volumes:
       - ./website/madresearchden:/opt/madresearchden
@@ -36,11 +36,11 @@ services:
       - DJANGO_ENV=dev
       - MRD_SCHEMA=mrd_django
       # dev/production
-      - POSTGRES_USER="mrd_postgres:${POSTGRES_USER}"
-      - POSTGRES_DB="mrd_postgres:${POSTGRES_DB}"
-      - POSTGRES_PORT="mrd_postgres:${POSTGRES_PORT}"
-      - POSTGRES_HOST="mrd_postgres:${POSTGRES_HOST}"
-      - POSTGRES_PASSWORD="mrd_postgres:${POSTGRES_PASSWORD}"
+      - POSTGRES_DB=mrd
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=mrd_postgres
+      - POSTGRES_USER=mrd_django
+      - POSTGRES_PASSWORD=password
 
   # bokeh_server:
   #   build: ./bokeh_apps
