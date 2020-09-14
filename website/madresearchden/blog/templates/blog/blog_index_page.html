@@ -1,0 +1,22 @@
+{% extends "base_navbar.html" %}
+{% load static %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+
+{% load wagtailcore_tags %}
+
+{% block content_navbar %}
+
+<div class="container mt-4 mb-4">
+
+
+    {{ page.intro|richtext }}
+
+    
+</div>
+
+{% endblock content_navbar %}
