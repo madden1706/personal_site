@@ -42,17 +42,17 @@ services:
       - POSTGRES_USER=mrd_django
       - POSTGRES_PASSWORD=password
 
-  # bokeh_server:
-  #   build: ./bokeh_apps
-  #   # list two apps as show ./app1 ./app2
-  #   command: bokeh serve --show ./bokeh_app/test_other_name.py ./plasmodium_gametocytes/scripts/bokeh_app/plasmodium_gametocytes.py my_app.py --port 5001 --allow-websocket-origin=*
-  #   container_name: bokeh_server
-  #   volumes:
-  #     - ./bokeh_apps:/bokeh_apps
-  #   ports:
-  #     - "5001:5001"
-  #   depends_on:
-  #     - website
+  bokeh_server:
+    build: ./bokeh_apps
+    # list two apps as show ./app1 ./app2
+    command: bokeh serve --show ./plasmodium_gametocytes/scripts/bokeh_app/plasmodium_gametocytes.py my_app.py --port 5001 --allow-websocket-origin=*
+    container_name: bokeh_server
+    volumes:
+      - ./bokeh_apps:/bokeh_apps
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mrd_django
 
 volumes:
   # Creation of a volume to store the postgres data.
