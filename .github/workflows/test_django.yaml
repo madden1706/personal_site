@@ -10,4 +10,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build and Test
-        run: docker-compose up -d && docker-compose exec -T mrd_django pytest
+        run: docker-compose -d -f docker-compose.yml up 
+      - name: Check running containers
+        run: docker ps -a
+      - name: Check logs
+        run: docker logs mrd_django
+      - name: Django Tests
+        run: docker-compose exec -T mrd_django pytest
