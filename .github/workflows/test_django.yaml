@@ -19,10 +19,11 @@ jobs:
         run: docker-compose exec -T mrd_django pytest
 
       - name: Push to GitHub Packages
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
           repository: madden1706/madresearchden/website:0.1.1
+        run: docker tag madresearchden_mrd_django docker.pkg.github.com/madden1706/madresearchden/website:0.1.1
           # tag_with_ref: true
