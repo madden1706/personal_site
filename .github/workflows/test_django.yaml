@@ -9,7 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build and Start
-        run: docker-compose up -d
-      - name: Django Tests
-        run: docker-compose exec -T mrd_django pytest
+      - name: Build and Test
+        run: docker-compose up -d && docker-compose exec -T mrd_django pytest
