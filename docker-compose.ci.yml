@@ -1,0 +1,64 @@
+version: '3.7'
+
+# This is for local dev.
+
+services:
+
+  mrd_postgres:
+    build: ./postgres
+    container_name: mrd_postgres
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment: 
+      - POSTGRES_DB=mrd
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=mrd_postgres
+      - POSTGRES_USER=mrd_django
+      - POSTGRES_PASSWORD=password
+
+  mrd_django:
+    build: ./website
+    #command: bash -c "/opt/entrypoint.sh && exec gunicorn madresearchden.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    # Collect static probably won't work with GitHub actions as there are resctrictions about writing files to the underlying system.
+    # The volumes will prevent. 
+    command: bash -c "/opt/entrypoint.sh && python manage.py && python manage.py runserver 0.0.0.0:8000"
+    container_name: mrd_django
+    volumes:
+      - ./website/madresearchden:/opt/madresearchden
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mrd_postgres 
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=key
+      - ALLOWED_HOSTS=*|
+      - BOKEH_URL=http://0.0.0.0:5001
+      - DJANGO_ENV=dev
+      - MRD_SCHEMA=mrd_django
+      # dev/production
+      - POSTGRES_DB=mrd
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=mrd_postgres
+      - POSTGRES_USER=mrd_django
+      - POSTGRES_PASSWORD=password
+
+  bokeh_server:
+    build: ./bokeh_apps
+    # list two apps as show ./app1 ./app2
+    command: bokeh serve --show ./plasmodium_gametocytes/scripts/bokeh_app/plasmodium_gametocytes.py my_app.py --port 5001 --allow-websocket-origin=*
+    container_name: bokeh_server
+    volumes:
+      - ./bokeh_apps:/bokeh_apps
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mrd_django
+
+volumes:
+  # Creation of a volume to store the postgres data.
+  postgres_data:
+
+
+
