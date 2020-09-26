@@ -13,22 +13,39 @@
 {% block content_navbar %}
 
 <div class="container mt-4 mb-4">
-    <div class="container">
+
         <div class="row">
+
           {% if blog_post %}
             <div class="col-md">
-                <h4>{{ blog_post }}</h4>
+                <h4><a href="{{ blog_post.url }}">{{ blog_post }}</a></h4>
                 <p>{{ blog_post.intro }}</p>
-                {% image blog_post.thumbnail max-320x320 class="img-fluid" %}
+                <a href="{{ blog_post.url }}">
+                  {% image blog_post.thumbnail max-320x320 class="img-fluid" %}
+                </a>
             </div>
           {% endif %}
+
+          {% if data_post %}
+            <div class="col-md">
+                <h4><a href="{{ data_post.url }}">{{ data_post }}</a></h4>
+                <p>{{ blog_post.intro }}</p>
+                <a href="{{ data_post.url }}">
+                  {% image data_post.thumbnail max-320x320 class="img-fluid" %}
+                </a>
+            </div>
+          {% endif %}
+
+
+          {% if other_post %}
           <div class="col-md">
             One of three columns
           </div>
-          <div class="col-md">
-            One of three columns
-          </div>
+          {% endif %}
+
+
         </div>
+
 
         <div class="row">
             <div class="col-8">
@@ -36,11 +53,11 @@
             </div>
             <div class="col-md-auto">
                 2 of 2
+            </div>
         </div>
-    </div>
-
 
 {{ page.body|richtext }}
+
 </div>
 
 {% endblock content_navbar %}
