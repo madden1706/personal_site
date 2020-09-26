@@ -1,6 +1,7 @@
 
 # Wagtail to ignore
 website/madresearchden/media/
+website/madresearchden/static/
 
 /static/admin/
 website/staticfiles
