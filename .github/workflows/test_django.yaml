@@ -25,6 +25,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: madden1706/madresearchden/website:0.1.1
-        
-          # tag_with_ref: true
+          repository: madden1706/madresearchden/website        
+          tag_with_ref: true
