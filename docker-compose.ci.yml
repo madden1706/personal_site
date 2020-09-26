@@ -22,7 +22,7 @@ services:
     #command: bash -c "/opt/entrypoint.sh && exec gunicorn madresearchden.wsgi:application --bind 0.0.0.0:8000 --workers 3"
     # Collect static probably won't work with GitHub actions as there are resctrictions about writing files to the underlying system.
     # The volumes will prevent. 
-    command: bash -c "/opt/entrypoint.sh && python manage.py && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "/opt/entrypoint.sh && python manage.py runserver 0.0.0.0:8000"
     container_name: mrd_django
     volumes:
       - ./website/madresearchden:/opt/madresearchden
