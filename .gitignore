@@ -1,3 +1,7 @@
+
+# Wagtail to ignore
+website/madresearchden/media/
+
 /static/admin/
 website/staticfiles
 website/old_local_static
