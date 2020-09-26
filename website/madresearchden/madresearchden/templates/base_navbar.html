@@ -2,6 +2,7 @@
 {% extends "base.html" %}
 {% load static %}
 
+
 {% block body_class %}template-homepage{% endblock %}
 
 {% block extra_css %}
@@ -19,16 +20,47 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="{% slugurl 'home' %}">Home <span class="sr-only">(current)</span></a>
-          <a class="nav-item nav-link" href="{% slugurl 'blog-index' %}">Blog</a>
-          <a class="nav-item nav-link" href="#">Data</a>
+          
+            {% slugurl 'home' as home_url %}
+            {% if request.path == home_url %}
+            <a class="nav-item nav-link active" href="{% slugurl 'home' %}">Home 
+              <span class="sr-only">(current)</span></a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% slugurl 'home' %}">Home 
+              <span class="sr-only">(current)</span></a>
+            {% endif %}
+
+            {% slugurl 'blog' as blog_url %}
+            {% if blog_url in request.path  and request.path != home_url %}
+            <a class="nav-item nav-link active" href="{% slugurl 'blog' %}">Blog 
+              <span class="sr-only">(current)</span></a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% slugurl 'blog' %}">Blog 
+              <span class="sr-only">(current)</span></a>
+            {% endif %}
+
+            {% slugurl 'data-vis' as data_url %}
+            {% if data_url in request.path and request.path != home_url %}
+            <a class="nav-item nav-link active" href="{% slugurl 'data-vis' %}">Data 
+              <span class="sr-only">(current)</span></a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% slugurl 'data-vis' %}">Data 
+              <span class="sr-only">(current)</span></a>
+            {% endif %}
           <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Other stuff</a>
         </div>
       </div>
     </div>
+
+
   </nav>
   {% block content_navbar %}
   {% endblock content_navbar %}
 
+
+
 {% endblock content %}
+
+
+
 
