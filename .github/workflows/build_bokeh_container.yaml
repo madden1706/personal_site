@@ -3,8 +3,8 @@ on:
   push:
     branches: 
       - wagtail
-    paths:
-      - './bokeh/Dockerfile'
+    # paths:
+    #   - './bokeh/Dockerfile'
 
 jobs:
   test:

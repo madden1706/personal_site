@@ -7,7 +7,7 @@ on:
       - './website/Dockerfile'
 
 jobs:
-  test:
+  build-website-container:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2      
