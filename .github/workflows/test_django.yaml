@@ -1,8 +1,10 @@
-name: Docker Compose Actions Workflow
+name: Build container and push workflow
 on:
   push:
     branches: 
       - wagtail
+    paths:
+      - '*/Dockerfile'
 
 jobs:
   test:
@@ -41,14 +43,14 @@ jobs:
           push: true
           tags: ghcr.io/madden1706/madresearchden/website:0.1.1
 
-      - name: Build and Test
-        run: docker-compose -f docker-compose.ci.yml up -d
+      # - name: Build and Test
+      #   run: docker-compose -f docker-compose.ci.yml up -d
 
-      - name: Check running containers
-        run: docker ps -a
+      # - name: Check running containers
+      #   run: docker ps -a
 
-      - name: Check logs
-        run: docker logs mrd_django
+      # - name: Check logs
+      #   run: docker logs mrd_django
 
-      - name: Django Tests
-        run: docker-compose exec -T mrd_django pytest
+      # - name: Django Tests
+      #   run: docker-compose exec -T mrd_django pytest
