@@ -18,7 +18,7 @@ services:
       - POSTGRES_PASSWORD=password
 
   mrd_django:
-    build: ./website
+    image: ghcr.io/madden1706/madresearchden/website:0.1.1
     #command: bash -c "/opt/entrypoint.sh && exec gunicorn madresearchden.wsgi:application --bind 0.0.0.0:8000 --workers 3"
     # Collect static probably won't work with GitHub actions as there are resctrictions about writing files to the underlying system.
     # The volumes will prevent. 
