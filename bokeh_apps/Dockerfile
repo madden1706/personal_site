@@ -1,4 +1,3 @@
-
 FROM python:3.7
 
 ENV PYTHONUNBUFFERED 1
@@ -8,3 +7,4 @@ WORKDIR /opt/bokeh_apps/
 COPY . /opt/bokeh_apps/
 
 RUN pip install -r requirements.txt
+
