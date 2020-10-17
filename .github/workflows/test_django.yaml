@@ -10,23 +10,24 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Build and Test
-        run: docker-compose -f docker-compose.ci.yml up -d
+      # - name: Build and Test
+      #   run: docker-compose -f docker-compose.ci.yml up -d
 
-      - name: Check running containers
-        run: docker ps -a
+      # - name: Check running containers
+      #   run: docker ps -a
 
-      - name: Check logs
-        run: docker logs mrd_django
+      # - name: Check logs
+      #   run: docker logs mrd_django
 
-      - name: Django Tests
-        run: docker-compose exec -T mrd_django pytest
+      # - name: Django Tests
+      #   run: docker-compose exec -T mrd_django pytest
 
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
         with:
-          context: .
-          file: ./website/Dockerfile
-          push: true
-          tags: user/website:latest
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: madden1706/madresearchden/website:test
+          tag_with_ref: true
