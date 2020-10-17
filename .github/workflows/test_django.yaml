@@ -49,4 +49,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64,linux/386
           push: true
-          tags: website:latest
+          tags: ghcr.io/madden1706/madresearchden/website:latest
