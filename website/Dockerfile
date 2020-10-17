@@ -1,7 +1,5 @@
-# Use an official Python runtime as a parent image
 FROM python:3.8.3-slim-buster
 
-# Set environment varibles
 ENV PYTHONUNBUFFERED 1
 
 COPY ./entrypoint.sh /opt/entrypoint.sh
@@ -16,5 +14,3 @@ RUN pip install -r /opt/requirements.txt && apt-get update && apt-get install ne
 USER mrd
 
 EXPOSE 8000
-
-
