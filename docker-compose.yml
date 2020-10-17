@@ -48,7 +48,7 @@ services:
     command: bokeh serve --show ./plasmodium_gametocytes/scripts/bokeh_app/plasmodium_gametocytes.py my_app.py --port 5001 --allow-websocket-origin=*
     container_name: bokeh_server
     volumes:
-      - ./bokeh_apps:/bokeh_apps
+      - ./bokeh_apps:/opt/bokeh_apps/
     ports:
       - "5001:5001"
     depends_on:

@@ -16,5 +16,3 @@ RUN pip install -r /opt/requirements.txt && apt-get update && apt-get install ne
 USER mrd
 
 EXPOSE 8000
-
-#CMD exec gunicorn madresearchden.wsgi:application --bind 0.0.0.0:8000 --workers 3
