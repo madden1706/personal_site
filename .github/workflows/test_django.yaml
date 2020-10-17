@@ -50,4 +50,4 @@ jobs:
           file: ./website/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/madden1706/madresearchden/website:latest
+          tags: ghcr.io/madden1706/madresearchden/website:0.1.1
