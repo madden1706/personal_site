@@ -3,6 +3,7 @@ on:
   push:
     branches: 
       - wagtail
+    # the path here should not be './path/to_file.'
     paths:
       - 'postgres/Dockerfile'
 
