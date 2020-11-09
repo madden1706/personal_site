@@ -43,12 +43,12 @@ services:
       - POSTGRES_PASSWORD=password
 
   bokeh_server:
-    build: ./bokeh_apps
+    build: ./bokeh
     # list two apps as show ./app1 ./app2
     command: bokeh serve --show ./plasmodium_gametocytes/scripts/bokeh_app/plasmodium_gametocytes.py my_app.py --port 5001 --allow-websocket-origin=*
     container_name: bokeh_server
     volumes:
-      - ./bokeh_apps:/opt/bokeh_apps/
+      - ./bokeh:/opt/bokeh/
     ports:
       - "5001:5001"
     depends_on:
