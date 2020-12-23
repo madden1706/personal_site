@@ -1,0 +1,74 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+
+{% load wagtailcore_tags %}
+
+
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+
+      <a class="navbar-brand" href="{% slugurl 'home' %}">
+        <img src="{% static 'images/paw_beaker_logo.png' %}" width="55" class="d-inline-block align-top" alt="">
+      </a>
+      <a class="navbar-brand" href="{% slugurl 'home' %}">
+        MadResearchDen
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          
+            {% slugurl 'home' as home_url %}
+            {% if request.path == home_url %}
+            <a class="nav-item nav-link active" href="{% slugurl 'home' %}">Home 
+              <span class="sr-only">(current)</span></a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% slugurl 'home' %}">Home 
+              <span class="sr-only">(current)</span></a>
+            {% endif %}
+
+            {% slugurl 'blog' as blog_url %}
+            {% if blog_url in request.path  and request.path != home_url %}
+            <a class="nav-item nav-link active" href="{% slugurl 'blog' %}">Blog 
+              <span class="sr-only">(current)</span></a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% slugurl 'blog' %}">Blog 
+              <span class="sr-only">(current)</span></a>
+            {% endif %}
+
+            {% slugurl 'data-vis' as data_url %}
+            {% if data_url in request.path and request.path != home_url %}
+            <a class="nav-item nav-link active" href="{% slugurl 'data-vis' %}">Data 
+              <span class="sr-only">(current)</span></a>
+            {% else %}
+            <a class="nav-item nav-link" href="{% slugurl 'data-vis' %}">Data 
+              <span class="sr-only">(current)</span></a>
+            {% endif %}
+          <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Other stuff</a>
+        </div>
+      </div>
+    </div>
+
+
+  </nav>
+  {% block content_navbar %}
+  {% endblock content_navbar %}
+
+
+
+{% endblock content %}
+
+
+
+

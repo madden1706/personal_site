@@ -1,26 +1,20 @@
-# The first instruction is what image we want to base our container on
-# We Use an official Python runtime as a parent image
-FROM python:3.6
-# The enviroment variable ensures that the python output is set straight
-# to the terminal with out buffering it first
+FROM python:3.8.3-slim-buster
+
 ENV PYTHONUNBUFFERED 1
 
-# create root directory for our project in the container
-RUN mkdir /website
-RUN mkdir /website/media
+COPY ./entrypoint.sh /opt/entrypoint.sh
+COPY ./requirements.txt /opt/requirements.txt
 
-# Set the working directory to /music_service
-WORKDIR /website
+RUN pip install -r /opt/requirements.txt && apt-get update && apt-get install netcat -y
 
-# Copy the current directory contents into the container at /music_service
-ADD . /website
+COPY ./madresearchden/ /opt/madresearchden/
+WORKDIR /opt/madresearchden/
 
-COPY ./entrypoint.sh /entrypoint.sh
-# Install any needed packages specified in requirements.txt
+RUN useradd mrd
+RUN chown -R mrd /opt/madresearchden/
 
-# Needed for script that checks that the db is up.
-RUN pip install -r requirements.txt 
-RUN apt-get update
-RUN apt-get install netcat -y
+VOLUME /opt/madresearchden/media
 
-# ENTRYPOINT ["/entrypoint.sh"]
+# USER mrd
+
+EXPOSE 8000

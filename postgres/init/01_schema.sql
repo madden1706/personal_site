@@ -1,0 +1,1 @@
+CREATE SCHEMA mrd_django; 

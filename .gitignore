@@ -1,8 +1,16 @@
+.vscode/
+ideas_posts/
+
+# Wagtail to ignore
+website/madresearchden/media/
+website/madresearchden/static/
+
+
 /static/admin/
 website/staticfiles
 website/old_local_static
 postgres_data/
-website/*/migrations/*.py
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
