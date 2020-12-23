@@ -1,16 +1,16 @@
-version: '3.1'
+version: '3.7'
 
 #Remove all docker containers
 # docker rm -v $(docker ps -a -q -f status=exited)
 #TODO: Move to github docker container registry in github actions. 
 services:
   website:
-    build: ./website
+    image: ghcr.io/madden1706/madresearchden/website:0.1.1
     restart: always
     command: bash -c "python manage.py makemigrations && 
       python manage.py migrate && 
       python manage.py collectstatic --noinput && 
-      gunicorn madreserachden.wsgi:application -b 0.0.0.0:8000"
+      exec gunicorn madresearchden.wsgi:application -b 0.0.0.0:8000"
     container_name: MRD
     volumes:
       - ./website:/website
@@ -30,9 +30,11 @@ services:
       - DATABASE=postgres
       - DBENGINE=django.db.backends.postgresql_psycopg2
       - BOKEH_URL=https://www.madresearchden.com/bokeh_app
+      - DJANGO_ENV=production
+
 
   nginx:
-    build: ./nginx
+    image: ghcr.io/madden1706/madresearchden/nginx:0.1.1
     restart: always
     ports:
       # HOST:CONTAINER
@@ -64,19 +66,17 @@ services:
   db:
     # image: postgres:10.1-alpine 
     # https://docs.docker.com/storage/volumes/   
-    build: ./db
+    image: ghcr.io/madden1706/madresearchden/postgres:0.1.1
     restart: always
     volumes:
       - ./postgres_data:/var/lib/postgresql/data/
-    environment:
-      # Order here matters DB, USER, PASS
-      #- POSTGRES_DB=madresearchden_db
-      # name has to be postgres.
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD="website:${DB_PASS}"
-      
+
+    env_file:
+      django.env
+
+
   bokeh_server:
-    build: ./bokeh_apps
+    image: ghcr.io/madden1706/madresearchden/bokeh:0.1.1
     restart: always
     # list two apps as show ./app1 ./app2
     # Note the prefix for https://
@@ -91,6 +91,4 @@ services:
 
 volumes:
   postgres_data:
-
-  # Why does this need to be here empty?
-  #You can set default values for environment variables using a .env file, which Compose automatically looks for. Values set in the shell environment override those set in the .env file.
+  ssl_data: 
