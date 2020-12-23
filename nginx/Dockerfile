@@ -1,8 +1,8 @@
 FROM nginx:1.17.2
 
 RUN rm /etc/nginx/conf.d/default.conf
-ADD nginx.conf /etc/nginx/conf.d
-ADD config/* /etc/nginx/
+COPY nginx.conf /etc/nginx/conf.d
+COPY config/ /etc/nginx/
 # Needed for certbot
 RUN mkdir -p /.well-known/acme-challenge/
 # COPY entrypoint.sh /entrypoint.sh
