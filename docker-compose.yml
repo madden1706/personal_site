@@ -19,7 +19,7 @@ services:
 
   mrd_django:
     build: ./website
-    command: bash -c "/opt/entrypoint.sh && python manage.py runserver"
+    command: bash -c "/opt/entrypoint.sh && python manage.py runserver 0:8000"
     # command: bash -c "/opt/entrypoint.sh && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
     container_name: mrd_django
     volumes:
@@ -31,7 +31,7 @@ services:
     environment:
       - DEBUG=True
       - SECRET_KEY=key
-      - ALLOWED_HOSTS=*
+      - ALLOWED_HOSTS=*|
       - BOKEH_URL=http://0.0.0.0:5001
       - DJANGO_ENV=dev
       - MRD_SCHEMA=mrd_django
