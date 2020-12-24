@@ -19,7 +19,8 @@ The script init-letsencrypt.sh is used to get a dummy ssl cert, start nginx and 
 ### Containers
 
 ```shell
-docker push docker.pkg.github.com/madden1706/madresearchden/website:0.1.1 
+docker build -t ghcr.io/madden1706/madresearchden/website:0.1.1 ./website/.
+docker push ghcr.io/madden1706/madresearchden/website:0.1.1 
 ```
 
 ```shell
