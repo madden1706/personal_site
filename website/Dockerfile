@@ -10,8 +10,8 @@ RUN pip install -r /opt/requirements.txt && apt-get update && apt-get install ne
 COPY ./madresearchden/ /opt/madresearchden/
 WORKDIR /opt/madresearchden/
 
-RUN useradd mrd
-RUN chown -R mrd /opt/madresearchden/
+# RUN useradd mrd
+# RUN chown -R mrd /opt/madresearchden/
 
 VOLUME /opt/madresearchden/media
 
