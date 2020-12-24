@@ -37,3 +37,17 @@ class HomePage(Page):
 
         return context
 
+
+class AboutMe(Page):
+
+    max_count = 1
+
+    body = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body', classname="full"),
+        #FieldPanel('promote_pages', classname="full"),
+    ]
+
+
+
