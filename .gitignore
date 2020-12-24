@@ -1,6 +1,9 @@
 .vscode/
 ideas_posts/
 
+#
+django.env
+
 # Wagtail to ignore
 website/madresearchden/media/
 website/madresearchden/static/
