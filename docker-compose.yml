@@ -44,10 +44,10 @@ services:
   bokeh_server:
     build: ./bokeh
     # list two apps as show ./app1 ./app2
-    command: bokeh serve --show ./plasmodium_gametocytes/scripts/bokeh_app/plasmodium_gametocytes.py my_app.py --port 5001 --allow-websocket-origin=*
-    container_name: bokeh_server
+    command: bokeh serve --show ./plasmodium_gametocytes/plasmodium_gametocytes.py ./my_app.py --port 5001 --allow-websocket-origin=*
+    container_name: bokeh
     volumes:
-      - ./bokeh:/opt/bokeh/
+      - ./bokeh/plots:/opt/plots
     ports:
       - "5001:5001"
     depends_on:

@@ -1,10 +1,10 @@
-FROM python:3.7
+FROM python:3.8.7-slim-buster
 
 ENV PYTHONUNBUFFERED 1
+COPY ./requirements.txt /opt/requirements.txt
+RUN pip install -r /opt/requirements.txt
 
-RUN mkdir /opt/bokeh_apps/
-WORKDIR /opt/bokeh_apps/
-COPY . /opt/bokeh_apps/
-
-RUN pip install -r requirements.txt
+RUN mkdir -p /opt/plots/
+COPY ./plots/ /opt/plots/
+WORKDIR /opt/plots/
 
