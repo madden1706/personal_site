@@ -21,8 +21,10 @@ rpkm_data_mean_stddev = pd.read_csv(
     f"{data_dir}/rpkm_data_mean_stddev", sep="\t", index_col=[0, 1, 2]
 )
 
-rpkm_p = rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev)
-all_rpkm_p = all_rpkm_plot(all_genes_rpkm)
+gene_list = all_genes_rpkm.gene_id.to_list()
+
+rpkm_p = rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev, gene_list)
+all_rpkm_p = all_rpkm_plot(all_genes_rpkm, gene_list)
 
 tabs = Tabs(tabs=[
     Panel(child=all_rpkm_p, title="Samples Plot"), 

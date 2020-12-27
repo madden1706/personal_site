@@ -3,7 +3,7 @@ import pandas as pd
 from bokeh.layouts import column, gridplot, layout
 from bokeh.models import ColorBar, HoverTool, Legend, LinearColorMapper, Whisker
 from bokeh.models.sources import ColumnDataSource
-from bokeh.models.widgets import TextInput
+from bokeh.models.widgets import TextInput, AutocompleteInput
 from bokeh.plotting import figure
 from bokeh.models.arrow_heads import TeeHead
 
@@ -86,7 +86,6 @@ def make_plot_time_plot(rapa_data, no_rapa_data):
         line_alpha=0.6,
         line_width=1.5,
     )  # x_range_name='stage')
-
 
     w_n_r = Whisker(
         source=no_rapa_data,
@@ -220,17 +219,15 @@ def make_plot(xy_rapa, xy_no_rapa, gene_data):
     return xy_data, rpkm_data_plot
 
 
-def rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev):
+def rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev, gene_list):
 
-    text_input = TextInput(value="PBANKA_1106000", title="Gene ID:")
+    text_input = AutocompleteInput(value="PBANKA_1106000", title="Gene ID:", completions=gene_list)
     source_xy_rapa, source_xy_norapa, geness_data = make_dataset(data, rpkm_data, text_input.value)
     rapa_data, no_rapa_data = make_dataset_time_plot(
         rpkm_data_mean_stddev, text_input.value
     )
 
-
     p1, p2 = make_plot(source_xy_rapa, source_xy_norapa, geness_data)
-    print(source_xy_rapa)
     time_p = make_plot_time_plot(rapa_data, no_rapa_data)
 
     final = gridplot(
@@ -243,7 +240,7 @@ def rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev):
 
         if text_input.value in rpkm_data["gene_id"].unique().tolist():
 
-            one, two, new_geness_data = make_dataset(data, text_input.value)
+            one, two, new_geness_data = make_dataset(data, rpkm_data, text_input.value)
             geness_data.data.update(new_geness_data.data)
 
             rapa_data_new, no_rapa_data_new = make_dataset_time_plot(
@@ -253,7 +250,7 @@ def rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev):
             no_rapa_data.data.update(no_rapa_data_new.data)
 
         else:
-            one, two, new_geness_data = make_dataset(data, "")
+            one, two, new_geness_data = make_dataset(data, rpkm_data, "")
             geness_data.data.update(new_geness_data.data)
 
             # rapa_data_new, no_rapa_data_new = make_dataset_time_plot(rpkm_data_mean_stddev, '')
@@ -272,7 +269,7 @@ def rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev):
         # text_input = TextInput(value="PBANKA_0000301", title="Gene ID:")
         # source_xy_rapa, source_xy_norapa, geness_data = make_dataset(text_input.value)
         
-    # text_input.on_change("value", update)
+    text_input.on_change("value", update)
 
     return final
 

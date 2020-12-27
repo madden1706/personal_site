@@ -11,6 +11,7 @@ from bokeh.models.widgets import (
     TableColumn,
     TextInput,
     AutocompleteInput,
+
 )
 from bokeh.plotting import figure
 
@@ -155,8 +156,6 @@ def make_plot(sample_data, highlight_data):
 
     # Returns selected values - but also others - empty, just the gene_id
 
-    p1.yaxis.major_label_text_font_size = (
-        "0pt"
     sample_data.selected.js_on_change(
         "indices",
         CustomJS(
@@ -231,7 +230,7 @@ def update(attr, old, new):
         highlight_data.data = new_highlight.data
 
 
-def all_rpkm_plot(data):
+def all_rpkm_plot(data, gene_list):
 
     # A list of all th samples. 
     sample_list = data.columns.tolist()
@@ -252,7 +251,7 @@ def all_rpkm_plot(data):
     # Gene finder tool
     # TODO look into AutocompleteInput
 
-    text_input = TextInput(value="PBANKA_1106000", title="Find Gene ID:",)
+    text_input = AutocompleteInput(value="PBANKA_1106000", title="Find Gene ID:", completions=gene_list)
     highlight_data = make_highlight_dataset(data, text_input.value)
 
 
