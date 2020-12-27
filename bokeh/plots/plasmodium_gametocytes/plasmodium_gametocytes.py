@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from bokeh.io import curdoc
 from bokeh.layouts import gridplot, layout
-from bokeh.models import Tabs
+from bokeh.models import Tabs, Panel
 from bokeh.models.sources import ColumnDataSource
 
 from scripts.all_rpkm_plot import all_rpkm_plot
@@ -21,12 +21,17 @@ rpkm_data_mean_stddev = pd.read_csv(
     f"{data_dir}/rpkm_data_mean_stddev", sep="\t", index_col=[0, 1, 2]
 )
 
-#rpkm_p = rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev)
+rpkm_p = rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev)
 all_rpkm_p = all_rpkm_plot(all_genes_rpkm)
 
-# tabs = Tabs(tabs=[all_rpkm_p, all_rpkm_p])
+tabs = Tabs(tabs=[
+    Panel(child=all_rpkm_p, title="Samples Plot"), 
+    Panel(child=rpkm_p, title="Genes Plot"),    
+    ])
+
+    
 # , rpkm_p
 
 
 # Bokeh func to serve the charts.
-curdoc().add_root(all_rpkm_p)
+curdoc().add_root(tabs)

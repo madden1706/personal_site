@@ -34,8 +34,8 @@ def make_plot(sample_data, highlight_data):
     # Plot tools
     base_plot_options = dict(
         # width=550,
-        plot_height=550,
-        tools=["box_select, pan, wheel_zoom, box_zoom, reset"],
+        plot_height=650,
+        tools=["box_select, wheel_zoom, box_zoom, reset"],
     )
 
     hover_gene_id = HoverTool(tooltips=[("Gene ID", "@gene_id")])
@@ -108,6 +108,16 @@ def make_plot(sample_data, highlight_data):
         text_font_size="9pt",
     )
 
+    color_bar = ColorBar(color_mapper=mapper, 
+        # ticker=LogTicker(),
+        height=10,
+        title='logRPKM',
+        title_text_font_size='10pt',
+        orientation='horizontal',
+        label_standoff=12, border_line_color=None, location=(0,0))
+
+    p1.add_layout(color_bar, 'below')
+
 
     p1.x_range = p2.x_range
     p1.y_range = p2.y_range
@@ -145,6 +155,8 @@ def make_plot(sample_data, highlight_data):
 
     # Returns selected values - but also others - empty, just the gene_id
 
+    p1.yaxis.major_label_text_font_size = (
+        "0pt"
     sample_data.selected.js_on_change(
         "indices",
         CustomJS(
@@ -227,11 +239,13 @@ def all_rpkm_plot(data):
     sample_list.remove("y")
     sample_list.remove("gene_id")
 
+    samples = sorted(sample_list)
+
     sample1 = Select(
-        title="Sample 1:", value="30h_1 Rapamycin (SRX365318)", options=sample_list
+        title="Sample 1:", value="30h_1 Rapamycin (SRX365318)", options=samples
     )
     sample2 = Select(
-        title="Sample 2:", value="30h_1 No Rapamycin (SRX365318)", options=sample_list
+        title="Sample 2:", value="30h_1 No Rapamycin (SRX365318)", options=samples
     )
     sample_data = make_dataset(data, sample1.value, sample2.value)
 

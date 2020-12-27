@@ -1,41 +1,27 @@
 import numpy as np
 import pandas as pd
 from bokeh.layouts import column, gridplot, layout
-from bokeh.models import ColorBar, HoverTool, Legend, LinearColorMapper, Panel, Whisker
+from bokeh.models import ColorBar, HoverTool, Legend, LinearColorMapper, Whisker
 from bokeh.models.sources import ColumnDataSource
 from bokeh.models.widgets import TextInput
 from bokeh.plotting import figure
+from bokeh.models.arrow_heads import TeeHead
 
 
-def make_dataset(gene_filter_val):
+def make_dataset(sample_data, rpkm_data, gene_filter_val):
     """Get data. Return a ColumnDataSource"""
-    geness_data = ColumnDataSource(
+    genes_data = ColumnDataSource(
         rpkm_data[rpkm_data["gene_id"] == gene_filter_val]
     )
 
     # Umap plot of samples data. Filtered for two sets for the treated/not.
-    data.loc[:, "logRPKM"] = "-"
+    sample_data.loc[:, "logRPKM"] = "N/A"
     source_xy_rapa = ColumnDataSource(
-        data[data["rapa_treat"] == "yes"].sort_values(by=["stage"])
+        sample_data[sample_data["rapa_treat"] == "yes"].sort_values(by=["stage"])
     )
-    source_xy_norapa = ColumnDataSource(data[data["rapa_treat"] == "no"])
-    return source_xy_rapa, source_xy_norapa, geness_data
+    source_xy_norapa = ColumnDataSource(sample_data[sample_data["rapa_treat"] == "no"])
 
-
-def make_dataset(gene_filter_val):
-    """Get data. Return a ColumnDataSource"""
-    geness_data = ColumnDataSource(
-        rpkm_data[rpkm_data["gene_id"] == gene_filter_val]
-    )
-
-    # Umap plot of samples data. Filtered for two sets for the treated/not.
-    data.loc[:, "logRPKM"] = "-"
-    source_xy_rapa = ColumnDataSource(
-        data[data["rapa_treat"] == "yes"].sort_values(by=["stage"])
-    )
-    source_xy_norapa = ColumnDataSource(data[data["rapa_treat"] == "no"])
-    return source_xy_rapa, source_xy_norapa, geness_data
-
+    return source_xy_rapa, source_xy_norapa, genes_data
 
 def make_dataset_time_plot(rpkm_data_mean_stddev, gene_filter_val):
     rapa_data = ColumnDataSource(
@@ -56,25 +42,25 @@ def make_plot_time_plot(rapa_data, no_rapa_data):
     p.yaxis.axis_label = "logRPKM"
 
     rapa_l = p.line(
-        "stage", "logRPKM", line_width=2, color="#ea2b1f", source=rapa_data
+        "stage", "logRPKM", line_width=2, color="red", source=rapa_data
     )
     rapa_c = p.circle(
         "stage",
         "logRPKM",
         fill_color="white",
         size=8,
-        color="#ea2b1f",
+        line_color="red",
         source=rapa_data,
     )
     no_rapa_l = p.line(
-        "stage", "logRPKM", line_width=2, color="#5fa8d3", source=no_rapa_data
+        "stage", "logRPKM", line_width=2, color="blue", source=no_rapa_data
     )
     no_rapa_c = p.circle(
         "stage",
         "logRPKM",
         fill_color="white",
         size=8,
-        color="#5fa8d3",
+        line_color="blue",
         source=no_rapa_data,
     )
 
@@ -96,24 +82,26 @@ def make_plot_time_plot(rapa_data, no_rapa_data):
         base="stage",
         upper="up_std",
         lower="low_std",
-        line_color="#ea2b1f",
+        line_color="red",
         line_alpha=0.6,
         line_width=1.5,
     )  # x_range_name='stage')
-    w_r.upper_head.line_color = "#ea2b1f"
-    w_r.lower_head.line_color = "#ea2b1f"
+
 
     w_n_r = Whisker(
         source=no_rapa_data,
         base="stage",
         upper="up_std",
         lower="low_std",
-        line_color="#5fa8d3",
+        line_color="blue",
         line_alpha=0.6,
         line_width=1.5,
-    )  # x_range_name='stage')
-    w_n_r.upper_head.line_color = "#5fa8d3"
-    w_n_r.lower_head.line_color = "#5fa8d3"
+        )  # x_range_name='stage')
+
+    w_r.upper_head.line_color = "red"
+    w_r.lower_head.line_color = "red"
+    w_n_r.upper_head.line_color = "blue"
+    w_n_r.lower_head.line_color = "blue"
 
     p.add_layout(w_r)
     p.add_layout(w_n_r)
@@ -125,7 +113,7 @@ def make_plot(xy_rapa, xy_no_rapa, gene_data):
     # needs to plot dependent of a gene ID filter. This needs to be from a text input.
     # Plot tools
     base_plot_options = dict(
-        width=500, plot_height=500, tools=["pan, reset, wheel_zoom"]
+        width=500, plot_height=500, tools=[]
     )
 
     # This is supercede by the other  HoverTool - so set rpkm val to '-' above.
@@ -153,8 +141,8 @@ def make_plot(xy_rapa, xy_no_rapa, gene_data):
         size=12,
         source=xy_rapa,
         line_width=0,
-        color="colours",
-        #legend_label="stage",
+        fill_color="colours",
+        legend_group="stage",
     )
     no_rapa_xy = xy_data.circle(
         "x",
@@ -163,7 +151,7 @@ def make_plot(xy_rapa, xy_no_rapa, gene_data):
         source=xy_no_rapa,
         fill_alpha=0,
         line_width=2.5,
-        color="colours",
+        line_color="colours",
     )
 
     # Mapping colours on logRPKM values.
@@ -232,66 +220,59 @@ def make_plot(xy_rapa, xy_no_rapa, gene_data):
     return xy_data, rpkm_data_plot
 
 
-def update(attr, old, new):
-    # print(old)
-    # print(text_input.value)
-    # update_val = old
-    if text_input.value in rpkm_data["gene_id"].unique().tolist():
-
-        one, two, new_geness_data = make_dataset(text_input.value)
-        geness_data.data.update(new_geness_data.data)
-
-        rapa_data_new, no_rapa_data_new = make_dataset_time_plot(
-            rpkm_data_mean_stddev, text_input.value
-        )
-        rapa_data.data.update(rapa_data_new.data)
-        no_rapa_data.data.update(no_rapa_data_new.data)
-
-    else:
-        one, two, new_geness_data = make_dataset("")
-        geness_data.data.update(new_geness_data.data)
-
-        # rapa_data_new, no_rapa_data_new = make_dataset_time_plot(rpkm_data_mean_stddev, '')
-        # rapa_data.data.update(rapa_data_new.data)
-        # no_rapa_data.data.update(no_rapa_data_new.data)
-        rapa_data.data["logRPKM"] = [0, 0, 0, 0, 0, 0]
-        rapa_data.data["std"] = [0, 0, 0, 0, 0, 0]
-        rapa_data.data["up_std"] = [0, 0, 0, 0, 0, 0]
-        rapa_data.data["low_std"] = [0, 0, 0, 0, 0, 0]
-
-        no_rapa_data.data["logRPKM"] = [0, 0, 0, 0, 0, 0]
-        no_rapa_data.data["std"] = [0, 0, 0, 0, 0, 0]
-        no_rapa_data.data["up_std"] = [0, 0, 0, 0, 0, 0]
-        no_rapa_data.data["low_std"] = [0, 0, 0, 0, 0, 0]
-
-    # print(geness_data.data.keys())
-    # print('TEST')
-
-    # text_input = TextInput(value="PBANKA_0000301", title="Gene ID:")
-    # source_xy_rapa, source_xy_norapa, geness_data = make_dataset(text_input.value)
-
-
 def rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev):
 
     text_input = TextInput(value="PBANKA_1106000", title="Gene ID:")
-    source_xy_rapa, source_xy_norapa, geness_data = make_dataset(text_input.value)
+    source_xy_rapa, source_xy_norapa, geness_data = make_dataset(data, rpkm_data, text_input.value)
     rapa_data, no_rapa_data = make_dataset_time_plot(
         rpkm_data_mean_stddev, text_input.value
     )
 
 
     p1, p2 = make_plot(source_xy_rapa, source_xy_norapa, geness_data)
+    print(source_xy_rapa)
     time_p = make_plot_time_plot(rapa_data, no_rapa_data)
-    # final = layout([[text_input], [p], [time_p]])
 
     final = gridplot(
         children=[[text_input, None, None], [p1, p2], [time_p]],
         toolbar_location="above",
-        sizing_mode="fixed",
+        # sizing_mode="fixed",
     )
+        
+    def update(attr, old, new):
 
-    final_tab = Panel(child=final, title="Samples Plot")
-    text_input.on_change("value", update)
+        if text_input.value in rpkm_data["gene_id"].unique().tolist():
 
-    return final_tab
+            one, two, new_geness_data = make_dataset(data, text_input.value)
+            geness_data.data.update(new_geness_data.data)
+
+            rapa_data_new, no_rapa_data_new = make_dataset_time_plot(
+                rpkm_data_mean_stddev, text_input.value
+            )
+            rapa_data.data.update(rapa_data_new.data)
+            no_rapa_data.data.update(no_rapa_data_new.data)
+
+        else:
+            one, two, new_geness_data = make_dataset(data, "")
+            geness_data.data.update(new_geness_data.data)
+
+            # rapa_data_new, no_rapa_data_new = make_dataset_time_plot(rpkm_data_mean_stddev, '')
+            # rapa_data.data.update(rapa_data_new.data)
+            # no_rapa_data.data.update(no_rapa_data_new.data)
+            rapa_data.data["logRPKM"] = [0, 0, 0, 0, 0, 0]
+            rapa_data.data["std"] = [0, 0, 0, 0, 0, 0]
+            rapa_data.data["up_std"] = [0, 0, 0, 0, 0, 0]
+            rapa_data.data["low_std"] = [0, 0, 0, 0, 0, 0]
+
+            no_rapa_data.data["logRPKM"] = [0, 0, 0, 0, 0, 0]
+            no_rapa_data.data["std"] = [0, 0, 0, 0, 0, 0]
+            no_rapa_data.data["up_std"] = [0, 0, 0, 0, 0, 0]
+            no_rapa_data.data["low_std"] = [0, 0, 0, 0, 0, 0]
+
+        # text_input = TextInput(value="PBANKA_0000301", title="Gene ID:")
+        # source_xy_rapa, source_xy_norapa, geness_data = make_dataset(text_input.value)
+        
+    # text_input.on_change("value", update)
+
+    return final
 
