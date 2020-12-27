@@ -15,7 +15,7 @@ from bokeh.models.widgets import (
 from bokeh.plotting import figure
 
 
-def make_dataset(sample1, sample2):
+def make_dataset(data, sample1, sample2):
     """Get data. Return a ColumnDataSource"""
     temp1 = data.loc[:, [sample1, sample2, "x", "y", "gene_id"]]
     temp1.loc[:, "sample1_val"] = temp1.loc[:, f"{sample1}"]
@@ -25,7 +25,7 @@ def make_dataset(sample1, sample2):
     return sample_data
 
 
-def make_highlight_dataset(gene):
+def make_highlight_dataset(data, gene):
     return ColumnDataSource(data[data["gene_id"] == f"{gene}"])
 
 
@@ -108,8 +108,6 @@ def make_plot(sample_data, highlight_data):
         text_font_size="9pt",
     )
 
-    color_bar = ColorBar(color_mapper=mapper, width=8, location=(4, 0))
-    p2.add_layout(color_bar, "left")
 
     p1.x_range = p2.x_range
     p1.y_range = p2.y_range
@@ -209,22 +207,21 @@ def make_plot(sample_data, highlight_data):
 
 
 def update(attr, old, new):
-    new_data = make_dataset(sample1.value, sample2.value)
+    new_data = make_dataset(data, sample1_value, sample2_value)
     # sample1_data.data.update(new_data1.data)
     sample_data.data = new_data.data
 
     if text_input.value in data["gene_id"].unique().tolist():
-        new_highlight = make_highlight_dataset(text_input.value)
+        new_highlight = make_highlight_dataset(data, text_input.value)
         highlight_data.data = new_highlight.data
     else:
-        new_highlight = make_highlight_dataset("")
+        new_highlight = make_highlight_dataset(data, "")
         highlight_data.data = new_highlight.data
-
-    # print(sample1_data.data.keys())
 
 
 def all_rpkm_plot(data):
 
+    # A list of all th samples. 
     sample_list = data.columns.tolist()
     sample_list.remove("x")
     sample_list.remove("y")
@@ -236,48 +233,39 @@ def all_rpkm_plot(data):
     sample2 = Select(
         title="Sample 2:", value="30h_1 No Rapamycin (SRX365318)", options=sample_list
     )
-    sample_data = make_dataset(sample1.value, sample2.value)
-
-
-
-    # Samples check list
-    sample_list = sorted(data.columns.tolist())
-    sample_list.remove("x")
-    sample_list.remove("y")
-    sample_list.remove("gene_id")
+    sample_data = make_dataset(data, sample1.value, sample2.value)
 
     # Gene finder tool
     # TODO look into AutocompleteInput
 
-    text_input = TextInput(value="PBANKA_1106000", title="Find Gene ID:",)  #completions=['PBANKA_1106000'], min_characters=4,) #
+    text_input = TextInput(value="PBANKA_1106000", title="Find Gene ID:",)
+    highlight_data = make_highlight_dataset(data, text_input.value)
 
-    sample1 = Select(
-        title="Sample 1 selection:",
-        value="30h_1 Rapamycin (SRX365318)",
-        options=sample_list,
-    )
-    sample2 = Select(
-        title="Sample 2 selection:",
-        value="30h_1 No Rapamycin (SRX365318)",
-        options=sample_list,
-    )
-    sample_data = make_dataset(sample1.value, sample2.value)
-    highlight_data = make_highlight_dataset(text_input.value)
 
     plot1, plot2, data_table = make_plot(sample_data, highlight_data)
+
     widgets = layout([[sample1, sample2]])
     final = gridplot([[text_input], [widgets], [plot1, plot2], [data_table]])
-    final_tab = Panel(child=final, title="Genes Plot")
+    # final_tab = Panel(child=final, title="Genes Plot")
+
+    def update(attr, old, new):
+        new_data = make_dataset(data, sample1.value, sample2.value)
+        sample_data.data = dict(new_data.data)
+
+        # For gene highlighting
+        if text_input.value in data["gene_id"].unique().tolist():
+            new_highlight = make_highlight_dataset(data, text_input.value)
+            highlight_data.data = dict(new_highlight.data)
+        else:
+            new_highlight = make_highlight_dataset(data, "")
+            highlight_data.data = dict(new_highlight.data)
+
     sample1.on_change("value", update)
     sample2.on_change("value", update)
     text_input.on_change("value", update)
 
-    # def callback(attr, old, new):
-    #     print(new)
-
-    # sample_data.data_source.on_change('selected',callback)
-
-    return final_tab
-
     # TODO - slider for RPKM val.
     # TODO rename samples. Use mean?
+   
+    return final
+

@@ -7,19 +7,19 @@ from bokeh.models.widgets import TextInput
 from bokeh.plotting import figure
 
 
-    def make_dataset(gene_filter_val):
-        """Get data. Return a ColumnDataSource"""
-        geness_data = ColumnDataSource(
-            rpkm_data[rpkm_data["gene_id"] == gene_filter_val]
-        )
+def make_dataset(gene_filter_val):
+    """Get data. Return a ColumnDataSource"""
+    geness_data = ColumnDataSource(
+        rpkm_data[rpkm_data["gene_id"] == gene_filter_val]
+    )
 
-        # Umap plot of samples data. Filtered for two sets for the treated/not.
-        data.loc[:, "logRPKM"] = "-"
-        source_xy_rapa = ColumnDataSource(
-            data[data["rapa_treat"] == "yes"].sort_values(by=["stage"])
-        )
-        source_xy_norapa = ColumnDataSource(data[data["rapa_treat"] == "no"])
-        return source_xy_rapa, source_xy_norapa, geness_data
+    # Umap plot of samples data. Filtered for two sets for the treated/not.
+    data.loc[:, "logRPKM"] = "-"
+    source_xy_rapa = ColumnDataSource(
+        data[data["rapa_treat"] == "yes"].sort_values(by=["stage"])
+    )
+    source_xy_norapa = ColumnDataSource(data[data["rapa_treat"] == "no"])
+    return source_xy_rapa, source_xy_norapa, geness_data
 
 
 def make_dataset(gene_filter_val):
@@ -154,7 +154,7 @@ def make_plot(xy_rapa, xy_no_rapa, gene_data):
         source=xy_rapa,
         line_width=0,
         color="colours",
-        legend="stage",
+        #legend_label="stage",
     )
     no_rapa_xy = xy_data.circle(
         "x",
@@ -294,3 +294,4 @@ def rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev):
     text_input.on_change("value", update)
 
     return final_tab
+
