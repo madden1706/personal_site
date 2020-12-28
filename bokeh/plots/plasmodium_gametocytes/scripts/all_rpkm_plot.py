@@ -251,7 +251,7 @@ def all_rpkm_plot(data, gene_list):
     # Gene finder tool
     # TODO look into AutocompleteInput
 
-    text_input = AutocompleteInput(value="PBANKA_1106000", title="Find Gene ID:", completions=gene_list)
+    text_input = AutocompleteInput(value="PBANKA_1106000", title="Find Gene ID:", completions=gene_list, min_characters=11)
     highlight_data = make_highlight_dataset(data, text_input.value)
 
 

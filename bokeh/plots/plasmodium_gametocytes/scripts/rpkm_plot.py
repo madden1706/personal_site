@@ -221,7 +221,7 @@ def make_plot(xy_rapa, xy_no_rapa, gene_data):
 
 def rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev, gene_list):
 
-    text_input = AutocompleteInput(value="PBANKA_1106000", title="Gene ID:", completions=gene_list)
+    text_input = AutocompleteInput(value="PBANKA_1106000", title="Gene ID:", completions=gene_list, min_characters=11)
     source_xy_rapa, source_xy_norapa, geness_data = make_dataset(data, rpkm_data, text_input.value)
     rapa_data, no_rapa_data = make_dataset_time_plot(
         rpkm_data_mean_stddev, text_input.value
