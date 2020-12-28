@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from bokeh.layouts import column, gridplot, layout
-from bokeh.models import ColorBar, HoverTool, Legend, LinearColorMapper, Whisker
+from bokeh.models import ColorBar, HoverTool, Legend, LinearColorMapper, Whisker, BasicTickFormatter
 from bokeh.models.sources import ColumnDataSource
 from bokeh.models.widgets import TextInput, AutocompleteInput
 from bokeh.plotting import figure
@@ -36,10 +36,12 @@ def make_dataset_time_plot(rpkm_data_mean_stddev, gene_filter_val):
 
 def make_plot_time_plot(rapa_data, no_rapa_data):
 
-    p = figure(width=600, height=400, title="logRPKM Change Over Time", tools=[])
+    p = figure(width=1000, height=400, title="logRPKM Change Over Time", tools=[])
 
     p.xaxis.axis_label = "Time (h)"
     p.yaxis.axis_label = "logRPKM"
+
+    p.yaxis.formatter=BasicTickFormatter(precision=3)
 
     rapa_l = p.line(
         "stage", "logRPKM", line_width=2, color="red", source=rapa_data
@@ -76,7 +78,6 @@ def make_plot_time_plot(rapa_data, no_rapa_data):
     p.add_layout(legend, "below")
 
     # Error bars - note the values are the absolution positions of the upper and lower values e.g. lower values = mean - std dev.
-    # TODO not resetting when there is no value that matches in the search.
     w_r = Whisker(
         source=rapa_data,
         base="stage",
@@ -112,7 +113,7 @@ def make_plot(xy_rapa, xy_no_rapa, gene_data):
     # needs to plot dependent of a gene ID filter. This needs to be from a text input.
     # Plot tools
     base_plot_options = dict(
-        width=500, plot_height=500, tools=[]
+        width=500, plot_height=600, tools=[]
     )
 
     # This is supercede by the other  HoverTool - so set rpkm val to '-' above.
@@ -170,8 +171,15 @@ def make_plot(xy_rapa, xy_no_rapa, gene_data):
     )
 
     # Colour bar
-    color_bar = ColorBar(color_mapper=mapper, width=8, location=(0, 0))
-    rpkm_data_plot.add_layout(color_bar, "right")
+    color_bar = ColorBar(color_mapper=mapper, 
+        # ticker=LogTicker(),
+        height=10,
+        title='logRPKM',
+        title_text_font_size='10pt',
+        orientation='horizontal',
+        label_standoff=12, border_line_color=None, location=(0,0))
+        
+    rpkm_data_plot.add_layout(color_bar, "below")
 
     # Maybe have to make two sets of glyphs - not plot them and have these as a legend???
 
@@ -221,7 +229,7 @@ def make_plot(xy_rapa, xy_no_rapa, gene_data):
 
 def rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev, gene_list):
 
-    text_input = AutocompleteInput(value="PBANKA_1106000", title="Gene ID:", completions=gene_list, min_characters=11)
+    text_input = AutocompleteInput(value="PBANKA_1106000", title="Gene ID:", completions=gene_list, min_characters=11, width=500)
     source_xy_rapa, source_xy_norapa, geness_data = make_dataset(data, rpkm_data, text_input.value)
     rapa_data, no_rapa_data = make_dataset_time_plot(
         rpkm_data_mean_stddev, text_input.value
@@ -230,11 +238,18 @@ def rpkm_plot(data, rpkm_data, rpkm_data_mean_stddev, gene_list):
     p1, p2 = make_plot(source_xy_rapa, source_xy_norapa, geness_data)
     time_p = make_plot_time_plot(rapa_data, no_rapa_data)
 
-    final = gridplot(
-        children=[[text_input, None, None], [p1, p2], [time_p]],
-        toolbar_location="above",
-        # sizing_mode="fixed",
-    )
+    # final = gridplot(
+    #     children=[[text_input], [time_p], [p1,p2],],
+    #     toolbar_location="above",
+    #     # sizing_mode="fixed",
+    # )
+
+    final = layout([
+        [text_input],
+        [time_p],
+        [p1,p2]
+
+    ])
         
     def update(attr, old, new):
 
